@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "365022898622",
+    "firebase_url": "https://moamoa-ac3f5.firebaseio.com",
+    "project_id": "moamoa-ac3f5",
+    "storage_bucket": "moamoa-ac3f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365022898622:android:5eefae3aeb7f39378671ef",
+        "android_client_info": {
+          "package_name": "com.example.moa_cardview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365022898622-22l2f4l59ktl3jg7555oo8f20ll6mfe8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moa_cardview",
+            "certificate_hash": "114634c67ca2e8252872f754a02a1c0680e1df5b"
+          }
+        },
+        {
+          "client_id": "365022898622-jo9i3p81c1q5ivg4scvtqci3msqclfeh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmR9UfzaR74VheoUA0CtYrP1wSDF8hgME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365022898622-jo9i3p81c1q5ivg4scvtqci3msqclfeh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

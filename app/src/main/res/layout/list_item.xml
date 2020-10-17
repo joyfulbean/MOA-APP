@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview_background_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="4dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="15.24dp"
+        android:layout_marginEnd="15.24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/post_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15.24dp"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/post_title_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="50dp"
+                    android:layout_toStartOf="@+id/post_price_textview"
+                    android:fontFamily="@font/bold"
+                    android:text="오뚜기 컵밥"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/blue"
+                    android:textSize="19.05dp" />
+
+                <TextView
+                    android:id="@+id/post_cost_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/bold"
+                    android:gravity="end"
+                    android:text="1000원"
+                    android:textColor="@color/black"
+                    android:textSize="15.24dp" />
+
+                <TextView
+                    android:id="@+id/post_datetitle_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/post_title_textview"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15.24dp"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:text="주문날짜:"
+                    android:textColor="@color/black"
+                    android:textSize="12.2dp" />
+
+                <TextView
+                    android:id="@+id/post_date_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/post_title_textview"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="15.24dp"
+                    android:layout_toEndOf="@id/post_datetitle_textview"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:text="2020년 8월 5일"
+                    android:textColor="@color/black"
+                    android:textSize="12.2dp" />
+
+                <TextView
+                    android:id="@+id/post_placetitle_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/post_datetitle_textview"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="15.24dp"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:text="수령장소:"
+                    android:textColor="@color/black"
+                    android:textSize="12.2dp" />
+
+                <TextView
+                    android:id="@+id/post_place_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/post_datetitle_textview"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="15.24dp"
+                    android:layout_toEndOf="@id/post_placetitle_textview"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:text="하용조관"
+                    android:textColor="@color/black"
+                    android:textSize="12.2dp" />
+
+                <ImageButton
+                    android:id="@+id/post_threeroundbutton"
+                    android:layout_width="10dp"
+                    android:layout_height="15dp"
+                    android:layout_below="@id/post_date_textview"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="15.24dp"
+                    android:src="@drawable/threeroundbutton"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:visibility="visible"/>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/expandable_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15.24dp"
+                android:layout_marginEnd="15.24dp">
+
+
+                <TextView
+                    android:id="@+id/post_pplnumbertitle_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:text="인원:"
+                    android:textColor="@color/black"
+                    android:textSize="12.2dp" />
+
+                <TextView
+                    android:id="@+id/post_pplnumber_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/post_pplnumbertitle_textview"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:text="3"
+                    android:textColor="@color/black"
+                    android:textSize="12.2dp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/post_preview_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="70.1dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/post_pplnumbertitle_textview"
+                    android:layout_marginTop="15.24dp">
+
+                    <ImageView
+                        android:id="@+id/post_preview_iv"
+                        android:layout_width="70.1dp"
+                        android:layout_height="70.1dp"
+                        android:src="@drawable/previewimage"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/post_preview_iv"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:padding="9.9dp">
+
+                        <TextView
+                            android:id="@+id/post_preview_tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="[11번가] 햇반 컵밥/오뚜기 컵밥 40종 골라담기"
+                            android:textSize="12.2dp"
+                            android:textColor="@color/black"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:textAlignment="textStart"/>
+
+                        <TextView
+                            android:id="@+id/post_preview_tv2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="[11번가] 햇반 컵밥/오뚜기 컵밥 40종 골라담기"
+                            android:textSize="9.14dp"
+                            android:textColor="@color/darkgrey"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:textAlignment="textStart"
+                            android:layout_marginTop="7.62dp"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="22.86dp"
+                    android:layout_marginTop="22.86dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/post_preview_layout"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageButton
+                        android:id="@+id/post_createbutton"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/big_button"/>
+
+                    <TextView
+                        android:id="@+id/post_createbutton_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="@font/bold"
+                        android:text="방 들어가기"
+                        android:textSize="16.76dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:gravity="center"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

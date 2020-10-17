@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profilepage_background_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".main.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profilepage_upperlayout"
+        android:layout_width="match_parent"
+        android:layout_height="57.14dp"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/profilepage_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="15dp"
+            app:tabTextAppearance="@style/tab_text"
+            app:tabSelectedTextColor="@color/blue"
+            app:tabTextColor="@color/darkgrey"
+            app:tabIndicatorHeight="4.57dp"
+            app:tabPaddingBottom="0dp">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/profilepage_tab_Item1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/profilepage_tab_Item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/profilepage_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="640dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profilepage_upperlayout">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/profilepage_lowerlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_apppbar"
+            android:layout_width="match_parent"
+            android:layout_height="45.71dp"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@color/white"
+            app:fabCradleMargin="7dp"
+            app:fabAlignmentMode="end"
+            app:fabCradleRoundedCornerRadius="0dp">
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/bottom_navi"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="619dp"
+            app:menu="@menu/bottom_menu"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            app:cnb_menuResource="@menu/bottom_menu"
+            app:cnb_iconSize="19dp"
+            app:cnb_textAppearance="@style/tab_text"
+            app:cnb_minExpandedWidth="200dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/create_room_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_plus"
+            app:backgroundTint="@color/yellow"
+            app:layout_anchor="@id/bottom_apppbar"
+            app:tint="@color/white"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

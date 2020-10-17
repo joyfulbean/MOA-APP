@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="15.24dp">
+
+    <ImageView
+        android:id="@+id/chatpage_otherprofile_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/profileicon2" />
+
+    <TextView
+        android:id="@+id/chatpage_pplname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/chatpage_otherprofile_iv"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@id/chatpage_otherprofile_iv"
+        android:gravity="center"
+        android:fontFamily="@font/regular"
+        android:text="강예빈"
+        android:textSize="11.43dp"
+        android:layout_marginStart="10dp"/>
+
+    <ImageButton
+        android:id="@+id/chatpage_phone_button"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_alignTop="@+id/chatpage_otherprofile_iv"
+        android:layout_alignBottom="@+id/chatpage_otherprofile_iv"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/phoneicon"/>
+
+</RelativeLayout>

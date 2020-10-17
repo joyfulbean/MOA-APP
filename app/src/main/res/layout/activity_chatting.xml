@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chatpage_drawerlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".main.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/chatpage_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="0dp">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/chatpage_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="45.71dp"
+                    android:background="@color/blue">
+
+                    <ImageButton
+                        android:id="@+id/chatpage_backbutton"
+                        android:layout_width="16dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13.33dp"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/backarrow" />
+
+                    <TextView
+                        android:id="@+id/chatpage_title_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/bold"
+                        android:text="오뚜기 컵밥"
+                        android:textColor="@color/white"
+                        android:textSize="15.24dp" />
+
+                    <ImageButton
+                        android:id="@+id/chatpage_drawer_button"
+                        android:layout_width="14dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="13.33dp"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/menuicon" />
+
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <RelativeLayout
+            android:id="@+id/chatpage_postbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chatpage_toolbar_layout"
+            android:elevation="6dp">
+
+
+            <TextView
+                android:id="@+id/chatpage_datetitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="15.24dp"
+                android:layout_marginTop="15.24dp"
+                android:fontFamily="@font/regular"
+                android:text="주문날짜:"
+                android:textAlignment="textStart"
+                android:textColor="@color/blue"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/chatpage_date_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15.24dp"
+                android:layout_toEndOf="@id/chatpage_datetitle_textview"
+                android:fontFamily="@font/regular"
+                android:text="2020년 9월 1일"
+                android:textAlignment="textStart"
+                android:textColor="@color/blue"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/chatpage_timetitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chatpage_date_textview"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15.24dp"
+                android:layout_marginTop="7.62dp"
+                android:fontFamily="@font/regular"
+                android:text="주문시간: "
+                android:textAlignment="textStart"
+                android:textColor="@color/blue"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/chatpage_time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chatpage_date_textview"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7.62dp"
+                android:layout_toEndOf="@id/chatpage_timetitle_textview"
+                android:fontFamily="@font/regular"
+                android:text="08:30 PM"
+                android:textAlignment="textStart"
+                android:textColor="@color/blue"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/chatpage_nametitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="15.24dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@id/chatpage_name_textview"
+                android:fontFamily="@font/regular"
+                android:text="방장:"
+                android:textAlignment="textEnd"
+                android:textColor="@color/blue"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/chatpage_name_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="15.24dp"
+                android:layout_marginEnd="15.24dp"
+                android:fontFamily="@font/regular"
+                android:text="정수현"
+                android:textAlignment="textEnd"
+                android:textColor="@color/blue"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/chatpage_pplnumbertitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chatpage_name_textview"
+                android:layout_marginTop="7.62dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@id/chatpage_pplnumber_textview"
+                android:fontFamily="@font/regular"
+                android:text="인원:"
+                android:textAlignment="textEnd"
+                android:textColor="@color/blue"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/chatpage_pplnumber_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chatpage_name_textview"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="7.62dp"
+                android:layout_marginEnd="15.24dp"
+                android:fontFamily="@font/regular"
+                android:text="3명"
+                android:textAlignment="textEnd"
+                android:textColor="@color/blue"
+                android:textSize="13dp" />
+
+            <RelativeLayout
+                android:id="@+id/chatpage_expandable_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chatpage_pplnumber_textview"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/chatpage_placetitle_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginTop="7.62dp"
+                    android:fontFamily="@font/regular"
+                    android:text="수령장소:"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/blue"
+                    android:textSize="11.43dp" />
+
+                <TextView
+                    android:id="@+id/chatpage_place_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="7.62dp"
+                    android:layout_toEndOf="@id/chatpage_placetitle_textview"
+                    android:fontFamily="@font/regular"
+                    android:text="하용조관"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/blue"
+                    android:textSize="11.43dp" />
+
+                <RelativeLayout
+                    android:id="@+id/chatpage_postpreview_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="70.1dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/chatpage_place_textview"
+                    android:layout_marginTop="15.24dp"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginEnd="15.24dp">
+
+                    <ImageView
+                        android:id="@+id/post_preview_iv"
+                        android:src="@drawable/previewimage"
+                        android:layout_width="70.1dp"
+                        android:layout_height="70.1dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/post_preview_iv"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:padding="9.9dp"
+                        android:background="@drawable/preview_background">
+
+                        <TextView
+                            android:id="@+id/chatpage_postpreview_tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="[11번가] 햇반 컵밥/오뚜기 컵밥 40종 골라담기"
+                            android:textSize="12.2dp"
+                            android:textColor="@color/black"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:textAlignment="textStart"/>
+
+                        <TextView
+                            android:id="@+id/chatpage_postpreview_tv2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="[11번가] 햇반 컵밥/오뚜기 컵밥 40종 골라담기"
+                            android:textSize="9.14dp"
+                            android:textColor="@color/darkgrey"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:textAlignment="textStart"
+                            android:layout_marginTop="7.62dp"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/chatpage_arrow_button"
+                android:layout_width="16dp"
+                android:layout_height="8dp"
+                android:layout_below="@+id/chatpage_expandable_layout"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="7.62dp"
+                android:layout_marginBottom="7.62dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/downbutton" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/chatpage_data"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:layout_constraintBottom_toTopOf="@id/chatpage_lowerlayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chatpage_postbar_layout"
+            app:layout_constraintVertical_bias="0.327"
+            app:layout_constraintVertical_chainStyle="spread_inside">
+
+            <ListView
+                android:id="@+id/chatpage_message_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:divider="#ffffff"
+                android:dividerHeight="0dp" />
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chatpage_lowerlayout"
+            android:layout_width="match_parent"
+            android:layout_height="51.81dp"
+            android:background="@color/blue"
+            android:elevation="6dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RelativeLayout
+                android:id="@+id/chatpage_textbar_layout"
+                android:layout_width="346.67dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toEndOf="@id/chatpage_plus_button"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="15.24dp">
+
+                <ImageView
+                    android:id="@+id/chatpage_textbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/textbar" />
+
+                <EditText
+                    android:id="@+id/chatpage_typein_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@id/chatpage_sendbutton"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginEnd="15.24dp"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"/>
+
+                <ImageButton
+                    android:id="@+id/chatpage_sendbutton"
+                    android:visibility="invisible"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="@null"
+                    android:fontFamily="@font/bold"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/send_button"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="3dp"/>
+
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/chatpage_plus_button"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="17.52dp"
+                android:layout_marginEnd="17.52dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/plusicon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/chatpage_textbar_layout"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/chatpage_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_gravity="end">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/chatpage_drawer_upperbarlayout"
+                android:layout_width="match_parent"
+                android:layout_height="45.71dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="@color/yellow">
+
+                <TextView
+                    android:id="@+id/chatpage_drawer_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="13.33dp"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="대화 상대"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="15.24dp" />
+
+                <ImageButton
+                    android:id="@+id/chatpage_drawer_closebutton"
+                    android:layout_width="11.43dp"
+                    android:layout_height="11.43dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="13.33dp"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/closeicon" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/chatpage_myprofile_layout"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15.24dp"
+                android:layout_below="@id/chatpage_drawer_upperbarlayout">
+
+                <ImageView
+                    android:id="@+id/chatpage_myprofile_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/profileicon" />
+
+                <TextView
+                    android:id="@+id/chatpage_myname_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/chatpage_myprofile_iv"
+                    android:layout_alignTop="@id/chatpage_myprofile_iv"
+                    android:layout_toEndOf="@id/chatpage_myprofile_iv"
+                    android:gravity="center"
+                    android:fontFamily="@font/regular"
+                    android:text="정수현"
+                    android:textSize="11.43dp"
+                    android:layout_marginStart="7.62dp"/>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/chatpage_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/longline"
+                android:layout_gravity="center"
+                android:layout_below="@id/chatpage_myprofile_layout"/>
+
+            <ListView
+                android:id="@+id/chatpage_ppl_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chatpage_line" />
+
+            <RelativeLayout
+                android:id="@+id/chatpage_drawer_lowerbarlayout"
+                android:layout_width="match_parent"
+                android:layout_height="45.71dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="@color/yellow">
+
+                <ImageButton
+                    android:id="@+id/chatpage_exitroom"
+                    android:layout_width="15.24dp"
+                    android:layout_height="15.24dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/exitbutton"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:fontFamily="@font/bold"
+                    android:text="방 나가기"
+                    android:textColor="@color/white"
+                    android:textSize="11.43dp"
+                    android:layout_marginStart="15.24dp">
+
+                </ImageButton>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

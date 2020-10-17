@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/phonenumber_background_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/bank_upperbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="45.71dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/blue">
+
+        <ImageButton
+            android:id="@+id/bank_backbutton"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/backarrow"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="13.33dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="계좌 등록"
+            android:textColor="@color/white"
+            android:textSize="15.24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:textAlignment="center"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/bank_upperbarlayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30.48dp"
+        android:layout_marginEnd="30.48dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="은행 이름"
+            android:textSize="15.24dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="38.1dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_bankname_edittext"
+            android:layout_marginStart="15.24dp"
+            android:layout_marginEnd="15.24dp"
+            android:layout_marginTop="22.86dp"
+            android:hint="은행 이름"
+            android:inputType="textPersonName"
+            android:fontFamily="@font/regular"
+            android:textSize="13.71dp"
+            android:textColor="@color/black"
+            android:background="@null"/>
+
+        <ImageView
+            android:layout_width="350.48dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/longline"
+            android:layout_marginTop="7.62dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="계좌번호"
+            android:textSize="15.24dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="38.1dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_banknumber_edittext"
+            android:layout_marginStart="15.24dp"
+            android:layout_marginEnd="15.24dp"
+            android:layout_marginTop="22.86dp"
+            android:hint="계좌번호"
+            android:inputType="numberSigned"
+            android:fontFamily="@font/regular"
+            android:textSize="13.71dp"
+            android:textColor="@color/black"
+            android:background="@null"/>
+
+        <ImageView
+            android:layout_width="350.48dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/longline"
+            android:layout_marginTop="7.62dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_banknumberconfirm_edittext"
+            android:layout_marginStart="15.24dp"
+            android:layout_marginEnd="15.24dp"
+            android:layout_marginTop="22.86dp"
+            android:hint="계좌번호 확인"
+            android:inputType="numberSigned"
+            android:fontFamily="@font/regular"
+            android:textSize="13.71dp"
+            android:textColor="@color/black"
+            android:background="@null"/>
+
+        <ImageView
+            android:layout_width="350.48dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/longline"
+            android:layout_marginTop="7.62dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="예금주"
+            android:textSize="15.24dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="38.1dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_bank_people_name_edittext"
+            android:layout_marginStart="15.24dp"
+            android:layout_marginEnd="15.24dp"
+            android:layout_marginTop="22.86dp"
+            android:hint="예금주"
+            android:inputType="textPersonName"
+            android:fontFamily="@font/regular"
+            android:textSize="13.71dp"
+            android:textColor="@color/black"
+            android:background="@null"/>
+
+        <ImageView
+            android:layout_width="350.48dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/longline"
+            android:layout_marginTop="7.62dp" />
+
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/bank_finish_button"
+        android:layout_width="240dp"
+        android:layout_height="38.1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="38.1dp"
+        android:src="@drawable/big_button"
+        android:background="@null"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:text="전화번호 등록하기"
+        android:textSize="16.76dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/bank_finish_button"
+        app:layout_constraintTop_toTopOf="@id/bank_finish_button"
+        app:layout_constraintStart_toStartOf="@id/bank_finish_button"
+        app:layout_constraintEnd_toEndOf="@id/bank_finish_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
