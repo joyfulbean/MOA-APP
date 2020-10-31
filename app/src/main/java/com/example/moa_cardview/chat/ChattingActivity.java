@@ -265,6 +265,7 @@ public class ChattingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent2 = new Intent(ChattingActivity.this, MainActivity.class);
                 startActivity(intent2);
+                finish();
             }
         });
 

@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         if(user!=null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -126,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             isNewChecker();
                             startActivity(intent);
+                            finish();
 
                         } else {
                             Toast.makeText(LoginActivity.this, "Sorry auth failed.", Toast.LENGTH_SHORT).show();

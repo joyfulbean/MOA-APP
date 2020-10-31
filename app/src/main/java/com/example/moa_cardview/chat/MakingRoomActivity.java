@@ -100,8 +100,9 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                     sendServer();
 
 
-                    Intent intent = new Intent(MakingRoomActivity.this, ChattingActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(MakingRoomActivity.this, ChattingActivity.class);
+//                    startActivity(intent);
+//                    finish();
                 }
                 else{
                     Toast.makeText(MakingRoomActivity.this, "사용할 수 없는 특수문자가 사용되었습니다. 다시 입력해주세", Toast.LENGTH_SHORT).show();
@@ -337,6 +338,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 intent.putExtra("test_id",roomID);
                 saveImage();
                 startActivity(intent);
+                finish();
             }
             @Override
             protected void onProgressUpdate(Void... values) {
