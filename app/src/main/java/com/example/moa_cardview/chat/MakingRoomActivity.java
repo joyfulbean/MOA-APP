@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Calendar;
 
 import okhttp3.MediaType;
@@ -223,7 +227,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     private void getOGTag(String url){
         String imageUrl = null;
         String linkTitle = null;
-        if (url != null) {
+        if (isValidURL(url)) {
             Document doc = null;
 
             try {
@@ -241,6 +245,11 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 System.out.println(element.attr("content")); // -- 4. 원하는 요소가 출력된다.
             }
         }
+        else{
+            imageUrl = "https://github.com/HGUMOA/MOA/blob/master/app/src/main/res/drawable-xxhdpi/logosmall.png?raw=true";
+            linkTitle = " ";
+        }
+
         if(imageUrl == null)
             imageUrl = "https://github.com/HGUMOA/MOA/blob/master/app/src/main/res/drawable-xxhdpi/logosmall.png?raw=true";
 
@@ -250,6 +259,18 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         stuffRoomInfo.setImageUrl(imageUrl);
         stuffRoomInfo.setOgTitle(linkTitle);
     }
+
+    public boolean isValidURL(String url) {
+
+        try {
+            new URL(url).toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
+            return false;
+        }
+
+        return true;
+    }
+
 
     private boolean isValidString(){
         if(!Utils.isValidInput(stuffRoomInfo.getTitle()))
