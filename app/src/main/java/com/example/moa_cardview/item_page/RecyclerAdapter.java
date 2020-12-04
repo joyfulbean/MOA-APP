@@ -1,16 +1,23 @@
 package com.example.moa_cardview.item_page;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,18 +27,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.chat.ChattingActivity;
 import com.example.moa_cardview.data.StuffInfo;
+import com.example.moa_cardview.main.MainActivity;
 import com.squareup.picasso.Picasso;
-
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> implements Filterable {
@@ -77,6 +81,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         ImageButton enterButton;
         TextView ogTitle;
         TextView ogContent;
+        ImageButton threeroundbutton;
 
 
         public MyViewHolder(final View itemView) {
@@ -105,6 +110,35 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 }
             });
 
+            threeroundbutton = itemView.findViewById(R.id.post_threeroundbutton);
+            threeroundbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    PopupMenu popup= new PopupMenu(context, v);//v는 클릭된 뷰를 의미
+                    final int position = getAdapterPosition();
+
+                    popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            switch (item.getItemId()){
+                                case R.id.popupLeave:
+                                    popupLeave(position, v);
+                                    break;
+                                case R.id.popupReport:
+                                    popupReport(position, v);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popup.show();//Popup Menu 보이기
+                }
+            });
+
             // expand card view when click it
             postLayout = itemView.findViewById(R.id.post_layout);
             postLayout.setOnClickListener(new View.OnClickListener() {
@@ -123,16 +157,95 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 @Override
                 public void onClick(final View view) {
                     Intent intent = new Intent(enterButton.getContext(), ChattingActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
 
                     int position = getAdapterPosition();
+
                     intent.putExtra("test_id", stuff.get(position).getRoomId());
+
 
                     enterButton.getContext().startActivity(intent);
                 }
             });
         }
     }
+
+    public void popupLeave(final int position, View v){
+        //AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+        View dialogView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.dialog_leave, null);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext())
+                .setIcon(R.drawable.logosmall)
+                .setTitle("방을 나가시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        leaveRoom(position);
+                    }
+                })
+                .setNegativeButton("취소", null);
+        builder.show();
+    }
+
+    public void popupReport(final int position, final View v){
+        /*
+        Log.i("Email", "popup report");
+        //AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+        final View dialogView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.dialog_report, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext())
+                .setPositiveButton("신고하기", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.i("Email", "신고하기 clicked");
+                        sendEmail(position, dialogView);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .setView(dialogView);
+        builder.show();
+        */
+
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.setType("plain/text");
+        String[] address = {"212600212@handong.edu"};
+        email.putExtra(Intent.EXTRA_EMAIL, address);
+        email.putExtra(Intent.EXTRA_SUBJECT, "[신고]"+"[방번호:"+stuff.get(position).getRoomId()+"]");
+        email.putExtra(Intent.EXTRA_TEXT, "");
+
+        Log.i("Email", "before start activity");
+
+        v.getContext().startActivity(email.addFlags(FLAG_ACTIVITY_NEW_TASK));
+
+    }
+
+    public void leaveRoom(int position){
+
+    }
+
+    public void sendEmail(int position, final View v){
+        Log.i("Email", "start");
+
+        TextView title = (TextView) v.findViewById(R.id.report_title);
+        TextView content = (TextView) v.findViewById(R.id.report_content);
+
+        String str = "[신고]"+"[방번호:"+stuff.get(position).getRoomId()+"]"+title.getText();
+
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.setType("plain/text");
+        String[] address = {"212600212@handong.edu"};
+        email.putExtra(Intent.EXTRA_EMAIL, address);
+        email.putExtra(Intent.EXTRA_SUBJECT, str);
+        email.putExtra(Intent.EXTRA_TEXT, content.getText());
+
+        Log.i("Email", "before start activity");
+
+        v.getContext().startActivity(email.addFlags(FLAG_ACTIVITY_NEW_TASK));
+
+        Log.i("Email", str);
+    }
+
 
     //* link -> web
     public void openWeb(Context context, String url) {
