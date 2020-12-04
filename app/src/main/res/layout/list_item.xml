@@ -123,11 +123,10 @@
                     android:layout_below="@id/post_date_textview"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="15.24dp"
-                    android:src="@drawable/threeroundbutton"
-                    android:scaleType="fitCenter"
                     android:background="@null"
-                    android:visibility="visible"/>
-
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/threeroundbutton"
+                    android:visibility="visible" />
 
 
             </RelativeLayout>
