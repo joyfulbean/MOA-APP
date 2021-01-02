@@ -20,6 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MyInfo#newInstance} factory method to
@@ -48,6 +50,8 @@ public class MyInfo extends Fragment {
     private ImageButton phoneNumberButton;
     private ImageButton bankButton;
     private ImageButton logout;
+
+    private int REQUEST_TEST = 777;
 
     public MyInfo() {
         // Required empty public constructor
@@ -113,14 +117,24 @@ public class MyInfo extends Fragment {
 
         //* phone number intent action
         phoneNumberButton = v.findViewById(R.id.profileinfo_phonenumber_button);
+//        phoneNumberButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent (getActivity(), PhoneNumberActivity.class);
+//                startActivity(intent);
+//                refresh();
+//            }
+//        });
+
         phoneNumberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (getActivity(), PhoneNumberActivity.class);
-                startActivity(intent);
-                refresh();
+                Intent intent = new Intent(getActivity(), PhoneNumberActivity.class);
+                startActivityForResult(intent, REQUEST_TEST);
+                // startActivityForResult(intent);
             }
         });
+
 
         //* bank intent action
         bankButton = v.findViewById(R.id.profileinfo_bank_button);
@@ -156,4 +170,25 @@ public class MyInfo extends Fragment {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.detach(this).attach(this).commit();
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_TEST) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getActivity(), "Result: " + MyData.phoneNumber, Toast.LENGTH_SHORT).show();
+                phone.setText(MyData.phoneNumber);
+            } else {   // RESULT_CANCEL
+                //Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Success: " + MyData.phoneNumber, Toast.LENGTH_SHORT).show();
+                phone.setText(MyData.phoneNumber);
+            }
+//        } else if (requestCode == REQUEST_ANOTHER) {
+//            ...
+        }
+    }
+
+
 }

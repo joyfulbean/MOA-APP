@@ -2,6 +2,7 @@ package com.example.moa_cardview.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -59,6 +60,11 @@ public class PhoneNumberActivity extends AppCompatActivity {
                 saveData();
                 loadPhoneData();
                 sendServer();
+                Intent intent = new Intent();
+                intent.putExtra("result", "good");
+                setResult(RESULT_OK, intent);
+                finish();
+
             }
         });
     }
