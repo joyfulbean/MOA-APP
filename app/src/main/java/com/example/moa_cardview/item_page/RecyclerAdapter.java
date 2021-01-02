@@ -258,7 +258,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         // Find an activity to hand the intent and start that activity.
         if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
+            context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
         } else {
             Toast.makeText(context, "Wrong Address. Try again.", Toast.LENGTH_LONG).show();
             Log.d("ImplicitIntents", "Can't handle this intent!");

@@ -63,6 +63,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class ChattingActivity extends AppCompatActivity {
     // for server
     private static final String urls = "http://54.180.8.235:3306/chatroom";
@@ -342,7 +344,7 @@ public class ChattingActivity extends AppCompatActivity {
         // Find an activity to hand the intent and start that activity.
 
         if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
+            context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
         } else {
             Toast.makeText(context, "Wrong Address. Try again.", Toast.LENGTH_LONG).show();
             Log.d("ImplicitIntents", "Can't handle this intent!");

@@ -118,6 +118,8 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
+        stuffAddressText = findViewById(R.id.createroom_stuffaddress_textview);
+
         //* create room
         createButton = findViewById(R.id.createroom_createbutton);
         createButton.setOnClickListener(new View.OnClickListener() {
@@ -199,6 +201,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     //* for get the room information
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        month = month + 1;
         String date = year + "-" + month + "-" + day;
         stuffDateText.setText(date);
     }
@@ -262,8 +265,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             public void run() {
                 String image_url = stuffRoomInfo.getStuffLink();
                 Log.i("OGT", "image_url:in showImage " + image_url);
-                //getOGTag(image_url);
-                getOptionList("http://www.11st.co.kr/products/2243025968?trTypeCd=PW00&trCtgrNo=585021");
+                getOGTag(image_url);
                 // Display a png image from the specified file
                 ImageUrlSendServer();
             }
@@ -306,34 +308,6 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         stuffRoomInfo.setOgTitle(linkTitle);
     }
 
-    private String getOptionList(String url){
-        String imageUrl = null;
-        String linkTitle = null;
-        if (isValidURL(url)) {
-            Document doc = null;
-
-            try {
-                doc = Jsoup.connect(url).get(); // -- 1. get방식의 URL에 연결해서 가져온 값을 doc에 담는다.
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-            Log.i("option tag","11111");
-            Elements element = doc.select("div.home_news");
-            String title = element.select("strong").text();
-            Log.i("option tag",title);
-
-            for(Element el : element.select("dl.div.dd.span.num value")) {
-                Log.i("option tag",el.text());
-            }
-
-            Log.i("option tag","23333333");
-        }
-        else{
-            return "";
-        }
-
-        return "";
-    }
 
     public boolean isValidURL(String url) {
 
@@ -392,7 +366,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                     jsonInput.put("room_id", roomID);
                     jsonInput.put("image_url", stuffRoomInfo.getImageUrl());
                     jsonInput.put("og_title", stuffRoomInfo.getOgTitle());
-                   // Log.i("db", stuffRoomInfo.getImageUrl());
+                    Log.i("db", stuffRoomInfo.getImageUrl());
                     RequestBody reqBody = RequestBody.create(
                             MediaType.parse("application/json; charset=utf-8"),
                             jsonInput.toString()
