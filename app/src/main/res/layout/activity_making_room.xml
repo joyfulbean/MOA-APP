@@ -470,37 +470,24 @@
                     android:layout_marginTop="22.86dp">
 
                     <TextView
-                        android:id="@+id/stuff_college_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="15.24dp"
-                        android:fontFamily="@font/regular"
-                        android:text="한동대학교"
-                        android:textColor="@color/black"
-                        android:textSize="13.71dp"/>
-
-                    <EditText
-                        android:id="@+id/createroom_stuffaddress_edittext"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/createroom_stuffaddress_textview"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginStart="30.48dp"
+                        android:layout_marginStart="15.24dp"
                         android:layout_marginEnd="15.24dp"
-                        android:layout_toEndOf="@+id/stuff_college_textview"
+                        android:layout_alignParentStart="true"
                         android:background="@null"
                         android:fontFamily="@font/regular"
-                        android:hint="배달 장소"
-                        android:inputType="textPersonName"
-                        android:textColor="@color/black"
-                        android:textSize="13.71dp" />
+                        android:textColor="@color/grey"
+                        android:textSize="13.71dp"
+                        android:text="내 주변 모아 보관함 찾기"/>
 
                 </RelativeLayout>
 
                 <ImageView
-                    android:layout_width="257.52dp"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7.62dp"
                     android:src="@drawable/shortline"

@@ -24,6 +24,9 @@ import com.example.moa_cardview.R;
 import com.example.moa_cardview.data.StuffInfo;
 import com.example.moa_cardview.item_page.RecyclerAdapter;
 import com.example.moa_cardview.util.Utils;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -48,6 +51,7 @@ import okhttp3.Response;
 
 
 public class MakingRoomActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+    public static final int REQUEST_CODE = 100;
     // for server
     private static final String urls = "http://54.180.8.235:3306/room/stuff";
     private static final String imageUrls = "http://54.180.8.235:3306/room/og";
@@ -69,11 +73,36 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     private LinearLayout foodLayout;
     private LinearLayout stuffLayout;
 
+
+    private TextView stuffAddressText;
+    private TextView placeName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Toast.makeText(MakingRoomActivity.this, "시작", Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_making_room);
+
+//        placeName = findViewById(R.id.createroom_stuffaddress_textview);
+//        placeName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(placeName.getContext(), PlaceSelectActivity.class);
+//                startActivityForResult(intent,REQUEST_CODE);
+//            }
+//        });
+
+
+//        stuffAddressText = findViewById(R.id.createroom_stuffaddress_textview);
+//        stuffAddressText.setOnClickListener(new View.OnClickListener() { // 이미지 버튼 이벤트 정의
+//            @Override
+//            public void onClick(View v) { //클릭 했을경우
+//                // TODO Auto-generated method stub
+//                //버튼 클릭 시 발생할 이벤트내용
+//                Intent intent = new Intent(MakingRoomActivity.this, SearchAddressActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         //* radio button
         final RadioGroup rg = (RadioGroup)findViewById(R.id.createroom_radiogroup);
@@ -185,6 +214,22 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         datePickerDialog.show();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("mappp", "onAcitivityResult entered");
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            if (data.hasExtra("myData1")) {
+                Toast.makeText(this, data.getExtras().getString("myData1"),
+                        Toast.LENGTH_SHORT).show();
+                placeName = findViewById(R.id.createroom_stuffaddress_textview);
+                Log.i("mappp", data.getExtras().getString("myData1"));
+                placeName.setText(data.getExtras().getString("myData1"));
+            }
+        }
+    }
+
     public void setting(String checkingRadio){
         //제목
         TextView title = findViewById(R.id.createroom_stuffTitle_edittext);
@@ -193,7 +238,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         //시간
         TimePicker time = findViewById(R.id.createroom_stuff_timepicker);
         //장소
-        TextView place = findViewById(R.id.createroom_stuffaddress_edittext);
+        TextView place = findViewById(R.id.createroom_stuffaddress_textview);
         //링크
         TextView link = findViewById(R.id.createroom_stuffLink_edittext);
         //가격
@@ -217,7 +262,8 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             public void run() {
                 String image_url = stuffRoomInfo.getStuffLink();
                 Log.i("OGT", "image_url:in showImage " + image_url);
-                getOGTag(image_url);
+                //getOGTag(image_url);
+                getOptionList("http://www.11st.co.kr/products/2243025968?trTypeCd=PW00&trCtgrNo=585021");
                 // Display a png image from the specified file
                 ImageUrlSendServer();
             }
@@ -258,6 +304,35 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
 
         stuffRoomInfo.setImageUrl(imageUrl);
         stuffRoomInfo.setOgTitle(linkTitle);
+    }
+
+    private String getOptionList(String url){
+        String imageUrl = null;
+        String linkTitle = null;
+        if (isValidURL(url)) {
+            Document doc = null;
+
+            try {
+                doc = Jsoup.connect(url).get(); // -- 1. get방식의 URL에 연결해서 가져온 값을 doc에 담는다.
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            Log.i("option tag","11111");
+            Elements element = doc.select("div.home_news");
+            String title = element.select("strong").text();
+            Log.i("option tag",title);
+
+            for(Element el : element.select("dl.div.dd.span.num value")) {
+                Log.i("option tag",el.text());
+            }
+
+            Log.i("option tag","23333333");
+        }
+        else{
+            return "";
+        }
+
+        return "";
     }
 
     public boolean isValidURL(String url) {
@@ -317,7 +392,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                     jsonInput.put("room_id", roomID);
                     jsonInput.put("image_url", stuffRoomInfo.getImageUrl());
                     jsonInput.put("og_title", stuffRoomInfo.getOgTitle());
-                    Log.i("db", stuffRoomInfo.getImageUrl());
+                   // Log.i("db", stuffRoomInfo.getImageUrl());
                     RequestBody reqBody = RequestBody.create(
                             MediaType.parse("application/json; charset=utf-8"),
                             jsonInput.toString()
@@ -355,6 +430,30 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+
+                Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
+                String time = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE); //14:16
+
+                //firebase DB에 저장할 값(MessageItem객체) 설정
+                String content = "@모아 릴레이 주문서 이용팁@\n" +
+                        "\n" +
+                        "방장님은 아래의 주문서를 그대로 또는 수정해서 공유해 주세요. \n" +
+                        "공동구매를 원하시는 분들은 주문서를 쓰고, 위에 주문서에 \"이어서\" 주문서를 쓰고 공유해주세요. \n" +
+                        "\n" +
+                        "<주문서>\n" +
+                        "주문자이름:\n" +
+                        "주문 목록:\n" +
+                        "수량:\n" +
+                        "사이즈: (없으면 X)\n" +
+                        "색상: (없으면 X)";
+                ChatMessageItem messageItem= new ChatMessageItem("MOA",content,time);
+                //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
+                FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
+                DatabaseReference roodIdReference;
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                roodIdReference = firebaseDatabase.getReference(roomID);
+                roodIdReference.push().setValue(messageItem);
+
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                 intent.putExtra("test_id",roomID);
                 saveImage();

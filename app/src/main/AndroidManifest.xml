@@ -14,9 +14,25 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".profile.BankActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+<!--        <activity-->
+<!--            android:name=".chat.PlaceSelectActivity"-->
+<!--            android:label=".PlaceSelectActivity"-->
+<!--            android:parentActivityName=".chat.MakingRoomActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+<!--        <activity-->
+<!--            android:name=".chat.SearchAddressActivity"-->
+<!--            android:label=".SearchAddressActivity"-->
+<!--            android:parentActivityName=".chat.MakingRoomActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+        <activity android:name=".profile.BankActivity" />
         <activity android:name=".profile.PhoneNumberActivity" />
 
         <uses-library

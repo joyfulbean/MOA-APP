@@ -3,11 +3,15 @@ package com.example.moa_cardview.chat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,9 +20,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -173,8 +179,16 @@ public class ChattingActivity extends AppCompatActivity {
 
         //* show message list
         messageList = findViewById(R.id.chatpage_message_listview);
-        messageAdapter = new ChatAdapter(messageItems,getLayoutInflater());
+        messageAdapter = new ChatAdapter(messageItems,getLayoutInflater(),getApplicationContext());
         messageList.setAdapter(messageAdapter);
+        messageList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id) { // view:클릭한 뷰 position: id:position이랑 일반적으로 같다
+                final int position = i;
+                messageAdapter.copy(position);
+                return false;//true하면 일반클릭과 롱클릭 둘다 먹고 false하면 롱클릭만 먹는다
+            }
+        });
 
         //Firebase DB관리 객체와 'caht'노드 참조객체 얻어오기
         if (FirebaseApp.getApps(this).size() == 0){
