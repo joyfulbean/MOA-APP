@@ -24,7 +24,7 @@ public class Utils {
     }
 
     private static boolean isSpecialChars(String userInput){
-        final String regex = "['\"\\-#()@;=*/+]";
+        final String regex = "['\"#;/]";
 
         final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         final Matcher matcher = pattern.matcher(userInput);

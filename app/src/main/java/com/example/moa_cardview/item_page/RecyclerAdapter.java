@@ -150,7 +150,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
                 }
             });
-
+// 여기서 유저가 새로들어가는 인물인지 아닌지에 대한 정보를 chatting방에 넘겨줘야할 듯...
             // when click the enterButton, enter the room
             enterButton = itemView.findViewById(R.id.post_createbutton);
             enterButton.setOnClickListener(new View.OnClickListener() {

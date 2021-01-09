@@ -255,7 +255,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         stuffRoomInfo.setTitle(title.getText().toString());
         stuffRoomInfo.setStuffLink(link.getText().toString());
         stuffRoomInfo.setOrderDate(stuffDateText.getText().toString());
-        stuffRoomInfo.setOrderTime(hour + ":" + min);
+        stuffRoomInfo.setOrderTime(hour + "시 " + min + "분");
         stuffRoomInfo.setPlace(place.getText().toString());
         stuffRoomInfo.setStuffCost(cost.getText().toString());
     }
