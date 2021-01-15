@@ -370,7 +370,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                     //firebase DB에 저장할 값(MessageItem객체) 설정
                     String content = MyData.name + "님이 입장 했습니다.";
-                    ChatMessageItem messageItem = new ChatMessageItem("MOA", content, time);
+                    ChatMessageItem messageItem = new ChatMessageItem("ENTER_EXIT", content, time);
                     //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
                     FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
                     DatabaseReference roodIdReference;
@@ -590,6 +590,19 @@ public class ChattingActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
+                String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE); //14:16
+
+                //firebase DB에 저장할 값(MessageItem객체) 설정
+                String content = MyData.name + "님이 퇴장 하셨습니다.";
+                ChatMessageItem messageItem = new ChatMessageItem("ENTER_EXIT", content, time);
+                //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
+                FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
+                DatabaseReference roodIdReference;
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                roodIdReference = firebaseDatabase.getReference(roomID);
+                roodIdReference.push().setValue(messageItem);
+
                 Intent intent3 = new Intent(ChattingActivity.this, MainActivity.class);
                 startActivity(intent3);
             }

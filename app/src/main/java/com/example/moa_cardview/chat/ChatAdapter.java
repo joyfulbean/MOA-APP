@@ -71,13 +71,34 @@ public class ChatAdapter  extends BaseAdapter {
         //메세지가 내 메세지인지 auth 확인
         if(item.getName().equals(MyData.name)){
             itemView = layoutInflater.inflate(R.layout.my_msgbox,viewGroup,false);
+            setting(item, itemView);
         }else if(item.getName().equals("MOA")){
             itemView = layoutInflater.inflate(R.layout.moabox,viewGroup,false);
+            setting(item, itemView);
+        }else if(item.getName().equals("ENTER_EXIT")){
+            itemView = layoutInflater.inflate(R.layout.enter_exit_box,viewGroup,false);
+            TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
+            msgboxContent.setText(item.getMessage());
         }
         else{
             itemView = layoutInflater.inflate(R.layout.other_msgbox,viewGroup,false);
+            setting(item, itemView);
         }
 
+        //만들어진 itemView에 값들 설정
+//        TextView msgboxName = itemView.findViewById(R.id.msgbox_name);
+//        TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
+//        TextView msgboxTime = itemView.findViewById(R.id.msgbox_time);
+//
+//        msgboxName.setText(item.getName());
+//        msgboxContent.setText(item.getMessage());
+//        msgboxTime.setText(item.getTime());
+
+        //Glide.with(itemView).load(item.getPofileUrl()).into(iv);
+        return itemView;
+    }
+
+    public void setting(ChatMessageItem item, View itemView){
         //만들어진 itemView에 값들 설정
         TextView msgboxName = itemView.findViewById(R.id.msgbox_name);
         TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
@@ -86,11 +107,7 @@ public class ChatAdapter  extends BaseAdapter {
         msgboxName.setText(item.getName());
         msgboxContent.setText(item.getMessage());
         msgboxTime.setText(item.getTime());
-
-        //Glide.with(itemView).load(item.getPofileUrl()).into(iv);
-        return itemView;
     }
-
 
     public void copy(int position) {
 
