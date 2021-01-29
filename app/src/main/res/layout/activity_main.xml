@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/storepage_upperlayout"
         android:layout_width="match_parent"
-        android:layout_height="99.05dp"
+        android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="@+id/storepage_background_layout"
         app:layout_constraintStart_toStartOf="@+id/storepage_background_layout"
         app:layout_constraintTop_toTopOf="@+id/storepage_background_layout"
@@ -41,7 +41,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="55dp">
+            android:layout_marginTop="55dp"
+            android:visibility="gone">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/storepage_tablayout"

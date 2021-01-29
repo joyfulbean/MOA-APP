@@ -39,7 +39,7 @@ import okhttp3.Response;
  */
 public class MyRoom extends Fragment {
     // for server
-    private static final String urls = "http://54.180.8.235:3306/room/my";
+    private static final String urls = "http://54.180.8.235:5000/room/my/";
     public ArrayList<StuffInfo> thingA = new ArrayList<>();
     public ArrayList<StuffInfo> thingB = new ArrayList<>();
     private boolean AorB = true;
@@ -196,18 +196,18 @@ public class MyRoom extends Fragment {
             protected String doInBackground(Void... voids) {
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    JSONObject jsonInput = new JSONObject();
-                    jsonInput.put("user_email",  MyData.mail);
+//                    JSONObject jsonInput = new JSONObject();
+//                    jsonInput.put("user_email",  MyData.mail);
+//
+//                    RequestBody reqBody = RequestBody.create(
+//                            MediaType.parse("application/json; charset=utf-8"),
+//                            jsonInput.toString()
+//                    );
 
-                    RequestBody reqBody = RequestBody.create(
-                            MediaType.parse("application/json; charset=utf-8"),
-                            jsonInput.toString()
-                    );
-
-                    Log.i("mailj", jsonInput.toString());
+//                    Log.i("mailj", jsonInput.toString());
                     Request request = new Request.Builder()
-                            .post(reqBody)
-                            .url(urls)
+//                            .post(reqBody)
+                            .url(urls + MyData.mail)
                             .build();
 
                     //json array로 받아서 파싱수 thing에 저장해준다.

@@ -136,7 +136,7 @@
             android:layout_toEndOf="@id/profileinfo_phonenumber_textview1"
             android:layout_marginStart="3.81dp"
             android:fontFamily="@font/regular"
-            android:text="01067646499"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="12.2dp"
             android:gravity="center_vertical"/>
@@ -209,7 +209,7 @@
             android:layout_toEndOf="@id/profileinfo_bank_textview1"
             android:layout_marginStart="3.81dp"
             android:fontFamily="@font/regular"
-            android:text="우리은행"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="12.2dp"
             android:gravity="center_vertical"/>
@@ -236,7 +236,7 @@
             android:layout_marginStart="3.81dp"
             android:layout_marginTop="15.24dp"
             android:fontFamily="@font/regular"
-            android:text="01067646499"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="12.2dp"
             android:gravity="center_vertical"/>
@@ -270,7 +270,7 @@
             android:layout_marginStart="3.81dp"
             android:layout_marginTop="15.24dp"
             android:fontFamily="@font/regular"
-            android:text="정수현"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="12.2dp"
             android:gravity="center_vertical"/>

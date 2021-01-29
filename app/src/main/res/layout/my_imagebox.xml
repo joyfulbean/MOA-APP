@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:layout_alignParentRight="true">
+
+
+    <TextView
+        android:id="@+id/msgbox_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textColor="@color/black"
+        android:layout_marginEnd="7.62dp"
+        android:layout_toLeftOf="@+id/iv"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:textSize="10dp" />
+
+    <ImageView
+        android:id="@+id/imgbox_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/msgbox_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3.81dp"
+        android:layout_marginEnd="7.62dp"
+        android:background="@drawable/back_et_mymsgbox"
+        android:fontFamily="@font/bold"
+        android:maxWidth="250dp"
+        android:paddingStart="10dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="8dp"
+        android:text="안녕하세요 ㅎㅎ"
+        android:textColor="#ffffff"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/msgbox_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/msgbox_content"
+        android:layout_marginEnd="7.62dp"
+        android:layout_toStartOf="@+id/msgbox_content"
+
+        android:fontFamily="@font/regular"
+        android:text="13:35"
+        android:textSize="9.14dp" />
+
+</RelativeLayout>

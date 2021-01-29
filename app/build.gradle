@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'com.google.firebase:firebase-auth:19.3.2'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -71,6 +72,7 @@ dependencies {
     implementation 'com.alespero:expandable-cardview:0.6'
 
     implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.2.1'
 
     //expandable layout
     implementation 'com.github.aakira:expandable-layout:1.6.0@aar'

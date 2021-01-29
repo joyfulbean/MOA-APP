@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         ArrayList<String> iText = new ArrayList<String>();
 
-        iText.add("나의 방");
+        iText.add("참여중");
         iText.add("나의 정보");
 
         for (int i = 0; i < 2; i++) {

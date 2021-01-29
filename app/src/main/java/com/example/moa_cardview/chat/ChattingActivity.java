@@ -6,16 +6,26 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -40,21 +50,29 @@ import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.data.RoomMemberData;
 import com.example.moa_cardview.data.StuffInfo;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -63,12 +81,14 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
+
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class ChattingActivity extends AppCompatActivity {
     // for server
-    private static final String urls = "http://54.180.8.235:3306/chatroom";
-    private static final String roomMemberUrls = "http://54.180.8.235:3306/chatroom/participants";
+    private static final String urls = "http://54.180.8.235:5000/room";
+    private static final String roomMemberUrls = "http://54.180.8.235:5000/participant";
     private StuffInfo chattingInfo = new StuffInfo();
     private String roomID;
 
@@ -101,6 +121,16 @@ public class ChattingActivity extends AppCompatActivity {
 
     private String isNew = "0";
 
+    // for displaying plus option
+    private ConstraintLayout expandLayoutPlus;
+    private ImageButton plusButton;
+    private ImageButton cameraButton;
+    //상수
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1001;
+    private static final int MY_STORAGE_ACCESS = 101;
+    private static final int CAMERA_CAPTURE = 102;
+    public static final int REQUEST_CODE = 100;
+
     public ChattingActivity() { }
 
     @Override
@@ -118,6 +148,44 @@ public class ChattingActivity extends AppCompatActivity {
         }
         setMyProfile(); // 대화 참여자 페이지에서 내 프로필 설정
         recieveServer();
+
+        //* plus option functions
+        expandLayoutPlus = findViewById(R.id.expandable_layout_plusoption);
+        plusButton = findViewById(R.id.chatpage_plus_button);
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (expandLayoutPlus.getVisibility()==View.GONE) {
+                    expandLayoutPlus.setVisibility(View.VISIBLE);
+                } else {
+                    expandLayoutPlus.setVisibility(View.GONE);
+                }
+            }
+        });
+        cameraButton = findViewById(R.id.chatpage_camerabutton);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_CAPTURE);
+            }
+        });
+        //camera permission check
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+
+        //아직 부여받지 않았으므로 요청
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+            }
+            //퍼미션 부여 받음
+            else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        MY_PERMISSIONS_REQUEST_CAMERA);
+            }
+        }
+
 
         previewImage = findViewById(R.id.post_preview_iv);
 
@@ -162,7 +230,7 @@ public class ChattingActivity extends AppCompatActivity {
                 String time = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE); //14:16
 
                 //firebase DB에 저장할 값(MessageItem객체) 설정
-                ChatMessageItem messageItem= new ChatMessageItem(name,message,time);
+                ChatMessageItem messageItem= new ChatMessageItem(name,message,time,"none");
                 //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
                 roodIdReference.push().setValue(messageItem);
 
@@ -297,6 +365,137 @@ public class ChattingActivity extends AppCompatActivity {
         });
 
     }
+    //for photo upload
+    private void storage(){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
+
+// Create a reference to "mountains.jpg"
+        StorageReference mountainsRef = storageRef.child("mountains.jpg");
+
+// Create a reference to 'images/mountains.jpg'
+        StorageReference mountainImagesRef = storageRef.child("images/mountains.jpg");
+
+// While the file names are the same, the references point to different files
+        mountainsRef.getName().equals(mountainImagesRef.getName());    // true
+        mountainsRef.getPath().equals(mountainImagesRef.getPath());    // false
+    }
+
+    //for camera
+    private Bitmap imgRotate(Bitmap bmp){
+        int width = bmp.getWidth();
+        int height = bmp.getHeight();
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bmp,0,0,width,height,matrix,true);
+        bmp.recycle();
+
+        return resizedBitmap;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == MY_STORAGE_ACCESS){
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                try {
+                    // 선택한 이미지에서 비트맵 생성
+                    InputStream in = getContentResolver().openInputStream(data.getData());
+                    Bitmap img = BitmapFactory.decodeStream(in);
+                    Uri uri = data.getData();
+                    clickUpload(uri);
+                    in.close();
+                    // 이미지뷰에 세팅
+//                    imgSelectedPicture.setImageBitmap(img);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if(requestCode == CAMERA_CAPTURE){
+            //찍은 사진 가져와서 붙여주기
+//            Toast.makeText(this, "휴..", Toast.LENGTH_SHORT).show();
+            if(resultCode == RESULT_OK && data.hasExtra("data")){
+//                Toast.makeText(this, "되냐?", Toast.LENGTH_SHORT).show();
+                try{
+                    //촬영한 이미지 가져오기
+//                    Toast.makeText(this, "되냐고?", Toast.LENGTH_SHORT).show();
+                    Bitmap img = (Bitmap) data.getExtras().get("data");
+                    img = imgRotate(img);
+                    Uri uri = data.getData();
+//                    Toast.makeText(this, uri.toString(), Toast.LENGTH_SHORT).show();
+                    clickUpload(uri);
+                    // 이미지 뷰에 세팅하기
+                    ImageView imgSelectedPicture = findViewById(R.id.chatpage_photobutton);
+                    imgSelectedPicture.setImageBitmap(img);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            if (data.hasExtra("myData2")) {
+                Toast.makeText(this, data.getExtras().getString("myData2"),
+                        Toast.LENGTH_SHORT).show();
+//                stuffAddressText.setText(data.getExtras().getString("myData2"));
+//                stuffAddressText.setTextColor(Color.BLACK);
+            }
+        }
+
+    }
+
+    public void clickUpload(Uri imgUri) {
+        //firebase storage에 업로드하기
+        //1. FirebaseStorage을 관리하는 객체 얻어오기
+        FirebaseStorage firebaseStorage= FirebaseStorage.getInstance();
+
+        //2. 업로드할 파일의 node를 참조하는 객체
+        //파일 명이 중복되지 않도록 날짜를 이용
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyyMMddhhmmss");
+        String filename= sdf.format(new Date())+ ".png";//현재 시간으로 파일명 지정 20191023142634
+        //원래 확장자는 파일의 실제 확장자를 얻어와서 사용해야함. 그러려면 이미지의 절대 주소를 구해야함.
+
+        StorageReference imgRef = firebaseStorage.getReference(roomID + "/" + filename);
+        //uploads라는 폴더가 없으면 자동 생성
+
+        //참조 객체를 통해 이미지 파일 업로드
+//        imgRef.putFile(imgUri);
+        //업로드한 파일의 경로를 firebaseDB에 저장하면 게시판 같은 앱도 구현할 수 있음.
+        UploadTask uploadTask =imgRef.putFile(imgUri);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(ChattingActivity.this, "업로드", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Camera Permission is approved", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Camera Permission is disapproved ", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
+
+
+
     //* when set my profile
     private void setMyProfile(){
         ImageView myImage = findViewById(R.id.chatpage_myprofile_iv);
@@ -370,7 +569,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                     //firebase DB에 저장할 값(MessageItem객체) 설정
                     String content = MyData.name + "님이 입장 했습니다.";
-                    ChatMessageItem messageItem = new ChatMessageItem("ENTER_EXIT", content, time);
+                    ChatMessageItem messageItem = new ChatMessageItem("ENTER_EXIT", content, time, "none");
                     //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
                     FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
                     DatabaseReference roodIdReference;
@@ -408,7 +607,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                     Request request = new Request.Builder()
                             .post(reqBody)
-                            .url(urls)
+                            .url(urls + File.separator + roomID)
                             .build();
 
                     Response responses = null;
@@ -418,16 +617,16 @@ public class ChattingActivity extends AppCompatActivity {
                     // 가장 큰 JSONObject를 가져옵니다.
                     JSONObject obj = new JSONObject(responses.body().string());
                     chattingInfo.setTitle(obj.getString("title"));
-                    chattingInfo.setOrderDate(obj.getString("order_date"));
-                    chattingInfo.setOrderTime(obj.getString("order_time"));
+//                    chattingInfo.setOrderDate(obj.getString("order_date"));
+//                    chattingInfo.setOrderTime(obj.getString("order_time"));
                     chattingInfo.setPlace(obj.getString("place"));
-                    chattingInfo.setNumUsers(obj.getString("num_users"));
-                    chattingInfo.setStuffCost(obj.getString("stuff_cost")+"원");
-                    chattingInfo.setStuffLink(obj.getString("stuff_link"));
-                    chattingInfo.setCreatorName(obj.getString("creator_name"));
-                    chattingInfo.setImageUrl(obj.getString("image_url"));
-                    chattingInfo.setOgTitle(obj.getString("og_title"));
-                    isNew = obj.getString("is_new");
+                    chattingInfo.setNumUsers(obj.getString("num_user"));
+//                    chattingInfo.setStuffCost(obj.getString("stuff_cost")+"원");
+//                    chattingInfo.setStuffLink(obj.getString("stuff_link"));
+//                    chattingInfo.setCreatorName(obj.getString("creator_name"));
+//                    chattingInfo.setImageUrl(obj.getString("image_url"));
+//                    chattingInfo.setOgTitle(obj.getString("og_title"));
+//                    isNew = obj.getString("is_new");
                     Log.i("db22", chattingInfo.getOgTitle());
                     if(isNew.equals("1")){
                         Log.i("isNew", "true");
@@ -539,25 +738,25 @@ public class ChattingActivity extends AppCompatActivity {
                     Log.i("menuMem", "started");
                     OkHttpClient client = new OkHttpClient();
 
-                    JSONObject jsonInput = new JSONObject();
-                    jsonInput.put("room_id", roomID);
-                    jsonInput.put("me", MyData.mail);
-
-                    RequestBody reqBody = RequestBody.create(
-                            MediaType.parse("application/json; charset=utf-8"),
-                            jsonInput.toString()
-                    );
+//                    JSONObject jsonInput = new JSONObject();
+//                    jsonInput.put("room_id", roomID);
+//                    jsonInput.put("me", MyData.mail);
+//
+//                    RequestBody reqBody = RequestBody.create(
+//                            MediaType.parse("application/json; charset=utf-8"),
+//                            jsonInput.toString()
+//                    );
 
                     Request request = new Request.Builder()
-                            .post(reqBody)
-                            .url(roomMemberUrls)
+//                            .post(reqBody)
+                            .url(roomMemberUrls + File.separator + roomID)
                             .build();
 
                     Response responses = null;
                     responses = client.newCall(request).execute();
 
                     JSONObject jObject = new JSONObject(responses.body().string());
-                    JSONArray jArray = jObject.getJSONArray("roomMembers");
+                    JSONArray jArray = jObject.getJSONArray("data");
 
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);
@@ -595,7 +794,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                 //firebase DB에 저장할 값(MessageItem객체) 설정
                 String content = MyData.name + "님이 퇴장 하셨습니다.";
-                ChatMessageItem messageItem = new ChatMessageItem("ENTER_EXIT", content, time);
+                ChatMessageItem messageItem = new ChatMessageItem("ENTER_EXIT", content, time, "none");
                 //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
                 FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
                 DatabaseReference roodIdReference;

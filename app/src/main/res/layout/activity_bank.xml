@@ -70,7 +70,7 @@
             android:layout_marginStart="15.24dp"
             android:layout_marginEnd="15.24dp"
             android:layout_marginTop="22.86dp"
-            android:hint="은행 이름"
+            android:hint="ex) 기업"
             android:inputType="textPersonName"
             android:fontFamily="@font/regular"
             android:textSize="13.71dp"

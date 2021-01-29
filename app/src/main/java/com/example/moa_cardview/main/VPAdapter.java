@@ -17,9 +17,9 @@ public class VPAdapter extends FragmentPagerAdapter {
         super(fm);
         items = new ArrayList<Fragment>();
         items.add(new Stuff());
-        items.add(new Food());
-        items.add(new OTT());
-        items.add(new Taxi());
+//        items.add(new Food());
+//        items.add(new OTT());
+//        items.add(new Taxi());
     }
     @Override
     public Fragment getItem(int position) {

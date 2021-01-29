@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,12 +29,24 @@ import com.example.moa_cardview.R;
 import com.example.moa_cardview.chat.ChattingActivity;
 import com.example.moa_cardview.data.StuffInfo;
 import com.example.moa_cardview.main.MainActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -44,6 +57,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private ArrayList<StuffInfo> stuff = new ArrayList<>();
     private String type;
     private List<StuffInfo> tempListAll;
+
+    private static final String urls = "http://54.180.8.235:3306/chatroom";
 
     // for getting link image
     private String title;
@@ -221,7 +236,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     public void leaveRoom(int position){
-
+        //sendServer(stuff.get(position).getRoomId());
     }
 
     public void sendEmail(int position, final View v){
@@ -329,4 +344,62 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             notifyDataSetChanged();
         }
     };
+
+        /*
+    //* user exit room
+    public void sendServer(){
+        class sendData extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
+                String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE); //14:16
+
+                //firebase DB에 저장할 값(MessageItem객체) 설정
+                String content = MyData.name + "님이 퇴장 하셨습니다.";
+                ChatMessageItem messageItem = new ChatMessageItem("ENTER_EXIT", content, time);
+                //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
+                FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
+                DatabaseReference roodIdReference;
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                roodIdReference = firebaseDatabase.getReference(roomID);
+                roodIdReference.push().setValue(messageItem);
+
+                Intent intent3 = new Intent(ChattingActivity.this, MainActivity.class);
+                startActivity(intent3);
+            }
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    JSONObject jsonInput = new JSONObject();
+
+                    jsonInput.put("user_email", MyData.mail);
+                    jsonInput.put("room_id", roomID);
+
+                    RequestBody reqBody = RequestBody.create(
+                            MediaType.parse("application/json; charset=utf-8"),
+                            jsonInput.toString()
+                    );
+
+                    Request request = new Request.Builder()
+                            .delete(reqBody)
+                            .url(urls)
+                            .build();
+
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+        sendData sendData = new sendData();
+        sendData.execute();
+    }
+    */
 }

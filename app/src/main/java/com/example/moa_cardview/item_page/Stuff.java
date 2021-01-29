@@ -37,7 +37,7 @@ import okhttp3.Response;
  */
 public class Stuff extends Fragment {
     // for server
-    private static final String urls = "http://54.180.8.235:3306/room";
+    private static final String urls = "http://54.180.8.235:5000/room";
     public ArrayList<StuffInfo> thingA = new ArrayList<>();
     public ArrayList<StuffInfo> thingB = new ArrayList<>();
     private boolean AorB = true;
@@ -225,23 +225,23 @@ public class Stuff extends Fragment {
                     //json array로 받아서 파싱수 thing에 저장해준다.
                     // 가장 큰 JSONObject를 가져옵니다.
                     JSONObject jObject = new JSONObject(responses.body().string());
-                    JSONArray jArray = jObject.getJSONArray("rooms");
+                    JSONArray jArray = jObject.getJSONArray("data");
 
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);
                         StuffInfo temp = new StuffInfo();
                         temp.setTitle(obj.getString("title"));
-                        temp.setOrderDate(obj.getString("order_date"));
-                        temp.setOrderTime(obj.getString("order_time"));
+                        //temp.setOrderDate(obj.getString("order_date"));
+                        //temp.setOrderTime(obj.getString("order_time"));
                         temp.setPlace(obj.getString("place"));
-                        temp.setNumUsers(obj.getString("num_users"));
-                        temp.setStuffCost(obj.getString("stuff_cost")+"원");
-                        temp.setRoomId(obj.getString("room_id"));
-                        temp.setStuffLink(obj.getString("stuff_link"));
-                        temp.setImageUrl(obj.getString("image_url"));
-                        temp.setOgTitle(obj.getString("og_title"));
+                        temp.setNumUsers(obj.getString("num_user"));
+                        //temp.setStuffCost(obj.getString("stuff_cost")+"원");
+                        temp.setRoomId(obj.getString("rid"));
+                        //temp.setStuffLink(obj.getString("stuff_link"));
+                        //temp.setImageUrl(obj.getString("image_url"));
+                        //temp.setOgTitle(obj.getString("og_title"));
 
-                        Log.i("db", temp.getImageUrl());
+                        //Log.i("db", temp.getImageUrl());
                         if(AorB) {
                             thingA.add(temp);
                         }else{

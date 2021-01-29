@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -76,6 +78,10 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
 
     private TextView stuffAddressText;
     private TextView placeName;
+
+    private CheckBox orderTimeCB;
+    private CheckBox orderDateCB;
+    private CheckBox stuffLinkCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +170,50 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 showDatePickerDialog(); // 날짜 버튼 클릭시 Date Picker Dialog 보여줌
             }
         });
+
+        orderTimeCB = findViewById(R.id.order_time_CB);
+        orderTimeCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(orderTimeCB.isChecked()) {
+                    findViewById(R.id.createroom_stuff_timepicker).setVisibility(View.VISIBLE);
+                    findViewById(R.id.order_time_line).setVisibility(View.VISIBLE);
+                }
+                else {
+                    findViewById(R.id.createroom_stuff_timepicker).setVisibility(View.GONE);
+                    findViewById(R.id.order_time_line).setVisibility(View.GONE);
+                }
+            }
+        });
+        stuffLinkCB = findViewById(R.id.stuff_link_CB);
+        findViewById(R.id.stuff_link_CB).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(stuffLinkCB.isChecked()) {
+                    findViewById(R.id.createroom_stuffLink_edittext).setVisibility(View.VISIBLE);
+                    findViewById(R.id.stuff_link_line).setVisibility(View.VISIBLE);
+                }
+                else{
+                    findViewById(R.id.createroom_stuffLink_edittext).setVisibility(View.GONE);
+                    findViewById(R.id.stuff_link_line).setVisibility(View.GONE);
+                }
+            }
+        });
+        orderDateCB = findViewById(R.id.order_date_CB);
+        findViewById(R.id.order_date_CB).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(orderDateCB.isChecked()) {
+                    findViewById(R.id.order_date_RL).setVisibility(View.VISIBLE);
+                    findViewById(R.id.order_date_line).setVisibility(View.VISIBLE);
+                }
+                else{
+                    findViewById(R.id.order_date_RL).setVisibility(View.GONE);
+                    findViewById(R.id.order_date_line).setVisibility(View.GONE);
+                }
+            }
+        });
+
 
 
 
@@ -420,7 +470,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                         "수량:\n" +
                         "사이즈: (없으면 X)\n" +
                         "색상: (없으면 X)";
-                ChatMessageItem messageItem= new ChatMessageItem("MOA",content,time);
+                ChatMessageItem messageItem= new ChatMessageItem("MOA",content,time,"none");
                 //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
                 FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
                 DatabaseReference roodIdReference;

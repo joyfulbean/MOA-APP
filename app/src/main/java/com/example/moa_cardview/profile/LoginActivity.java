@@ -40,7 +40,7 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
     // for server
-    private static final String urls = "http://54.180.8.235:3306/user/new";
+    private static final String urls = "http://54.180.8.235:5000/user";
     boolean isNew;
 
     // for google sign in

@@ -104,10 +104,7 @@ public class MainActivity extends AppCompatActivity {
         //* tab bar info
         ArrayList<String> iText = new ArrayList<String>();
         iText.add("상품");
-        iText.add("음식");
-        iText.add("OTT");
-        iText.add("택시");
-        for(int i=0; i<4; i++) {
+        for(int i=0; i<1; i++) {
             tabLayout.getTabAt(i).setText(iText.get(i));
         }
 
