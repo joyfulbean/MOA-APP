@@ -184,9 +184,6 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
-
-
-
         //방만들기 버튼을 누를때 작동
         /*ImageButton radioInfoButton = (ImageButton)findViewById(R.id.createroom_createbutton);
         radioInfoButton.setOnClickListener(new View.OnClickListener() {
@@ -381,7 +378,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                     );
 
                     Request request = new Request.Builder()
-                            .put(reqBody)
+                            .post(reqBody)
                             .url(imageUrls)
                             .build();
 
@@ -434,7 +431,8 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 roodIdReference = firebaseDatabase.getReference(roomID);
                 roodIdReference.push().setValue(messageItem);
 
-                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                //Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ReceiptActivity.class);
                 intent.putExtra("test_id",roomID);
                 saveImage();
                 startActivity(intent);

@@ -72,8 +72,7 @@ public class ChatAdapter  extends BaseAdapter {
         View itemView = null;
 
         //메세지가 내 메세지인지 auth 확인
-//        if(item.getImg().equals("none")){
-        if(item == null && item.getImg() == null){
+        if(item.getImg().equals("none")){
             if (item.getName().equals(MyData.name)) {
                 itemView = layoutInflater.inflate(R.layout.my_msgbox, viewGroup, false);
                 setting(item, itemView);

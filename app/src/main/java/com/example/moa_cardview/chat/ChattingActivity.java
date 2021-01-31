@@ -138,7 +138,7 @@ public class ChattingActivity extends AppCompatActivity {
 
         //get the room id
         Intent secondIntent = getIntent();
-        String message = secondIntent.getStringExtra("test_id");
+        String message = secondIntent.getStringExtra("room_id");
         if(message == null) {
             roomID = "1";
         }

@@ -7,10 +7,9 @@
     <uses-feature android:name="android.hardware.type.watch" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -26,7 +25,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".chat.ReceiptActivity">
+            android:name=".chat.ReceiptActivity"
+            android:label="@string/title_activity_search"
+            android:parentActivityName=".chat.MakingRoomActivity"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
         <activity android:name=".profile.BankActivity" />
         <activity android:name=".profile.PhoneNumberActivity" />
 
@@ -71,9 +78,7 @@
         <activity
             android:name=".main.MainActivity"
             android:label=".MainActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".init.LoadingActivity"
             android:theme="@style/SplashTheme">
