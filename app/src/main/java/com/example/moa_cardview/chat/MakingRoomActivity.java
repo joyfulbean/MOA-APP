@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -24,12 +22,9 @@ import android.widget.Toast;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.data.StuffInfo;
-import com.example.moa_cardview.item_page.RecyclerAdapter;
 import com.example.moa_cardview.util.Utils;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,8 +50,8 @@ import okhttp3.Response;
 public class MakingRoomActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     public static final int REQUEST_CODE = 100;
     // for server
-    private static final String urls = "http://54.180.8.235:3306/room/stuff";
-    private static final String imageUrls = "http://54.180.8.235:3306/room/og";
+    private static final String urls = "http://54.180.8.235:5000/room";
+    private static final String imageUrls = "http://54.180.8.235:5000/room/og";
     private StuffInfo stuffRoomInfo = new StuffInfo();
     private String roomID;
 
@@ -89,27 +84,6 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_making_room);
 
-//        placeName = findViewById(R.id.createroom_stuffaddress_textview);
-//        placeName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(placeName.getContext(), PlaceSelectActivity.class);
-//                startActivityForResult(intent,REQUEST_CODE);
-//            }
-//        });
-
-
-//        stuffAddressText = findViewById(R.id.createroom_stuffaddress_textview);
-//        stuffAddressText.setOnClickListener(new View.OnClickListener() { // 이미지 버튼 이벤트 정의
-//            @Override
-//            public void onClick(View v) { //클릭 했을경우
-//                // TODO Auto-generated method stub
-//                //버튼 클릭 시 발생할 이벤트내용
-//                Intent intent = new Intent(MakingRoomActivity.this, SearchAddressActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         //* radio button
         final RadioGroup rg = (RadioGroup)findViewById(R.id.createroom_radiogroup);
         radioGroup = (RadioGroup) findViewById(R.id.createroom_radiogroup);
@@ -139,14 +113,9 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 if(isValidString()) {
                     Log.i("isValid","It is valid");
                     sendServer();
-
-
-//                    Intent intent = new Intent(MakingRoomActivity.this, ChattingActivity.class);
-//                    startActivity(intent);
-//                    finish();
                 }
                 else{
-                    Toast.makeText(MakingRoomActivity.this, "사용할 수 없는 특수문자가 사용되었습니다. 다시 입력해주세", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MakingRoomActivity.this, "사용할 수 없는 특수문자가 사용되었습니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -171,6 +140,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
+        //* CD:Check Box
         orderTimeCB = findViewById(R.id.order_time_CB);
         orderTimeCB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,7 +218,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         });
         */
     }
-    //* for get the room information
+    //* date setting
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         month = month + 1;
@@ -256,6 +226,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         stuffDateText.setText(date);
     }
 
+    //* date setting
     private void showDatePickerDialog(){
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
@@ -267,22 +238,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         datePickerDialog.show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i("mappp", "onAcitivityResult entered");
-
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            if (data.hasExtra("myData1")) {
-                Toast.makeText(this, data.getExtras().getString("myData1"),
-                        Toast.LENGTH_SHORT).show();
-                placeName = findViewById(R.id.createroom_stuffaddress_textview);
-                Log.i("mappp", data.getExtras().getString("myData1"));
-                placeName.setText(data.getExtras().getString("myData1"));
-            }
-        }
-    }
-
+    //* getting the info
     public void setting(String checkingRadio){
         //제목
         TextView title = findViewById(R.id.createroom_stuffTitle_edittext);
@@ -310,6 +266,33 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         stuffRoomInfo.setStuffCost(cost.getText().toString());
     }
 
+    //* for security
+    public boolean isValidURL(String url) {
+        try {
+            new URL(url).toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    //* for security
+    private boolean isValidString(){
+        if(!Utils.isValidInput(stuffRoomInfo.getTitle()))
+            return false;
+        else if(!Utils.isValidInput(stuffRoomInfo.getStuffCost()))
+            return false;
+//        else if(!Utils.isValidInput(stuffRoomInfo.getStuffLink()))
+//            return false;
+        else if(!Utils.isValidInput(stuffRoomInfo.getPlace()))
+            return false;
+        else {
+            return true;
+        }
+    }
+
+    //* save image (og tag)
     public void saveImage(){
         new Thread() {
             public void run() {
@@ -322,6 +305,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         }.start();
     }
 
+    //* get og tag (og tag)
     private void getOGTag(String url){
         String imageUrl = null;
         String linkTitle = null;
@@ -358,33 +342,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         stuffRoomInfo.setOgTitle(linkTitle);
     }
 
-
-    public boolean isValidURL(String url) {
-
-        try {
-            new URL(url).toURI();
-        } catch (MalformedURLException | URISyntaxException e) {
-            return false;
-        }
-
-        return true;
-    }
-
-
-    private boolean isValidString(){
-        if(!Utils.isValidInput(stuffRoomInfo.getTitle()))
-            return false;
-        else if(!Utils.isValidInput(stuffRoomInfo.getStuffCost()))
-            return false;
-//        else if(!Utils.isValidInput(stuffRoomInfo.getStuffLink()))
-//            return false;
-        else if(!Utils.isValidInput(stuffRoomInfo.getPlace()))
-            return false;
-        else {
-            return true;
-        }
-    }
-
+    //* for send image url (og tag)
     public void ImageUrlSendServer(){
         class sendData extends AsyncTask<Void, Void, String> {
             @Override
@@ -441,8 +399,6 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         sendData sendData = new sendData();
         sendData.execute();
     }
-
-
 
     //* for send room information
     public void sendServer(){

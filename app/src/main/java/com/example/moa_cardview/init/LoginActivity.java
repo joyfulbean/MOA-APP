@@ -1,4 +1,4 @@
-package com.example.moa_cardview.profile;
+package com.example.moa_cardview.init;
 
 import android.content.Intent;
 import android.os.AsyncTask;

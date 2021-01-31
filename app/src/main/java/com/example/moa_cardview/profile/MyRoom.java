@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.moa_cardview.R;
-import com.example.moa_cardview.item_page.RecyclerAdapter;
+import com.example.moa_cardview.main.RecyclerAdapter;
 import com.example.moa_cardview.data.StuffInfo;
-import com.example.moa_cardview.item_page.Stuff;
+import com.example.moa_cardview.main.Stuff;
 import com.example.moa_cardview.data.MyData;
 
 import org.json.JSONArray;
@@ -26,10 +26,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**

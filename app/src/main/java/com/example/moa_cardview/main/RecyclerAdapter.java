@@ -1,24 +1,20 @@
-package com.example.moa_cardview.item_page;
+package com.example.moa_cardview.main;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,25 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.chat.ChattingActivity;
 import com.example.moa_cardview.data.StuffInfo;
-import com.example.moa_cardview.main.MainActivity;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -57,8 +39,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private ArrayList<StuffInfo> stuff = new ArrayList<>();
     private String type;
     private List<StuffInfo> tempListAll;
-
-    private static final String urls = "http://54.180.8.235:3306/chatroom";
 
     // for getting link image
     private String title;

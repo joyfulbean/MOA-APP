@@ -1,10 +1,10 @@
-package com.example.moa_cardview.main;
+package com.example.moa_cardview.init;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.moa_cardview.profile.LoginActivity;
+import com.example.moa_cardview.init.LoginActivity;
 
 public class LoadingActivity extends Activity {
     @Override

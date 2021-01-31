@@ -1,6 +1,10 @@
 package com.example.moa_cardview.main;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -12,7 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.moa_cardview.R;
-import com.example.moa_cardview.item_page.Stuff;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -23,6 +29,9 @@ public class SearchActivity extends AppCompatActivity {
     private ImageButton deleteButton;
     private ImageButton backButton;
 
+    //main stuff page
+    private Stuff stuff;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +40,10 @@ public class SearchActivity extends AppCompatActivity {
 
         //* view page
         viewPager = findViewById(R.id.searchpage_viewpager);
-        VPAdapter adapter = new VPAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
+        stuff = new Stuff();
+        SearchActivity.ViewPagerAdapter viewPagerAdapter = new SearchActivity.ViewPagerAdapter(getSupportFragmentManager(), 0);
+        viewPagerAdapter.addFragment(stuff, "Stuff");
+        viewPager.setAdapter(viewPagerAdapter);
 
         //* search content
         searchContent = (EditText)findViewById(R.id.searchpage_search_edittext);
@@ -87,5 +98,24 @@ public class SearchActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        private List<Fragment> fragments = new ArrayList<>();
+        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+        public void addFragment(Fragment fragment, String title) {
+            fragments.add(fragment);
+        }
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
     }
 }

@@ -26,22 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-<!--        <activity-->
-<!--            android:name=".chat.PlaceSelectActivity"-->
-<!--            android:label=".PlaceSelectActivity"-->
-<!--            android:parentActivityName=".chat.MakingRoomActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-<!--        <activity-->
-<!--            android:name=".chat.SearchAddressActivity"-->
-<!--            android:label=".SearchAddressActivity"-->
-<!--            android:parentActivityName=".chat.MakingRoomActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+
         <activity android:name=".profile.BankActivity" />
         <activity android:name=".profile.PhoneNumberActivity" />
 
@@ -88,18 +73,9 @@
             android:label=".MainActivity"
             android:windowSoftInputMode="adjustPan">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.VIEW" /> -->
-            <!-- </intent-filter> -->
-
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".main.LoadingActivity"
+            android:name=".init.LoadingActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -108,7 +84,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".profile.LoginActivity"
+            android:name=".init.LoginActivity"
             android:allowBackup="true"
             android:label=".LoginActivity"
             android:windowSoftInputMode="adjustPan">

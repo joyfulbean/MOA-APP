@@ -72,7 +72,8 @@ public class ChatAdapter  extends BaseAdapter {
         View itemView = null;
 
         //메세지가 내 메세지인지 auth 확인
-        if(item.getImg().equals("none")) {
+//        if(item.getImg().equals("none")){
+        if(item == null && item.getImg() == null){
             if (item.getName().equals(MyData.name)) {
                 itemView = layoutInflater.inflate(R.layout.my_msgbox, viewGroup, false);
                 setting(item, itemView);
@@ -92,15 +93,11 @@ public class ChatAdapter  extends BaseAdapter {
             if (item.getName().equals(MyData.name)) {
                 itemView = layoutInflater.inflate(R.layout.my_imagebox, viewGroup, false);
                 imgSetting(item, itemView);
-            } else if (item.getName().equals("MOA")) {
-                itemView = layoutInflater.inflate(R.layout.my_imagebox, viewGroup, false);
-                imgSetting(item, itemView);
             } else {
                 itemView = layoutInflater.inflate(R.layout.other_imagebox, viewGroup, false);
                 imgSetting(item, itemView);
             }
         }
-        //Glide.with(itemView).load(item.getPofileUrl()).into(iv);
         return itemView;
     }
 
@@ -145,7 +142,6 @@ public class ChatAdapter  extends BaseAdapter {
     }
 
     public void copy(int position) {
-
         //현재 보여줄 번째의(position)의 데이터로 뷰를 생성
         ChatMessageItem item = messageItems.get(position);
 
@@ -160,5 +156,3 @@ public class ChatAdapter  extends BaseAdapter {
         Toast.makeText(context, MOAcontent,Toast.LENGTH_SHORT).show();
     }
 }
-
-//https://kutar37.tistory.com/entry/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%B1%84%ED%8C%85%EC%95%B1-%EB%A7%8C%EB%93%A4%EA%B8%B0-ListView-Adapter
