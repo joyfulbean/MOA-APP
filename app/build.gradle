@@ -71,11 +71,16 @@ dependencies {
     //Expandable Cardview
     implementation 'com.alespero:expandable-cardview:0.6'
 
-    implementation 'com.google.firebase:firebase-core:17.0.0'
-    implementation 'com.google.firebase:firebase-storage:19.2.1'
-
     //expandable layout
     implementation 'com.github.aakira:expandable-layout:1.6.0@aar'
+
+    //for firebase storage
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-storage:19.2.1'
+
+    //for photo upload
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    implementation 'com.google.android.material:material:1.1.0-beta01'
 
 }
 apply plugin: 'com.google.gms.google-services'

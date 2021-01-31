@@ -3,8 +3,8 @@ package com.example.moa_cardview.chat;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,14 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
-
 /**
  * Created by KPlo on 2018. 10. 28..
  */
@@ -88,17 +90,13 @@ public class ChatAdapter  extends BaseAdapter {
         }
         else{
             if (item.getName().equals(MyData.name)) {
-                itemView = layoutInflater.inflate(R.layout.my_msgbox, viewGroup, false);
+                itemView = layoutInflater.inflate(R.layout.my_imagebox, viewGroup, false);
                 imgSetting(item, itemView);
             } else if (item.getName().equals("MOA")) {
-                itemView = layoutInflater.inflate(R.layout.moabox, viewGroup, false);
+                itemView = layoutInflater.inflate(R.layout.my_imagebox, viewGroup, false);
                 imgSetting(item, itemView);
-            } else if (item.getName().equals("ENTER_EXIT")) {
-                itemView = layoutInflater.inflate(R.layout.enter_exit_box, viewGroup, false);
-                TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
-                msgboxContent.setText(item.getMessage());
             } else {
-                itemView = layoutInflater.inflate(R.layout.other_msgbox, viewGroup, false);
+                itemView = layoutInflater.inflate(R.layout.other_imagebox, viewGroup, false);
                 imgSetting(item, itemView);
             }
         }
@@ -118,20 +116,33 @@ public class ChatAdapter  extends BaseAdapter {
     }
 
 
-    public void imgSetting(ChatMessageItem item, View itemView){
+    public void imgSetting(ChatMessageItem item, final View itemView){
         //만들어진 itemView에 값들 설정
         TextView msgboxName = itemView.findViewById(R.id.msgbox_name);
-        ImageView imgboxContent = itemView.findViewById(R.id.imgbox_content); //텍스트뷰
+        final ImageView imgboxContent = itemView.findViewById(R.id.imgbox_content); //텍스트뷰
         TextView msgboxTime = itemView.findViewById(R.id.msgbox_time);
 
         msgboxName.setText(item.getName());
-        //imgboxContent.setText(item.getMessage());
         msgboxTime.setText(item.getTime());
 
+        //1. Firebase Storeage관리 객체 얻어오기
+        FirebaseStorage firebaseStorage= FirebaseStorage.getInstance();
+        //2. 최상위노드 참조 객체 얻어오기
+        StorageReference rootRef= firebaseStorage.getReference();
+        //하위 폴더가 있다면 폴더명까지 포함하여
+        StorageReference imgRef = rootRef.child(item.getImg());
+        if(imgRef!=null){
+            //참조객체로 부터 이미지의 다운로드 URL을 얻어오기
+            imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    //다운로드 URL이 파라미터로 전달되어 옴.
+                    Glide.with(itemView).load(uri).into(imgboxContent);
+                }
+            });
 
+        }
     }
-
-
 
     public void copy(int position) {
 

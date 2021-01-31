@@ -45,6 +45,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.moa_cardview.main.MainActivity;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
@@ -125,6 +126,11 @@ public class ChattingActivity extends AppCompatActivity {
     private ConstraintLayout expandLayoutPlus;
     private ImageButton plusButton;
     private ImageButton cameraButton;
+    private ImageButton galleryButton;
+    //업로드할 이미지 파일의 경로 Uri
+    private Uri imgUri;
+
+
     //상수
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1001;
     private static final int MY_STORAGE_ACCESS = 101;
@@ -149,6 +155,7 @@ public class ChattingActivity extends AppCompatActivity {
         setMyProfile(); // 대화 참여자 페이지에서 내 프로필 설정
         recieveServer();
 
+
         //* plus option functions
         expandLayoutPlus = findViewById(R.id.expandable_layout_plusoption);
         plusButton = findViewById(R.id.chatpage_plus_button);
@@ -162,6 +169,8 @@ public class ChattingActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //camera
         cameraButton = findViewById(R.id.chatpage_camerabutton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,8 +195,19 @@ public class ChattingActivity extends AppCompatActivity {
             }
         }
 
+        //gallery
+        galleryButton = findViewById(R.id.chatpage_photobutton);
+        galleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent,MY_STORAGE_ACCESS);
+            }
+        });
 
         previewImage = findViewById(R.id.post_preview_iv);
+
 
         //* post bar, chat page information
         expandLayout = findViewById(R.id.chatpage_expandable_layout);
@@ -399,18 +419,11 @@ public class ChattingActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == MY_STORAGE_ACCESS){
-            // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 try {
-                    // 선택한 이미지에서 비트맵 생성
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    Uri uri = data.getData();
-                    clickUpload(uri);
-                    in.close();
-                    // 이미지뷰에 세팅
-//                    imgSelectedPicture.setImageBitmap(img);
-
+                    //선택한 이미지의 경로 얻어오기
+                    imgUri= data.getData();
+                    Glide.with(this).load(imgUri).into(previewImage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -418,20 +431,15 @@ public class ChattingActivity extends AppCompatActivity {
         }
         else if(requestCode == CAMERA_CAPTURE){
             //찍은 사진 가져와서 붙여주기
-//            Toast.makeText(this, "휴..", Toast.LENGTH_SHORT).show();
             if(resultCode == RESULT_OK && data.hasExtra("data")){
-//                Toast.makeText(this, "되냐?", Toast.LENGTH_SHORT).show();
                 try{
                     //촬영한 이미지 가져오기
-//                    Toast.makeText(this, "되냐고?", Toast.LENGTH_SHORT).show();
                     Bitmap img = (Bitmap) data.getExtras().get("data");
                     img = imgRotate(img);
-                    Uri uri = data.getData();
-//                    Toast.makeText(this, uri.toString(), Toast.LENGTH_SHORT).show();
-                    clickUpload(uri);
-                    // 이미지 뷰에 세팅하기
-                    ImageView imgSelectedPicture = findViewById(R.id.chatpage_photobutton);
-                    imgSelectedPicture.setImageBitmap(img);
+                    imgUri= data.getData();
+                    clickUpload();
+                    Glide.with(this).load(imgUri).into(previewImage);
+
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -450,7 +458,7 @@ public class ChattingActivity extends AppCompatActivity {
 
     }
 
-    public void clickUpload(Uri imgUri) {
+    public void clickUpload() {
         //firebase storage에 업로드하기
         //1. FirebaseStorage을 관리하는 객체 얻어오기
         FirebaseStorage firebaseStorage= FirebaseStorage.getInstance();
@@ -493,7 +501,6 @@ public class ChattingActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
     //* when set my profile

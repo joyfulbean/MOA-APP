@@ -310,6 +310,7 @@
             android:id="@+id/chatpage_data"
             android:layout_width="match_parent"
             android:layout_height="500dp"
+            android:layout_below="@+id/chatpage_bottomsheet"
             app:layout_constraintBottom_toTopOf="@id/chatpage_bottomsheet"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -321,10 +322,12 @@
             <ListView
                 android:id="@+id/chatpage_message_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:stackFromBottom="false"
+                android:transcriptMode="alwaysScroll"
                 android:layout_weight="1"
                 android:divider="#ffffff"
                 android:dividerHeight="0dp" />
@@ -407,8 +410,10 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandable_layout_plusoption"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:layout_height="200dp"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+                >
 
                 <ImageView
                     android:layout_width="match_parent"
