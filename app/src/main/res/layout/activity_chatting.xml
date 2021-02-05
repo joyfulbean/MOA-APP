@@ -271,14 +271,14 @@
 
             <ImageButton
                 android:id="@+id/chatpage_arrow_button"
-                android:layout_width="16dp"
-                android:layout_height="8dp"
+                android:layout_width="10dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:src="@drawable/downbutton"
-                android:layout_gravity="center"/>
+                android:src="@drawable/downbutton" />
 
         </LinearLayout>
 

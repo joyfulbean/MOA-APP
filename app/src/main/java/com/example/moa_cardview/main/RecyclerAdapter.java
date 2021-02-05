@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,12 +24,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.chat.ChattingActivity;
+import com.example.moa_cardview.chat.ReceiptActivity;
+import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.data.StuffInfo;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -44,6 +58,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private String title;
     private String contents;
     private String imageUrl;
+
+    // for is new
+    private static final String urls = "http://54.180.8.235:5000/participant";
+    private boolean isNew;
+
 
     public RecyclerAdapter(Context context, ArrayList<StuffInfo> stuff, String type) {
         this.context = context;
@@ -151,15 +170,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             enterButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
-                    Intent intent = new Intent(enterButton.getContext(), ChattingActivity.class);
-                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-
                     int position = getAdapterPosition();
-
-                    intent.putExtra("test_id", stuff.get(position).getRoomId());
-
-
-                    enterButton.getContext().startActivity(intent);
+                    isNewCheckerServer(position);
                 }
             });
         }
@@ -240,6 +252,88 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         Log.i("Email", str);
     }
 
+    public void isNewCheckerServer(final int position){
+        class sendData extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                // 아니면 여기서 추가를해줘도 될 듯 하네
+                if(isNew) {
+                    Intent intent = new Intent(context, ReceiptActivity.class);
+                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                    Log.i("roomID", stuff.get(position).getRoomId());
+                    intent.putExtra("test_id", stuff.get(position).getRoomId());
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(context, ChattingActivity.class);
+                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                    Log.i("roomID", stuff.get(position).getRoomId());
+                    intent.putExtra("room_id", stuff.get(position).getRoomId());
+                    intent.putExtra("isNew",isNew);
+                    context.startActivity(intent);
+                }
+            }
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+            @Override
+            protected void onCancelled(String s) {
+                super.onCancelled(s);
+            }
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+
+                    JSONObject jsonInput = new JSONObject();
+                    jsonInput.put("room_id", stuff.get(position).getRoomId());
+                    jsonInput.put("user_email", MyData.mail);
+
+                    RequestBody reqBody = RequestBody.create(
+                            MediaType.parse("application/json; charset=utf-8"),
+                            jsonInput.toString()
+                    );
+
+                    Request request = new Request.Builder()
+                            .post(reqBody)
+                            .url(urls + File.separator + stuff.get(position).getRoomId())
+                            .build();
+
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+
+                    //json array로 받아서 파싱수 thing에 저장해준다.
+                    // 가장 큰 JSONObject를 가져옵니다.
+                    JSONObject obj = new JSONObject(responses.body().string());
+                    isNew = obj.getBoolean("is_new");
+//                    Log.i("db22", chattingInfo.getOgTitle());
+                    if(isNew){
+                        Log.i("isNew", "true");
+                    }
+                    else {
+                        Log.i("isNew", "false");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+        sendData sendData = new sendData();
+        sendData.execute();
+    }
 
     //* link -> web
     public void openWeb(Context context, String url) {

@@ -120,7 +120,7 @@ public class ChattingActivity extends AppCompatActivity {
     private ImageButton exitRoom;
 
     // checking the new Member
-    private String isNew = "0";
+    private boolean isNew = false;
 
     // for displaying plus option
     private ConstraintLayout expandLayoutPlus;
@@ -147,11 +147,14 @@ public class ChattingActivity extends AppCompatActivity {
         //get the room id
         Intent secondIntent = getIntent();
         String message = secondIntent.getStringExtra("room_id");
+        isNew = secondIntent.getBooleanExtra("isNew", false);
         if(message == null) {
             roomID = "1";
+            Log.i("roomID null", roomID);
         }
         else{
             roomID = message;
+            Log.i("roomID ", roomID);
         }
         setMyProfile();     // 대화 참여자 페이지에서 내 프로필 설정
         receiveServer();    // chatting room 정보 가져 오기
@@ -508,8 +511,12 @@ public class ChattingActivity extends AppCompatActivity {
 
     //* when set chat page information
     public void settingScreen(){
+        // for recipe page
         TextView chatpage_title_textview = (TextView)findViewById(R.id.chatpage_title_textview);
         chatpage_title_textview.setText(chattingInfo.getTitle());
+
+        TextView chatpage_name_textview = (TextView)findViewById(R.id.chatpage_name_textview);
+        chatpage_name_textview.setText(chattingInfo.getTitle());
 
         TextView chatpage_date_textview = (TextView)findViewById(R.id.chatpage_date_textview);
         chatpage_date_textview.setText(chattingInfo.getOrderDate());
@@ -520,8 +527,11 @@ public class ChattingActivity extends AppCompatActivity {
         TextView chatpage_place_textview = (TextView)findViewById(R.id.chatpage_place_textview);
         chatpage_place_textview.setText(chattingInfo.getPlace());
 
-        TextView chatpage_name_textview = findViewById(R.id.chatpage_name_textview);
-        chatpage_name_textview.setText(chattingInfo.getCreatorName());
+//        TextView chatpage_name_textview = findViewById(R.id.chatpage_name_textview);
+//        chatpage_name_textview.setText(chattingInfo.getCreatorName());
+
+
+
 
 //        TextView chatpage_pplnumber_textview = findViewById(R.id.chatpage_pplnumber_textview);
 //        chatpage_pplnumber_textview.setText(chattingInfo.getNumUsers());
@@ -696,10 +706,10 @@ public class ChattingActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 settingScreen();
                 // 아니면 여기서 추가를해줘도 될 듯 하네
-                if(isNew.equals("1")) {
+                if(isNew) {
                     String content = MyData.name + "님이 입장 했습니다.";
                     sendMessageFirebase("ENTER_EXIT", content, "none");
-                    isNew = "0";
+                    isNew = false;
                 }
             }
             @Override
@@ -740,8 +750,8 @@ public class ChattingActivity extends AppCompatActivity {
                     // 가장 큰 JSONObject를 가져옵니다.
                     JSONObject obj = new JSONObject(responses.body().string());
                     chattingInfo.setTitle(obj.getString("title"));
-//                    chattingInfo.setOrderDate(obj.getString("order_date"));
-//                    chattingInfo.setOrderTime(obj.getString("order_time"));
+                    chattingInfo.setOrderDate(obj.getString("order_date"));
+                    chattingInfo.setOrderTime(obj.getString("order_time"));
                     chattingInfo.setPlace(obj.getString("place"));
                     chattingInfo.setNumUsers(obj.getString("num_user"));
 //                    chattingInfo.setStuffCost(obj.getString("stuff_cost")+"원");
@@ -749,9 +759,9 @@ public class ChattingActivity extends AppCompatActivity {
 //                    chattingInfo.setCreatorName(obj.getString("creator_name"));
 //                    chattingInfo.setImageUrl(obj.getString("image_url"));
 //                    chattingInfo.setOgTitle(obj.getString("og_title"));
-//                    isNew = obj.getString("is_new");
+//                    isNew = obj.getBoolean("is_new");
 //                    Log.i("db22", chattingInfo.getOgTitle());
-                    if(isNew.equals("1")){
+                    if(isNew){
                         Log.i("isNew", "true");
                     }
                     else {
