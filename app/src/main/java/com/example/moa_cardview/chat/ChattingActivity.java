@@ -3,6 +3,7 @@ package com.example.moa_cardview.chat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -11,11 +12,15 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -85,11 +91,13 @@ public class ChattingActivity extends AppCompatActivity {
     private String roomID;
 
     // for displaying chat page info
-    private RelativeLayout expandLayout;
+    private LinearLayout expandLayout;
     private RelativeLayout previewLayout; //미리보기 링크
     private String linkUrl;
-    private ImageButton arrowButton;
+    private ImageButton arrowButton, popupCloseButton;
     private ImageView previewImage;
+    private RelativeLayout wholereceiptButton;
+    private Dialog epicDialog;
 
     // for displaying the message box list
     private EditText messageContent;
@@ -148,6 +156,30 @@ public class ChattingActivity extends AppCompatActivity {
         setMyProfile();     // 대화 참여자 페이지에서 내 프로필 설정
         receiveServer();    // chatting room 정보 가져 오기
 
+
+        //whole receipt popup
+        epicDialog = new Dialog(this);
+
+        wholereceiptButton = findViewById(R.id.chatpage_wholereceipt_button);
+
+        wholereceiptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Popup", "Clicked");
+                View dlgview = View.inflate(ChattingActivity.this, R.layout.whole_receipt_popup, null);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ChattingActivity.this)
+                    .setView(dlgview);
+                dialog.show();
+
+//                popupCloseButton = (ImageButton) dlgview.findViewById(R.id.wholereceipt_popup_closebutton);
+//                popupCloseButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        dialog.this.dismiss();
+//                    }
+//                });
+            }
+        });
 
         //* plus option functions
         expandLayoutPlus = findViewById(R.id.expandable_layout_plusoption);
@@ -211,7 +243,7 @@ public class ChattingActivity extends AppCompatActivity {
                 if (expandLayout.getVisibility()==View.GONE) {
                     expandLayout.setVisibility(View.VISIBLE);
                     arrowButton.setImageResource(R.drawable.upbutton);
-                    Picasso.get().load(chattingInfo.getImageUrl()).into(previewImage);
+                    //Picasso.get().load(chattingInfo.getImageUrl()).into(previewImage);
                 } else {
                     expandLayout.setVisibility(View.GONE);
                     arrowButton.setImageResource(R.drawable.downbutton);
@@ -219,14 +251,14 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
-        //* Link 미리보기 누르면 Web으로 연결
-        previewLayout = findViewById(R.id.chatpage_postpreview_layout);
-        previewLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openWeb(getApplicationContext(), linkUrl);
-            }
-        });
+//        //* Link 미리보기 누르면 Web으로 연결
+//        previewLayout = findViewById(R.id.chatpage_postpreview_layout);
+//        previewLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                openWeb(getApplicationContext(), linkUrl);
+//            }
+//        });
 
         //* firebase setting (Firebase DB관리 객체와 'roomID'노드 참조객체 얻어오기)
         if (FirebaseApp.getApps(this).size() == 0){
@@ -491,14 +523,14 @@ public class ChattingActivity extends AppCompatActivity {
         TextView chatpage_name_textview = findViewById(R.id.chatpage_name_textview);
         chatpage_name_textview.setText(chattingInfo.getCreatorName());
 
-        TextView chatpage_pplnumber_textview = findViewById(R.id.chatpage_pplnumber_textview);
-        chatpage_pplnumber_textview.setText(chattingInfo.getNumUsers());
+//        TextView chatpage_pplnumber_textview = findViewById(R.id.chatpage_pplnumber_textview);
+//        chatpage_pplnumber_textview.setText(chattingInfo.getNumUsers());
 
-        TextView ogTitle = findViewById(R.id.chatpage_postpreview_tv1);
-        ogTitle.setText(chattingInfo.getOgTitle());
-
-        TextView ogContent = findViewById(R.id.chatpage_postpreview_tv2);
-        ogContent.setText(chattingInfo.getStuffLink());
+//        TextView ogTitle = findViewById(R.id.chatpage_postpreview_tv1);
+//        ogTitle.setText(chattingInfo.getOgTitle());
+//
+//        TextView ogContent = findViewById(R.id.chatpage_postpreview_tv2);
+//        ogContent.setText(chattingInfo.getStuffLink());
 
         linkUrl = chattingInfo.getStuffLink();
     }

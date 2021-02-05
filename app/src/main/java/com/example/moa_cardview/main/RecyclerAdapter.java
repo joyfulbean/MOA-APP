@@ -169,7 +169,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         //AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
         View dialogView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.dialog_leave, null);
 
-
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext())
                 .setIcon(R.drawable.logosmall)
                 .setTitle("방을 나가시겠습니까?")

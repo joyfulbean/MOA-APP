@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="4dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/wholereceipt_popup_closebutton"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/closeiconblack"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="총 주문 내역"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/extrabold"
+                    android:textSize="16dp"
+                    android:layout_marginStart="23dp"/>
+
+                <ImageView
+                    android:id="@+id/wholereceipt_popup_imagemenu1"
+                    android:layout_width="match_parent"
+                    android:layout_height="380dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="38dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="18dp"
+                    android:src="@drawable/menulistimage"/>
+
+                <LinearLayout
+                    android:id="@+id/wholereceipt_popup_menutextlayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="38dp"
+                        android:layout_marginEnd="30dp"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/wholereceipt_popup_foodname1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="50dp"
+                            android:layout_toStartOf="@+id/post_price_textview"
+                            android:fontFamily="@font/bold"
+                            android:text="떡볶이 (순한맛)"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/wholereceipt_popup_cost1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/regular"
+                            android:gravity="end"
+                            android:text="3000원"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/wholereceipt_popup_amount1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:layout_gravity="end"
+                        android:text="2개"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/wholereceipt_popup_dottedline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dotted_line"
+                    android:layout_marginStart="38dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="12dp"/>
+
+                <LinearLayout
+                    android:id="@+id/wholereceipt_popup_menutextlayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="38dp"
+                        android:layout_marginEnd="30dp"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/wholereceipt_popup_foodname2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="50dp"
+                            android:layout_toStartOf="@+id/post_price_textview"
+                            android:fontFamily="@font/bold"
+                            android:text="만두튀김"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/wholereceipt_popup_cost2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/regular"
+                            android:gravity="end"
+                            android:text="3000원"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/wholereceipt_popup_amount2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:layout_gravity="end"
+                        android:text="3개"
+                        android:textColor="@color/black"
+                        android:textSize="14dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/wholereceipt_popup_wholecostline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shortline"
+                    android:layout_marginStart="38dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="23dp"/>
+
+                <TextView
+                    android:id="@+id/wholereceipt_popup_wholecost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:layout_gravity="end"
+                    android:text="총 36,000원"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="23dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
