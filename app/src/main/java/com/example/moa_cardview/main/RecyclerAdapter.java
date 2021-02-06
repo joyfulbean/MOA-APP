@@ -261,7 +261,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // 아니면 여기서 추가를해줘도 될 듯 하네
                 if(isNew) {
                     Intent intent = new Intent(context, ReceiptActivity.class);
                     intent.addFlags(FLAG_ACTIVITY_NEW_TASK);

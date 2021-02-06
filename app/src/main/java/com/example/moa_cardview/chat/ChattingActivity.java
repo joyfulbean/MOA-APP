@@ -171,7 +171,7 @@ public class ChattingActivity extends AppCompatActivity {
                 Log.i("Popup", "Clicked");
                 View dlgview = View.inflate(ChattingActivity.this, R.layout.whole_receipt_popup, null);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ChattingActivity.this)
-                    .setView(dlgview);
+                        .setView(dlgview);
                 dialog.show();
 
 //                popupCloseButton = (ImageButton) dlgview.findViewById(R.id.wholereceipt_popup_closebutton);
@@ -527,21 +527,6 @@ public class ChattingActivity extends AppCompatActivity {
         TextView chatpage_place_textview = (TextView)findViewById(R.id.chatpage_place_textview);
         chatpage_place_textview.setText(chattingInfo.getPlace());
 
-//        TextView chatpage_name_textview = findViewById(R.id.chatpage_name_textview);
-//        chatpage_name_textview.setText(chattingInfo.getCreatorName());
-
-
-
-
-//        TextView chatpage_pplnumber_textview = findViewById(R.id.chatpage_pplnumber_textview);
-//        chatpage_pplnumber_textview.setText(chattingInfo.getNumUsers());
-
-//        TextView ogTitle = findViewById(R.id.chatpage_postpreview_tv1);
-//        ogTitle.setText(chattingInfo.getOgTitle());
-//
-//        TextView ogContent = findViewById(R.id.chatpage_postpreview_tv2);
-//        ogContent.setText(chattingInfo.getStuffLink());
-
         linkUrl = chattingInfo.getStuffLink();
     }
 
@@ -649,17 +634,7 @@ public class ChattingActivity extends AppCompatActivity {
                     Log.i("menuMem", "started");
                     OkHttpClient client = new OkHttpClient();
 
-//                    JSONObject jsonInput = new JSONObject();
-//                    jsonInput.put("room_id", roomID);
-//                    jsonInput.put("me", MyData.mail);
-//
-//                    RequestBody reqBody = RequestBody.create(
-//                            MediaType.parse("application/json; charset=utf-8"),
-//                            jsonInput.toString()
-//                    );
-
                     Request request = new Request.Builder()
-//                            .post(reqBody)
                             .url(roomMemberUrls + File.separator + roomID)
                             .build();
 
@@ -807,7 +782,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                     Request request = new Request.Builder()
                             .delete(reqBody)
-                            .url(urls)
+                            .url(roomMemberUrls)
                             .build();
 
                     Response responses = null;
