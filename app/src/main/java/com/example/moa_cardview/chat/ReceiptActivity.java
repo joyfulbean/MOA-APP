@@ -44,6 +44,8 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
     LinearLayout addmyorderLayout, addothersorderLayout;
     TextView myOrderAddButton, othersOrderAddButton;
     ImageButton myOrderCloseButton;
+    ImageButton myOrderOthersCloseButton;
+
 
     EditText stuff_name;
     EditText stuff_cost;
@@ -67,6 +69,10 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         othersOrderAddButton = findViewById(R.id.order_othersorder_add_button1);
 
         othersOrderAddButton.setOnClickListener(this);
+
+        //delete order layout
+        myOrderCloseButton = findViewById(R.id.order_myorder_closebutton);
+        myOrderOthersCloseButton = findViewById(R.id.order_myorderothers_closebutton1);
 
 
         //get the room id
@@ -274,8 +280,15 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
     //add others order layout
     private void addothersorderView() {
         final View addLayoutView = getLayoutInflater().inflate(R.layout.myorderothers_addlayout, null, false);
-
         addothersorderLayout.addView(addLayoutView);
+
+        myOrderOthersCloseButton = findViewById(R.id.order_myorderothers_closebutton1);
+        myOrderOthersCloseButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                addothersorderLayout.removeView(view);
+            }
+        });
     }
 
 
@@ -285,12 +298,13 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
 
         addmyorderLayout.addView(addLayoutView);
 
-//        myOrderCloseButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                removeView(addLayoutView);
-//            }
-//        });
+        myOrderCloseButton = findViewById(R.id.order_myorder_closebutton);
+        myOrderCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeView(addLayoutView);
+            }
+        });
     }
 
     private void removeView(View view) {

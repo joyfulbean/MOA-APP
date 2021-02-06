@@ -648,7 +648,7 @@ public class ChattingActivity extends AppCompatActivity {
                         JSONObject obj = jArray.getJSONObject(i);
                         RoomMemberData temp = new RoomMemberData();
                         temp.setName(obj.getString("name"));
-                        temp.setMail(obj.getString("email"));
+//                        temp.setMail(obj.getString("email"));
                         temp.setPhonNumber(obj.getString("phone"));
                         temp.setPhotoUrl(obj.getString("photo_url"));
 

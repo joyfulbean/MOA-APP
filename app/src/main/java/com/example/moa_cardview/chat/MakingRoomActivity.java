@@ -464,7 +464,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                     jsonInput.put("order_time", stuffRoomInfo.getOrderTime());
                     jsonInput.put("place", stuffRoomInfo.getPlace());
                     jsonInput.put("stuff_link", stuffRoomInfo.getStuffLink());
-                    jsonInput.put("stuff_cost", Integer.parseInt(stuffRoomInfo.getStuffCost()));
+//                    jsonInput.put("stuff_cost", Integer.parseInt(stuffRoomInfo.getStuffCost()));
 
                     RequestBody reqBody = RequestBody.create(
                             MediaType.parse("application/json; charset=utf-8"),
