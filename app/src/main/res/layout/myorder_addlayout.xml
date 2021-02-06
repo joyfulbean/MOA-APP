@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/order_myorder_closebutton"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/closeiconblack"
+        android:background="@null"
+        android:layout_gravity="end"
+        android:scaleType="fitCenter"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+
+        <EditText
+            android:id="@+id/order_myorder_product1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:background="@null"
+            android:hint="상품명(+옵션)"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/order_myorder_camerabutton1"/>
+
+        <ImageButton
+            android:id="@+id/order_myorder_camerabutton1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/camerabuttongrey"
+            android:background="@null"
+            android:layout_gravity="end"
+            android:scaleType="fitCenter"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="9dp"
+        android:layout_marginStart="15.24dp"
+        android:layout_marginEnd="15.24dp"
+        android:src="@drawable/longline_edit" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="15.24dp"
+        android:layout_marginEnd="15.24dp"
+        android:layout_marginBottom="57dp">
+
+        <EditText
+            android:id="@+id/order_myorder_price1"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15.24dp"
+            android:background="@null"
+            android:fontFamily="@font/regular"
+            android:hint="가격"
+            android:inputType="textPersonName"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="@color/grey"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/order_myorder_price1"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/regular"
+            android:text="원"
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="15.24dp"
+            android:src="@drawable/shorterline"
+            android:layout_below="@id/order_myorder_price1"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@id/order_myorder_price1"/>
+
+        <ImageButton
+            android:id="@+id/order_plusbutton1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/plusbutton"
+            android:background="@null"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:id="@+id/order_myorder_count1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/order_plusbutton1"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/regular"
+            android:text="1"
+            android:textColor="@color/darkgrey"
+            android:textSize="16dp"/>
+
+        <ImageButton
+            android:id="@+id/order_minusbutton1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/minusbutton"
+            android:layout_toStartOf="@id/order_myorder_count1"
+            android:layout_marginEnd="12dp"
+            android:background="@null"
+            android:scaleType="fitCenter"/>
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

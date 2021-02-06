@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -29,7 +32,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ReceiptActivity extends AppCompatActivity {
+public class ReceiptActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String urls = "http://54.180.8.235:5000/room";
 
@@ -37,6 +40,10 @@ public class ReceiptActivity extends AppCompatActivity {
     private String roomID;
 
     private StuffInfo stuffRoomInfo = new StuffInfo();
+
+    LinearLayout addmyorderLayout, addothersorderLayout;
+    TextView myOrderAddButton, othersOrderAddButton;
+    ImageButton myOrderCloseButton;
 
     EditText stuff_name;
     EditText stuff_cost;
@@ -48,6 +55,19 @@ public class ReceiptActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt);
+
+        //add my order layout
+        addmyorderLayout = findViewById(R.id.order_myorder_addlayout);
+        myOrderAddButton = findViewById(R.id.order_myorder_addbutton);
+
+        myOrderAddButton.setOnClickListener(this);
+
+        //add others order layout
+        addothersorderLayout = findViewById(R.id.order_myorderothers_layout);
+        othersOrderAddButton = findViewById(R.id.order_othersorder_add_button1);
+
+        othersOrderAddButton.setOnClickListener(this);
+
 
         //get the room id
         Intent secondIntent = getIntent();
@@ -238,4 +258,44 @@ public class ReceiptActivity extends AppCompatActivity {
         sendData sendData = new sendData();
         sendData.execute();
     }
+
+
+    //add item layout and remove//
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.order_myorder_addbutton){
+            addmyorderView();
+        }
+        else {
+            addothersorderView();
+        }
+    }
+
+    //add others order layout
+    private void addothersorderView() {
+        final View addLayoutView = getLayoutInflater().inflate(R.layout.myorderothers_addlayout, null, false);
+
+        addothersorderLayout.addView(addLayoutView);
+    }
+
+
+    //add my order layout
+    private void addmyorderView() {
+        final View addLayoutView = getLayoutInflater().inflate(R.layout.myorder_addlayout, null, false);
+
+        addmyorderLayout.addView(addLayoutView);
+
+//        myOrderCloseButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                removeView(addLayoutView);
+//            }
+//        });
+    }
+
+    private void removeView(View view) {
+        addmyorderLayout.removeView(view);
+
+    }
+    //End add item layout and remove//
 }

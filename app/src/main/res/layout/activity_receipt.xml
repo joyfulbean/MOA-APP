@@ -247,6 +247,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
+                    android:layout_marginBottom="30dp"
                     android:fontFamily="@font/bold"
                     android:text="나의 상품"
                     android:textColor="@color/black"
@@ -256,89 +257,13 @@
                     android:id="@+id/order_myorderothers_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/order_myorderothers_closebutton1"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/closeiconblack"
-                        android:background="@null"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="30dp"
-                        android:scaleType="fitCenter"/>
-
-                    <TextView
-                        android:id="@+id/order_myorderothers_product1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginStart="15.24dp"
-                        android:fontFamily="@font/regular"
-                        android:text="떡볶이 (순한맛)"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginStart="15.24dp"
-                        android:layout_marginEnd="15.24dp">
-
-                        <TextView
-                            android:id="@+id/order_myorderothers_price1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentBottom="true"
-                            android:fontFamily="@font/regular"
-                            android:text="3000원"
-                            android:textColor="@color/darkgrey"
-                            android:textSize="14dp" />
-
-                        <ImageButton
-                            android:id="@+id/order_others_plusbutton1"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_alignParentEnd="true"
-                            android:src="@drawable/plusbutton"
-                            android:background="@null"
-                            android:scaleType="fitCenter"/>
-
-                        <TextView
-                            android:id="@+id/order_myorderothers_count1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toStartOf="@id/order_others_plusbutton1"
-                            android:layout_marginEnd="12dp"
-                            android:layout_marginTop="3dp"
-                            android:fontFamily="@font/regular"
-                            android:text="1"
-                            android:textColor="@color/darkgrey"
-                            android:textSize="16dp"/>
-
-                        <ImageButton
-                            android:id="@+id/order_others_minusbutton1"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/minusbutton"
-                            android:layout_toStartOf="@id/order_myorderothers_count1"
-                            android:layout_marginEnd="12dp"
-                            android:background="@null"
-                            android:scaleType="fitCenter"/>
-
-                    </RelativeLayout>
-
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/order_myorder_addlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="57dp">
 
                     <ImageButton
                         android:id="@+id/order_myorder_closebutton1"
@@ -347,7 +272,6 @@
                         android:src="@drawable/closeiconblack"
                         android:background="@null"
                         android:layout_gravity="end"
-                        android:layout_marginTop="57dp"
                         android:scaleType="fitCenter"/>
 
                     <RelativeLayout
@@ -473,10 +397,18 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/order_myorder_addlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"></LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/order_myorder_addimagelayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="57dp"
+                    android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/order_myorderimage_closebutton1"
@@ -485,23 +417,24 @@
                         android:src="@drawable/closeiconblack"
                         android:background="@null"
                         android:layout_gravity="end"
-                        android:layout_marginTop="57dp"
                         android:scaleType="fitCenter"/>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="240dp"
+                        android:layout_height="200dp"
                         android:layout_marginTop="25dp"
                         android:layout_marginStart="15.24dp"
                         android:layout_marginEnd="15.24dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="200dp"
                             android:layout_alignParentStart="true"
                             android:layout_toStartOf="@id/order_myorderimage_price1"
                             android:background="@null"
-                            android:src="@drawable/menulistimage" />
+                            android:src="@drawable/menulistimage"
+                            android:scaleType="fitCenter"
+                            android:layout_alignParentBottom="true"/>
 
                         <EditText
                             android:id="@+id/order_myorderimage_price1"
@@ -550,7 +483,6 @@
                     android:id="@+id/order_myorder_addbutton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="38dp"
                     android:fontFamily="@font/regular"
                     android:text="+ 상품추가"
                     android:textColor="@color/yellow"
