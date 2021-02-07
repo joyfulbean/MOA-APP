@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.data.StuffInfo;
+import com.example.moa_cardview.receipt.ReceiptActivity;
 import com.example.moa_cardview.util.Utils;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

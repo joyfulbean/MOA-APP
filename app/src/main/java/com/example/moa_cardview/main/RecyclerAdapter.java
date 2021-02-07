@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.chat.ChattingActivity;
-import com.example.moa_cardview.chat.ReceiptActivity;
+import com.example.moa_cardview.receipt.ReceiptActivity;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.data.StuffInfo;
 import com.squareup.picasso.Picasso;

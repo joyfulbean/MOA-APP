@@ -685,6 +685,7 @@ public class ChattingActivity extends AppCompatActivity {
                     String content = MyData.name + "님이 입장 했습니다.";
                     sendMessageFirebase("ENTER_EXIT", content, "none");
                     isNew = false;
+                    saveNewParticipant();
                 }
             }
             @Override
@@ -736,12 +737,6 @@ public class ChattingActivity extends AppCompatActivity {
 //                    chattingInfo.setOgTitle(obj.getString("og_title"));
 //                    isNew = obj.getBoolean("is_new");
 //                    Log.i("db22", chattingInfo.getOgTitle());
-                    if(isNew){
-                        Log.i("isNew", "true");
-                    }
-                    else {
-                        Log.i("isNew", "false");
-                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -782,6 +777,43 @@ public class ChattingActivity extends AppCompatActivity {
 
                     Request request = new Request.Builder()
                             .delete(reqBody)
+                            .url(roomMemberUrls)
+                            .build();
+
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+        sendData sendData = new sendData();
+        sendData.execute();
+    }
+
+    //* user exit room
+    public void saveNewParticipant(){
+        class sendData extends AsyncTask<Void, Void, String> {
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    JSONObject jsonInput = new JSONObject();
+
+                    jsonInput.put("user_email", MyData.mail);
+                    jsonInput.put("room_id", roomID);
+
+                    RequestBody reqBody = RequestBody.create(
+                            MediaType.parse("application/json; charset=utf-8"),
+                            jsonInput.toString()
+                    );
+
+                    Request request = new Request.Builder()
+                            .post(reqBody)
                             .url(roomMemberUrls)
                             .build();
 

@@ -1,4 +1,4 @@
-package com.example.moa_cardview.chat;
+package com.example.moa_cardview.receipt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,17 +7,24 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moa_cardview.R;
+import com.example.moa_cardview.chat.ChatAdapter;
+import com.example.moa_cardview.chat.ChatMessageItem;
+import com.example.moa_cardview.chat.ChattingActivity;
 import com.example.moa_cardview.data.MyData;
+import com.example.moa_cardview.data.OrderInfo;
 import com.example.moa_cardview.data.StuffInfo;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,24 +60,61 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
     String stuff_img = "http://yebinfigthing";
     private static final String MyItemSend_urls = "http://54.180.8.235:5000/receipt";
 
+    // for oder list - first try
+    private ListView orderInfoList;
+    private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
+    private AddMyOrderAdapter addMyOrderAdapter;
+    private int orderCount = 0;
+
+    // for order list - second try
+    private ArrayList<View> viewLists = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt);
 
-        //add my order layout
+        //* show info list - sb - first try
+//        orderInfoList = findViewById(R.id.order_myorderothers_listview);
+//        addMyOrderAdapter = new AddMyOrderAdapter(orderInfos, getLayoutInflater(),getApplicationContext());
+//        orderInfoList.setAdapter(addMyOrderAdapter);
+//        addmyorderLayout = findViewById(R.id.order_myorder_addlayout);
+//        myOrderAddButton = findViewById(R.id.order_myorder_addbutton);
+//        myOrderAddButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                OrderInfo orderInfo = new OrderInfo(roomID);
+//                orderInfos.add(orderInfo);
+//                orderCount++;
+//                addmyorderView();
+//            }
+//        });
+
+        //* delete info
+//        myOrderOthersCloseButton = findViewById(R.id.order_myorderothers_closebutton1);
+//        myOrderOthersCloseButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                orderInfos.remove(view.getVerticalScrollbarPosition());
+//                orderCount--;
+//            }
+//        });
+
+
+        //add my order layout - sh
         addmyorderLayout = findViewById(R.id.order_myorder_addlayout);
         myOrderAddButton = findViewById(R.id.order_myorder_addbutton);
 
         myOrderAddButton.setOnClickListener(this);
 
-        //add others order layout
+        //add others order layout - sh
         addothersorderLayout = findViewById(R.id.order_myorderothers_layout);
         othersOrderAddButton = findViewById(R.id.order_othersorder_add_button1);
 
         othersOrderAddButton.setOnClickListener(this);
 
-        //delete order layout
+        //delete order layout - sb
         myOrderCloseButton = findViewById(R.id.order_myorder_closebutton);
         myOrderOthersCloseButton = findViewById(R.id.order_myorderothers_closebutton1);
 
@@ -93,6 +137,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         ReceiptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveViewInfo();
                 MyItemSendServer();
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                 intent.putExtra("room_id",roomID);
@@ -102,27 +147,50 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        stuff_name = findViewById(R.id.order_myorder_product1);
-        stuff_cost = findViewById(R.id.order_myorder_price1);
-        stuff_num = findViewById(R.id.order_myorder_count1);
-        ImageButton minus = findViewById(R.id.order_minusbutton1);
-        ImageButton plus = findViewById(R.id.order_plusbutton1);
+        //* set
+//        stuff_name = findViewById(R.id.order_myorder_product1);
+//        stuff_cost = findViewById(R.id.order_myorder_price1);
+//        stuff_num = findViewById(R.id.order_myorder_count1);
+        for(int i = 0; i<viewLists.size(); i++){
+            View itemView = viewLists.get(i);
+            ImageButton minus = itemView.findViewById(R.id.order_minusbutton1);
+            ImageButton plus = itemView.findViewById(R.id.order_plusbutton1);
 
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int total_num = Integer.parseInt(stuff_num.getText().toString()) - 1;
-                stuff_num.setText(Integer.toString(total_num));
-            }
-        });
+            minus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int total_num = Integer.parseInt(stuff_num.getText().toString()) - 1;
+                    stuff_num.setText(Integer.toString(total_num));
+                }
+            });
 
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int total_num = Integer.parseInt(stuff_num.getText().toString()) + 1;
-                stuff_num.setText(Integer.toString(total_num));
-            }
-        });
+            plus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int total_num = Integer.parseInt(stuff_num.getText().toString()) + 1;
+                    stuff_num.setText(Integer.toString(total_num));
+                }
+            });
+        }
+    }
+    public void saveViewInfo(){
+        EditText stuff_name = null;
+        EditText stuff_cost = null;
+        TextView stuff_num = null;
+        myOrderAddButton.getViewTreeObserver();
+        for(int i = 0; i<viewLists.size(); i++){
+            View itemView = viewLists.get(i);
+            stuff_name = itemView.findViewById(R.id.order_myorder_product1);
+            stuff_cost = itemView.findViewById(R.id.order_myorder_price1);
+            stuff_num = itemView.findViewById(R.id.order_myorder_count1);
+
+            OrderInfo orderInfo = new OrderInfo(roomID, stuff_name.getText().toString(), stuff_cost.getText().toString(), stuff_num.getText().toString());
+            Log.i("order info test cost : ", orderInfo.getCost());
+            Log.i("order info test name : ", orderInfo.getStuffName());
+            Log.i("order info test num : ", orderInfo.getNum());
+            orderInfos.add(orderInfo);
+        }
+
 
     }
 
@@ -297,6 +365,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         final View addLayoutView = getLayoutInflater().inflate(R.layout.myorder_addlayout, null, false);
 
         addmyorderLayout.addView(addLayoutView);
+        viewLists.add(addmyorderLayout);
 
         myOrderCloseButton = findViewById(R.id.order_myorder_closebutton);
         myOrderCloseButton.setOnClickListener(new View.OnClickListener() {

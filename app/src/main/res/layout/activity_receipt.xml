@@ -257,7 +257,15 @@
                     android:id="@+id/order_myorderothers_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/order_myorderothers_listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        ></ListView>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chat.ReceiptActivity">
+        <activity android:name=".receipt.ReceiptActivity">
             android:name=".chat.ReceiptActivity"
             android:label="@string/title_activity_search"
             android:parentActivityName=".chat.MakingRoomActivity"
