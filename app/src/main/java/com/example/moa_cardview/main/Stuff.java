@@ -164,7 +164,6 @@ public class Stuff extends Fragment {
                         thingA.clear();
                         AorB = true;
                     }
-                    recieveServer();
                     isRefreshing = false;
                 }
             }

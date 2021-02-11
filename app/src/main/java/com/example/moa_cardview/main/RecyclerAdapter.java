@@ -23,10 +23,13 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moa_cardview.R;
+import com.example.moa_cardview.chat.ChatMessageItem;
 import com.example.moa_cardview.chat.ChattingActivity;
 import com.example.moa_cardview.receipt.ReceiptActivity;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.data.StuffInfo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -35,6 +38,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,6 +62,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private String title;
     private String contents;
     private String imageUrl;
+
+
 
     // for is new
     private static final String urls = "http://54.180.8.235:5000/participant";
@@ -164,8 +170,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
                 }
             });
-// 여기서 유저가 새로들어가는 인물인지 아닌지에 대한 정보를 chatting방에 넘겨줘야할 듯...
-            // when click the enterButton, enter the room
+
             enterButton = itemView.findViewById(R.id.post_createbutton);
             enterButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -178,9 +183,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     public void popupLeave(final int position, View v){
-        //AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
-        View dialogView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.dialog_leave, null);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext())
                 .setIcon(R.drawable.logosmall)
                 .setTitle("방을 나가시겠습니까?")
@@ -195,24 +197,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     public void popupReport(final int position, final View v){
-        /*
-        Log.i("Email", "popup report");
-        //AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
-        final View dialogView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.dialog_report, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext())
-                .setPositiveButton("신고하기", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.i("Email", "신고하기 clicked");
-                        sendEmail(position, dialogView);
-                    }
-                })
-                .setNegativeButton("취소", null)
-                .setView(dialogView);
-        builder.show();
-        */
-
         Intent email = new Intent(Intent.ACTION_SEND);
         email.setType("plain/text");
         String[] address = {"212600212@handong.edu"};
@@ -227,7 +211,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     public void leaveRoom(int position){
-        //sendServer(stuff.get(position).getRoomId());
+        LearveRoomServer(stuff.get(position).getRoomId());
     }
 
     public void sendEmail(int position, final View v){
@@ -417,28 +401,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         }
     };
 
-        /*
+    //send message on firebase
+    private void sendMessageFirebase(String name, String content, String image, String roomID){
+        FirebaseDatabase firebaseDatabase;
+        DatabaseReference roodIdReference;
+
+        Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
+        String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+
+        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        roodIdReference = firebaseDatabase.getReference(roomID);
+        roodIdReference.push().setValue(messageItem);
+    }
+
     //* user exit room
-    public void sendServer(){
+    public void LearveRoomServer(final String roomID){
         class sendData extends AsyncTask<Void, Void, String> {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
-                String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE); //14:16
-
-                //firebase DB에 저장할 값(MessageItem객체) 설정
                 String content = MyData.name + "님이 퇴장 하셨습니다.";
-                ChatMessageItem messageItem = new ChatMessageItem("ENTER_EXIT", content, time);
-                //'char'노드에 MessageItem객체를 통해 데이터를 저장하기.
-                FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
-                DatabaseReference roodIdReference;
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                roodIdReference = firebaseDatabase.getReference(roomID);
-                roodIdReference.push().setValue(messageItem);
-
-                Intent intent3 = new Intent(ChattingActivity.this, MainActivity.class);
-                startActivity(intent3);
+                sendMessageFirebase("ENTER_EXIT", content, "none", roomID);
+                //Intent intent3 = new Intent(ChattingActivity.this, MainActivity.class);
+                //startActivity(intent3);
             }
             @Override
             protected String doInBackground(Void... voids) {
@@ -473,5 +460,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         sendData sendData = new sendData();
         sendData.execute();
     }
-    */
 }

@@ -148,7 +148,6 @@ public class MyRoom extends Fragment {
                         thingA.clear();
                         AorB = true;
                     }
-                    recieveServer();
                     isRefreshing = false;
                 }
             }
@@ -192,43 +191,37 @@ public class MyRoom extends Fragment {
             }
             @Override
             protected String doInBackground(Void... voids) {
+                Log.i("GetMyRoomList", "Star");
                 try {
                     OkHttpClient client = new OkHttpClient();
-//                    JSONObject jsonInput = new JSONObject();
-//                    jsonInput.put("user_email",  MyData.mail);
-//
-//                    RequestBody reqBody = RequestBody.create(
-//                            MediaType.parse("application/json; charset=utf-8"),
-//                            jsonInput.toString()
-//                    );
-
-//                    Log.i("mailj", jsonInput.toString());
                     Request request = new Request.Builder()
-//                            .post(reqBody)
-                            .url(urls + MyData.mail)
+                            .url(urls + MyData.getMail())
                             .build();
 
-                    //json array로 받아서 파싱수 thing에 저장해준다.
-                    // 가장 큰 JSONObject를 가져옵니다.
                     Response responses = null;
                     responses = client.newCall(request).execute();
 
+                    //json array로 받아서 파싱수 thing에 저장해준다.
+                    // 가장 큰 JSONObject를 가져옵니다.
                     JSONObject jObject = new JSONObject(responses.body().string());
-                    JSONArray jArray = jObject.getJSONArray("rooms");
+                    JSONArray jArray = jObject.getJSONArray("data");
+
+                    Log.i("roomID", Integer.toString(jArray.length()));
 
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);
                         StuffInfo temp = new StuffInfo();
-                        temp.setRoomId(obj.getString("room_id"));
                         temp.setTitle(obj.getString("title"));
                         temp.setOrderDate(obj.getString("order_date"));
                         temp.setOrderTime(obj.getString("order_time"));
                         temp.setPlace(obj.getString("place"));
-                        temp.setNumUsers(obj.getString("num_users"));
-                        temp.setStuffCost(obj.getString("stuff_cost")+"원");
-                        temp.setImageUrl(obj.getString("image_url"));
-                        temp.setOgTitle(obj.getString("og_title"));
-
+                        temp.setNumUsers(obj.getString("num_user"));
+                        temp.setRoomId(Integer.toString(obj.getInt("rid")));
+                        Log.i("roomID", Integer.toString(obj.getInt("rid")));
+                        temp.setStuffLink(obj.getString("stuff_link"));
+                        //temp.setImageUrl(obj.getString("image_url"));
+                        //temp.setOgTitle(obj.getString("og_title"));
+                        //Log.i("db", temp.getImageUrl());
                         if(AorB) {
                             thingA.add(temp);
                         }else{

@@ -555,7 +555,7 @@ public class ChattingActivity extends AppCompatActivity {
             images.setImageResource( R.drawable.profileicon2);
             name.setText(rRoomMembers.get(position).getName());
 
-            if(rRoomMembers.get(position).getPhonNumber().equals("null")) {
+            if(rRoomMembers.get(position).getPhonNumber().equals("null")||rRoomMembers.get(position).getPhonNumber().isEmpty()) {
                 Log.i("phone", "null input");
                 phone.setVisibility(View.GONE);
             }else {
@@ -651,9 +651,13 @@ public class ChattingActivity extends AppCompatActivity {
 //                        temp.setMail(obj.getString("email"));
                         temp.setPhonNumber(obj.getString("phone"));
                         temp.setPhotoUrl(obj.getString("photo_url"));
+                        temp.setMail(obj.getString("email"));
 
-                        Log.i("menuMem", obj.getString("name"));
-                        roomMembers.add(temp);
+                        Log.i("MyMail", temp.getMail());
+                        Log.i("MyMailData", MyData.getMail());
+
+                        if(!temp.getMail().equals(MyData.getMail()))
+                            roomMembers.add(temp);
                     }
                     Log.i("menuMem", "leave for");
 
