@@ -6,6 +6,9 @@ public class OrderInfo {
     private String cost;
     private String num;
 
+    public OrderInfo() {
+    }
+
     public OrderInfo(String roomId, String stuffName, String cost, String num) {
         this.roomId = roomId;
         this.stuffName = stuffName;

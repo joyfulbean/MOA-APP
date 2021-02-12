@@ -10,17 +10,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,6 +43,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.moa_cardview.data.OrderInfo;
 import com.example.moa_cardview.main.MainActivity;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
@@ -59,7 +59,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,6 +86,7 @@ public class ChattingActivity extends AppCompatActivity {
     // for server
     private static final String urls = "http://54.180.8.235:5000/room";
     private static final String roomMemberUrls = "http://54.180.8.235:5000/participant";
+    private static final String receiptUrls = "http://54.180.8.235:5000/receipt";
     private StuffInfo chattingInfo = new StuffInfo();
     private String roomID;
 
@@ -96,8 +96,8 @@ public class ChattingActivity extends AppCompatActivity {
     private String linkUrl;
     private ImageButton arrowButton, popupCloseButton;
     private ImageView previewImage;
-    private RelativeLayout wholereceiptButton;
-    private Dialog epicDialog;
+
+
 
     // for displaying the message box list
     private EditText messageContent;
@@ -137,6 +137,14 @@ public class ChattingActivity extends AppCompatActivity {
     private static final int CAMERA_CAPTURE = 102;
     public static final int REQUEST_CODE = 100;
 
+    // for show all receipt info
+    private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
+    private Dialog epicDialog;
+    private RelativeLayout wholereceiptButton;
+    private RecyclerView recyclerView;
+    public static ShowReceiptAllInfoAdapter recyclerAdapter;
+    private LinearLayoutManager linearLayoutManager;
+
     public ChattingActivity() { }
 
     @Override
@@ -161,26 +169,12 @@ public class ChattingActivity extends AppCompatActivity {
 
 
         //whole receipt popup
-        epicDialog = new Dialog(this);
-
         wholereceiptButton = findViewById(R.id.chatpage_wholereceipt_button);
-
         wholereceiptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("Popup", "Clicked");
-                View dlgview = View.inflate(ChattingActivity.this, R.layout.whole_receipt_popup, null);
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ChattingActivity.this)
-                        .setView(dlgview);
-                dialog.show();
-
-//                popupCloseButton = (ImageButton) dlgview.findViewById(R.id.wholereceipt_popup_closebutton);
-//                popupCloseButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        dialog.this.dismiss();
-//                    }
-//                });
+                receiveOrderInfo();
             }
         });
 
@@ -824,6 +818,73 @@ public class ChattingActivity extends AppCompatActivity {
                     Response responses = null;
                     responses = client.newCall(request).execute();
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+        sendData sendData = new sendData();
+        sendData.execute();
+    }
+
+    //* receive orderInfo, for show all receipt info
+    public void receiveOrderInfo(){
+        class sendData extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                ShowReceiptAllInfoDialog showReceiptAllInfoDialog;
+                recyclerAdapter = new ShowReceiptAllInfoAdapter(ChattingActivity.this, orderInfos);
+                showReceiptAllInfoDialog = new ShowReceiptAllInfoDialog(ChattingActivity.this, recyclerAdapter);
+
+                showReceiptAllInfoDialog.show();
+                showReceiptAllInfoDialog.setCanceledOnTouchOutside(false);
+            }
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+            @Override
+            protected void onCancelled(String s) {
+                super.onCancelled(s);
+            }
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    JSONObject jsonInput = new JSONObject();
+
+                    Request request = new Request.Builder()
+                            .url(receiptUrls + File.separator + "7")
+                            .build();
+
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+
+
+                    JSONObject jObject = new JSONObject(responses.body().string());
+                    JSONArray jArray = jObject.getJSONArray("data");
+
+                    for (int i = 0; i < jArray.length(); i++) {
+                        JSONObject obj = jArray.getJSONObject(i);
+                        OrderInfo temp = new OrderInfo();
+                        temp.setStuffName(obj.getString("stuff_name"));
+                        temp.setCost(obj.getString("stuff_cost"));
+                        temp.setNum(Integer.toString(obj.getInt("stuff_num")));
+                        //이미지 정보 추가해야함.
+                        orderInfos.add(temp);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
