@@ -42,82 +42,29 @@ import okhttp3.Response;
 public class ReceiptActivity extends AppCompatActivity {
 
     private static final String urls = "http://54.180.8.235:5000/room";
+    private static final String MyItemSend_urls = "http://54.180.8.235:5000/receipt";
+
+//    private StuffInfo stuffRoomInfo = new StuffInfo();
 
     private ImageButton ReceiptButton;
     private String roomID;
+    private OrderInfo listInfo = new OrderInfo();
 
-    //private StuffInfo stuffRoomInfo = new StuffInfo();
-
-//    LinearLayout addmyorderLayout, addothersorderLayout;
-//    TextView myOrderAddButton, othersOrderAddButton;
-//    ImageButton myOrderCloseButton;
-//    ImageButton myOrderOthersCloseButton;
-
+    TextView myOrderAddButton, othersOrderAddButton;
 
     EditText stuff_name;
     EditText stuff_cost;
     TextView stuff_num;
-    String stuff_img = "http://yebinfigthing";
-    private static final String MyItemSend_urls = "http://54.180.8.235:5000/receipt";
+    ListView listView,listView2;
+    //image구현 필요.
+    //String stuff_img = "http://yebinfigthing";
 
-    // for oder list - first try
-    private ListView orderInfoList;
     private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
-    private AddMyOrderAdapter addMyOrderAdapter;
-    private int orderCount = 0;
-
-    // for order list - second try
-    private ArrayList<View> viewLists = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt);
-
-        //* show info list - sb - first try
-//        orderInfoList = findViewById(R.id.order_myorderothers_listview);
-//        addMyOrderAdapter = new AddMyOrderAdapter(orderInfos, getLayoutInflater(),getApplicationContext());
-//        orderInfoList.setAdapter(addMyOrderAdapter);
-//        addmyorderLayout = findViewById(R.id.order_myorder_addlayout);
-//        myOrderAddButton = findViewById(R.id.order_myorder_addbutton);
-//        myOrderAddButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                OrderInfo orderInfo = new OrderInfo(roomID);
-//                orderInfos.add(orderInfo);
-//                orderCount++;
-//                addmyorderView();
-//            }
-//        });
-
-        //* delete info
-//        myOrderOthersCloseButton = findViewById(R.id.order_myorderothers_closebutton1);
-//        myOrderOthersCloseButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                orderInfos.remove(view.getVerticalScrollbarPosition());
-//                orderCount--;
-//            }
-//        });
-
-//
-//        //add my order layout - sh
-//        addmyorderLayout = findViewById(R.id.order_myorder_addlayout);
-//        myOrderAddButton = findViewById(R.id.order_myorder_addbutton);
-//
-//        myOrderAddButton.setOnClickListener(this);
-//
-//        //add others order layout - sh
-//        addothersorderLayout = findViewById(R.id.order_myorderothers_layout);
-//        othersOrderAddButton = findViewById(R.id.order_othersorder_add_button1);
-//
-//        othersOrderAddButton.setOnClickListener(this);
-
-        //delete order layout - sb
-//        myOrderCloseButton = findViewById(R.id.order_myorder_closebutton);
-//        myOrderOthersCloseButton = findViewById(R.id.order_myorderothers_closebutton1);
-
 
         //get the room id
         Intent secondIntent = getIntent();
@@ -130,15 +77,55 @@ public class ReceiptActivity extends AppCompatActivity {
             Log.i("this", roomID);
         }
 
+        stuff_name = findViewById(R.id.order_myorder_product1);
+        stuff_cost = findViewById(R.id.order_myorder_price1);
+        stuff_num = findViewById(R.id.order_myorder_count1);
+        listView = (ListView)findViewById(R.id.order_myorderothers_listview);
+
+        //receive 받아서 방 정보 세팅
         //InfoReceiveServer();
+
+        //주문 목록 세팅
+        ListReceiveServer();
+
+        //null handling 필요...
+        orderInfos.add(new OrderInfo(roomID,"hello","123","12"));
+
+        final MyAdapter myAdapter = new MyAdapter(this,orderInfos);
+        listView.setAdapter(myAdapter);
+
+        //상품추가 버튼
+        myOrderAddButton = findViewById(R.id.order_myorder_addbutton);
+        myOrderAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OrderInfo orderInfo = new OrderInfo(roomID, stuff_name.getText().toString(), stuff_cost.getText().toString(), stuff_num.getText().toString());
+                orderInfos.add(orderInfo);
+                myAdapter.notifyDataSetChanged();
+                //서버와 받는거 부분 에러..!! 디버깅 필요.!!
+                MyItemSendServer();
+                //디자인 회색처리 해주세요
+                stuff_name.setText("상품명(+옵션)");
+                stuff_cost.setText("가격");
+                stuff_num.setText("0");
+            }
+        });
+
+        //나도 추가 버튼 (구현 아직 안됨) 추후 구현 필요
+        othersOrderAddButton = findViewById(R.id.order_othersorder_add_button1);
+        othersOrderAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "toast message",Toast.LENGTH_SHORT);
+
+            }
+        });
 
         //* create room
         ReceiptButton = findViewById(R.id.createroom_createbutton);
         ReceiptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //saveViewInfo();
-                //MyItemSendServer();
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                 intent.putExtra("room_id",roomID);
                 intent.putExtra("isNew",true);
@@ -147,14 +134,9 @@ public class ReceiptActivity extends AppCompatActivity {
             }
         });
 
-        //* set
-//        stuff_name = findViewById(R.id.order_myorder_product1);
-//        stuff_cost = findViewById(R.id.order_myorder_price1);
-//        stuff_num = findViewById(R.id.order_myorder_count1);
-        for(int i = 0; i<viewLists.size(); i++){
-            View itemView = viewLists.get(i);
-            ImageButton minus = itemView.findViewById(R.id.order_minusbutton1);
-            ImageButton plus = itemView.findViewById(R.id.order_plusbutton1);
+        //숫자 plus mius 버튼 활성화
+        ImageButton minus = findViewById(R.id.order_minusbutton1);
+        ImageButton plus = findViewById(R.id.order_plusbutton1);
 
             minus.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -171,28 +153,7 @@ public class ReceiptActivity extends AppCompatActivity {
                     stuff_num.setText(Integer.toString(total_num));
                 }
             });
-        }
     }
-//    public void saveViewInfo(){
-//        EditText stuff_name = null;
-//        EditText stuff_cost = null;
-//        TextView stuff_num = null;
-//        myOrderAddButton.getViewTreeObserver();
-//        for(int i = 0; i<viewLists.size(); i++){
-//            View itemView = viewLists.get(i);
-//            stuff_name = itemView.findViewById(R.id.order_myorder_product1);
-//            stuff_cost = itemView.findViewById(R.id.order_myorder_price1);
-//            stuff_num = itemView.findViewById(R.id.order_myorder_count1);
-//
-//            OrderInfo orderInfo = new OrderInfo(roomID, stuff_name.getText().toString(), stuff_cost.getText().toString(), stuff_num.getText().toString());
-//            Log.i("order info test cost : ", orderInfo.getCost());
-//            Log.i("order info test name : ", orderInfo.getStuffName());
-//            Log.i("order info test num : ", orderInfo.getNum());
-//            orderInfos.add(orderInfo);
-//        }
-
-
-//    }
 
 //    public void settingScreen(){
 //        // for recipe page
@@ -218,7 +179,7 @@ public class ReceiptActivity extends AppCompatActivity {
 //            @Override
 //            protected void onPostExecute(String s) {
 //                super.onPostExecute(s);
-//                //settingScreen();
+//                settingScreen();
 ////                // 아니면 여기서 추가를해줘도 될 듯 하네
 ////                if(isNew.equals("1")) {
 ////                    String content = MyData.name + "님이 입장 했습니다.";
@@ -287,98 +248,120 @@ public class ReceiptActivity extends AppCompatActivity {
 //        sendData sendData = new sendData();
 //        sendData.execute();
 //    }
-//
-//    //* user exit room
-//    public void MyItemSendServer(){
-//        class sendData extends AsyncTask<Void, Void, String> {
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//            }
-//            @Override
-//            protected String doInBackground(Void... voids) {
-//                try {
-//                    OkHttpClient client = new OkHttpClient();
-//                    JSONObject jsonInput = new JSONObject();
-//
-//                    jsonInput.put("room_id", roomID);
-//                    jsonInput.put("user_id", MyData.mail);
-//                    jsonInput.put("stuff_name", stuff_name);
-//                    jsonInput.put("stuff_cost", stuff_cost);
-//                    jsonInput.put("stuff_num", stuff_num);
-//                    jsonInput.put("stuff_img", stuff_img);
-//
-//                    RequestBody reqBody = RequestBody.create(
-//                            MediaType.parse("application/json; charset=utf-8"),
-//                            jsonInput.toString()
-//                    );
-//
-//                    Request request = new Request.Builder()
-//                            .post(reqBody)
-//                            .url(MyItemSend_urls)
-//                            .build();
-//
-//                    Response responses = null;
-//                    responses = client.newCall(request).execute();
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                return null;
-//            }
-//        }
+
+        public void listsettingScreen(){
+        // for recipe page
+
+    }
+
+        public void ListReceiveServer(){
+        class sendData extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                listsettingScreen();
+            }
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+            @Override
+            protected void onCancelled(String s) {
+                super.onCancelled(s);
+            }
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+
+                    Request request = new Request.Builder()
+                            .get()
+                            .url(MyItemSend_urls + "/" + roomID)
+                            .build();
+
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+
+                    //json array로 받아서 파싱수 thing에 저장해준다.
+                    // 가장 큰 JSONObject를 가져옵니다.
+                    JSONObject obj = new JSONObject(responses.body().string());
+                    listInfo.setId(obj.getString("id"));
+                    listInfo.setRef_cnt(obj.getString("ref_cnt"));
+                    listInfo.setRegistered_on(obj.getString("registered_on"));
+                    listInfo.setCost(obj.getString("stuff_cost"));
+                    //listInfo.set(obj.getString("stuff_img"));
+                    listInfo.setStuffName(obj.getString("stuff_name"));
+                    listInfo.setNum(obj.getString("stuff_num"));
+                    listInfo.setUser_id(obj.getString("user_id"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
 //        sendData sendData = new sendData();
 //        sendData.execute();
-//    }
-
-//
-//    //add item layout and remove//
-//    @Override
-//    public void onClick(View view) {
-//        if (view.getId() == R.id.order_myorder_addbutton){
-//            addmyorderView();
-//        }
-//        else {
-//            addothersorderView();
-//        }
-//    }
-//
-//    //add others order layout
-//    private void addothersorderView() {
-//        final View addLayoutView = getLayoutInflater().inflate(R.layout.myorderothers_addlayout, null, false);
-//        addothersorderLayout.addView(addLayoutView);
-//
-//        myOrderOthersCloseButton = findViewById(R.id.order_myorderothers_closebutton1);
-//        myOrderOthersCloseButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                addothersorderLayout.removeView(view);
-//            }
-//        });
-//    }
+    }
 
 
-//    //add my order layout
-//    private void addmyorderView() {
-//        final View addLayoutView = getLayoutInflater().inflate(R.layout.myorder_addlayout, null, false);
-//
-//        addmyorderLayout.addView(addLayoutView);
-//        viewLists.add(addmyorderLayout);
-//
-//        myOrderCloseButton = findViewById(R.id.order_myorder_closebutton);
-//        myOrderCloseButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                removeView(addLayoutView);
-//            }
-//        });
-//    }
-//
-//    private void removeView(View view) {
-//        addmyorderLayout.removeView(view);
-//
-//    }
-    //End add item layout and remove//
+    //* send each item to server
+    public void MyItemSendServer(){
+        class sendData extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+            }
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    JSONObject jsonInput = new JSONObject();
+
+                    jsonInput.put("room_id", roomID);
+                    jsonInput.put("user_email", MyData.mail);
+                    Log.i("testing",stuff_name.getText().toString());
+                    jsonInput.put("stuff_name", stuff_name.getText().toString());
+                    Log.i("testing",stuff_cost.getText().toString());
+                    jsonInput.put("stuff_cost", Integer.parseInt(stuff_cost.getText().toString()));
+                    Log.i("testing",stuff_num.getText().toString());
+                    jsonInput.put("stuff_num", Integer.parseInt(stuff_num.getText().toString()));
+                    //jsonInput.put("stuff_img", stuff_img);
+
+                    RequestBody reqBody = RequestBody.create(
+                            MediaType.parse("application/json; charset=utf-8"),
+                            jsonInput.toString()
+                    );
+
+                    Request request = new Request.Builder()
+                            .post(reqBody)
+                            .url(MyItemSend_urls + "/" + roomID + "/" + MyData.mail)
+                            .build();
+
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+        sendData sendData = new sendData();
+        sendData.execute();
+    }
+
+
 }

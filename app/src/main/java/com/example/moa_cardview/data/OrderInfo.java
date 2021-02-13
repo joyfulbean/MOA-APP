@@ -5,15 +5,41 @@ public class OrderInfo {
     private String stuffName;
     private String cost;
     private String num;
+    private String id;
+    private String ref_cnt;
+    private String registered_on;
+    private String user_id;
 
-    public OrderInfo() {
+    public String getId() {
+        return id;
     }
 
-    public OrderInfo(String roomId, String stuffName, String cost, String num) {
-        this.roomId = roomId;
-        this.stuffName = stuffName;
-        this.cost = cost;
-        this.num = num;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRef_cnt() {
+        return ref_cnt;
+    }
+
+    public void setRef_cnt(String ref_cnt) {
+        this.ref_cnt = ref_cnt;
+    }
+
+    public String getRegistered_on() {
+        return registered_on;
+    }
+
+    public void setRegistered_on(String registered_on) {
+        this.registered_on = registered_on;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getRoomId() {
@@ -47,4 +73,27 @@ public class OrderInfo {
     public void setNum(String num) {
         this.num = num;
     }
+
+
+    public OrderInfo() {
+    }
+
+    public OrderInfo(String roomId, String stuffName, String cost, String num) {
+        this.roomId = roomId;
+        this.stuffName = stuffName;
+        this.cost = cost;
+        this.num = num;
+    }
+
+    public OrderInfo(String roomId, String stuffName, String cost, String num, String id, String ref_cnt, String registered_on, String user_id) {
+        this.roomId = roomId;
+        this.stuffName = stuffName;
+        this.cost = cost;
+        this.num = num;
+        this.id = id;
+        this.ref_cnt = ref_cnt;
+        this.registered_on = registered_on;
+        this.user_id = user_id;
+    }
+
 }
