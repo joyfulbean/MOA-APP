@@ -110,7 +110,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                 myAdapter.notifyDataSetChanged();
                 //서버와 받는거 부분 에러..!! 디버깅 필요.!!
                 //서버에게 보내는건 나중에 "주문서 등록"버튼 누를때, orderInfos를 for문으로 보내는게 더 나을듯해보임.
-                //MyItemSendServer();
+                MyItemSendServer();
                 //디자인 회색처리 해주세요
                 stuff_name.setText("");
                 stuff_cost.setText("");
@@ -317,9 +317,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
 
                         //orderInfos.add(temp);
                     }
-
-
-
+                    
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
