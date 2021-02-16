@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <ImageButton
-        android:id="@+id/order_myorderothers_closebutton1"
+        android:id="@+id/order_myorderothers_closebutton"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:src="@drawable/closeiconblack"

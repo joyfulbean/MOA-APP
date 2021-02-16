@@ -1,9 +1,11 @@
 package com.example.moa_cardview.receipt;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +41,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ReceiptActivity extends AppCompatActivity {
+public class ReceiptActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String urls = "http://54.180.8.235:5000/room";
     private static final String MyItemSend_urls = "http://54.180.8.235:5000/receipt";
@@ -60,6 +62,9 @@ public class ReceiptActivity extends AppCompatActivity {
     //String stuff_img = "http://yebinfigthing";
 
     private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
+    private AdapterView.OnItemClickListener listener;
+    private MyAdapter myAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +96,7 @@ public class ReceiptActivity extends AppCompatActivity {
         //null handling 필요...
         orderInfos.add(new OrderInfo(roomID,"hello","123","12"));
 
-        final MyAdapter myAdapter = new MyAdapter(this,orderInfos);
+        myAdapter = new MyAdapter(this, orderInfos, stuff_name, stuff_cost, stuff_num);
         listView.setAdapter(myAdapter);
 
         //상품추가 버튼
@@ -103,11 +108,12 @@ public class ReceiptActivity extends AppCompatActivity {
                 orderInfos.add(orderInfo);
                 myAdapter.notifyDataSetChanged();
                 //서버와 받는거 부분 에러..!! 디버깅 필요.!!
-                MyItemSendServer();
+                //서버에게 보내는건 나중에 "주문서 등록"버튼 누를때, orderInfos를 for문으로 보내는게 더 나을듯해보임.
+                //MyItemSendServer();
                 //디자인 회색처리 해주세요
-                stuff_name.setText("상품명(+옵션)");
-                stuff_cost.setText("가격");
-                stuff_num.setText("0");
+                stuff_name.setText("");
+                stuff_cost.setText("");
+                stuff_num.setText("1");
             }
         });
 
@@ -364,4 +370,31 @@ public class ReceiptActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        String temp = v.getTag().toString();
+        int position = Integer.parseInt(temp.substring(1));
+
+        Log.i("ehlsi", temp);
+
+//        if(temp.contains("D")) {
+//            OrderInfo temp_edit = myAdapter.getItem(position);
+//            orderInfos.remove(temp_edit);
+//            Log.i("ehlsi", "?????????mmmmmm");
+//            myAdapter.notifyDataSetChanged();
+//            stuff_name.setText(temp_edit.getStuffName());
+//            stuff_cost.setText(temp_edit.getCost());
+//            stuff_num.setText(temp_edit.getNum());
+//            onResume();
+//        } else {
+//            OrderInfo temp_delete = myAdapter.getItem(position);
+//            orderInfos.remove(temp_delete);
+//            stuff_name.setText(temp_delete.getStuffName());
+//            stuff_cost.setText(temp_delete.getCost());
+//            stuff_num.setText(temp_delete.getNum());
+//            myAdapter.notifyDataSetChanged();
+//            Log.i("ehlsi", "eeeeeee");
+//            onResume();
+//        }
+    }
 }

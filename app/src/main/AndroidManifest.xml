@@ -26,10 +26,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".receipt.ReceiptActivity">
-            android:name=".chat.ReceiptActivity"
-            android:label="@string/title_activity_search"
-            android:parentActivityName=".chat.MakingRoomActivity"
-            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -40,10 +36,6 @@
         <uses-library
             android:name="com.google.android.maps"
             android:required="false" />
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
