@@ -28,6 +28,7 @@ import com.example.moa_cardview.data.OrderInfo;
 import com.example.moa_cardview.data.StuffInfo;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -286,27 +287,38 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             protected String doInBackground(Void... voids) {
                 try {
+                    Log.i("listTest", "list server start");
                     OkHttpClient client = new OkHttpClient();
 
                     Request request = new Request.Builder()
                             .get()
-                            .url(MyItemSend_urls + "/" + roomID)
+                            .url(MyItemSend_urls + "/" + "7")
                             .build();
 
                     Response responses = null;
                     responses = client.newCall(request).execute();
 
-                    //json array로 받아서 파싱수 thing에 저장해준다.
-                    // 가장 큰 JSONObject를 가져옵니다.
-                    JSONObject obj = new JSONObject(responses.body().string());
-                    listInfo.setId(obj.getString("id"));
-                    listInfo.setRef_cnt(obj.getString("ref_cnt"));
-                    listInfo.setRegistered_on(obj.getString("registered_on"));
-                    listInfo.setCost(obj.getString("stuff_cost"));
-                    //listInfo.set(obj.getString("stuff_img"));
-                    listInfo.setStuffName(obj.getString("stuff_name"));
-                    listInfo.setNum(obj.getString("stuff_num"));
-                    listInfo.setUser_id(obj.getString("user_id"));
+                    JSONObject jObject = new JSONObject(responses.body().string());
+                    JSONArray jArray = jObject.getJSONArray("data");
+
+                    for (int i = 0; i < jArray.length(); i++) {
+                        JSONObject obj = jArray.getJSONObject(i);
+
+                        listInfo.setId(obj.getString("id"));
+                        listInfo.setRef_cnt(obj.getString("ref_cnt"));
+                        listInfo.setRegistered_on(obj.getString("registered_on"));
+                        listInfo.setCost(obj.getString("stuff_cost"));
+                        //listInfo.set(obj.getString("stuff_img"));
+                        listInfo.setStuffName(obj.getString("stuff_name"));
+                        listInfo.setNum(obj.getString("stuff_num"));
+                        listInfo.setUser_id(obj.getString("user_id"));
+                        Log.i("listTest", obj.getString("user_id"));
+                        Log.i("listTest", obj.getString("stuff_name"));
+
+                        //orderInfos.add(temp);
+                    }
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -316,8 +328,8 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                 return null;
             }
         }
-//        sendData sendData = new sendData();
-//        sendData.execute();
+        sendData sendData = new sendData();
+        sendData.execute();
     }
 
 
