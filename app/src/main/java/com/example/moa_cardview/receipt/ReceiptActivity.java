@@ -166,13 +166,12 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                     OrderInfo imageInfo = new OrderInfo(roomID, image_cost.getText().toString(), filePath);
                     imageInfos.add(imageInfo);
                     imageAdapter.notifyDataSetChanged();
-                    //서버에 이미지 정보 보내는 함수 필요
-                    //send image server
-                    //image setting 부분 안보이게
-                    relativeLayoutImage.setVisibility(View.INVISIBLE);
+                    //****서버에 이미지 정보 보내는 함수 필요*****
+                    //****send image server (call function)*****
+                    //****INVISIBLE 할 때, 늘어났던 레이아웃 사이즈 다시 줄이기 구현 필요****
+                    relativeLayoutImage.setVisibility(View.INVISIBLE); // image setting 부분 안보이게
                     isImage = false;
-                    //다시 상품정보 입력란 보이게
-                    linearLayoutWrite.setVisibility(View.VISIBLE);
+                    linearLayoutWrite.setVisibility(View.VISIBLE); // 다시 상품정보 입력란 보이게
                     image_cost.setText("");
                 }else {
                     OrderInfo orderInfo = new OrderInfo(roomID, stuff_name.getText().toString(), stuff_cost.getText().toString(), stuff_num.getText().toString());
@@ -268,10 +267,10 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             try {
                 //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                relativeLayoutImage.setVisibility(View.VISIBLE);
+                relativeLayoutImage.setVisibility(View.VISIBLE); //image setting 부분 보이게
                 imagePreview.setImageBitmap(bitmap);
                 isImage = true;
-                linearLayoutWrite.setVisibility(View.INVISIBLE);
+                linearLayoutWrite.setVisibility(View.INVISIBLE); //  상품정보 입력 안보이게 
             } catch (IOException e) {
                 e.printStackTrace();
             }
