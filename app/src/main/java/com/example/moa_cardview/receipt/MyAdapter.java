@@ -35,6 +35,12 @@ public class MyAdapter extends BaseAdapter{
         this.num = num;
     }
 
+    public MyAdapter(Context context, ArrayList<OrderInfo> data) {
+        context = context;
+        orderinfos = data;
+        mLayoutInflater = LayoutInflater.from(context);
+    }
+
     @Override
     public int getCount() {
         return orderinfos.size();

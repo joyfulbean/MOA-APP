@@ -78,6 +78,13 @@ public class OrderInfo {
     public OrderInfo() {
     }
 
+    public OrderInfo(String roomId, String stuffName, String cost) {
+        this.roomId = roomId;
+        this.stuffName = stuffName;
+        this.cost = cost;
+        this.num = num;
+    }
+
     public OrderInfo(String roomId, String stuffName, String cost, String num) {
         this.roomId = roomId;
         this.stuffName = stuffName;

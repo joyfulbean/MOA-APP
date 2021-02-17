@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/order_othersorder_product1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15.24dp"
+        android:fontFamily="@font/regular"
+        android:text="떡볶이 (순한맛)"
+        android:textColor="@color/darkgrey"
+        android:textSize="14dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="15.24dp"
+        android:layout_marginEnd="15.24dp">
+
+        <TextView
+            android:id="@+id/order_othersorder_price2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/regular"
+            android:text="3000원"
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/order_othersorder_add_button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15.24dp"
+            android:fontFamily="@font/bold"
+            android:text="나도 추가"
+            android:textColor="@color/yellow"
+            android:textSize="14dp"
+            android:clickable="true"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="23dp"
+        android:src="@drawable/shortline"
+        android:scaleType="fitCenter"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
