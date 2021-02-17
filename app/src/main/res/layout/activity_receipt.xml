@@ -210,13 +210,17 @@
                 <LinearLayout
                     android:id="@+id/order_myorderothers_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
+                    <ListView
+                        android:id="@+id/order_image_listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></ListView>
 
                     <ListView
                         android:id="@+id/order_myorderothers_listview"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"></ListView>
+                        android:layout_height="wrap_content"></ListView>
 
                 </LinearLayout>
 
@@ -229,6 +233,7 @@
                     android:layout_marginBottom="40dp"/>
 
                 <LinearLayout
+                    android:id="@+id/write_suff_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -295,7 +300,7 @@
                             android:background="@null"
                             android:fontFamily="@font/regular"
                             android:hint="가격"
-                            android:inputType="textPersonName"
+                            android:inputType="number"
                             android:textColor="@color/darkgrey"
                             android:textColorHint="@color/grey"
                             android:textSize="14dp"/>
@@ -438,6 +443,66 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginEnd="15.24dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/image_preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@id/order_myorderimage_price_image"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:layout_alignParentBottom="true"/>
+
+                    <EditText
+                        android:id="@+id/order_myorderimage_price_image"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="15.24dp"
+                        android:layout_toStartOf="@+id/order_myorder_won1_image"
+                        android:background="@null"
+                        android:fontFamily="@font/regular"
+                        android:gravity="end"
+                        android:hint="가격"
+                        android:inputType="number"
+                        android:textColor="@color/darkgrey"
+                        android:textColorHint="@color/grey"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/order_myorder_won1_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/order_myorderimage_price_image"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="15.24dp"
+                        android:fontFamily="@font/regular"
+                        android:text="원"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignStart="@id/order_myorderimage_price_image"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_toStartOf="@id/order_myorder_won1_image"
+                        android:src="@drawable/shorterline" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/order_myorder_addbutton"

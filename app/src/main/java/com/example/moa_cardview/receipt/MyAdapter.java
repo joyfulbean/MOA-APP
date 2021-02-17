@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.moa_cardview.R;
@@ -24,6 +25,7 @@ public class MyAdapter extends BaseAdapter{
     TextView name;
     TextView cost;
     TextView num;
+    ListView listView;
 
 
     public MyAdapter(Context context, ArrayList<OrderInfo> data, TextView name, TextView cost, TextView num) {
@@ -33,6 +35,10 @@ public class MyAdapter extends BaseAdapter{
         this.name = name;
         this.cost = cost;
         this.num = num;
+    }
+
+    public void setListView(ListView listView) {
+        this.listView = listView;
     }
 
     public MyAdapter(Context context, ArrayList<OrderInfo> data) {
@@ -86,6 +92,12 @@ public class MyAdapter extends BaseAdapter{
                 cost.setText(temp_edit.getCost());
                 num.setText(temp_edit.getNum());
                 orderinfos.remove(getItem(position));
+
+                // 삭제시 뷰 사이즈 조절
+                ViewGroup.LayoutParams params = listView.getLayoutParams();
+                params.height = (342 * getCount()) + (listView.getDividerHeight() * (getCount() - 1));
+                listView.setLayoutParams(params);
+
                 notifyDataSetChanged();
             }
         });
@@ -94,6 +106,13 @@ public class MyAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 orderinfos.remove(getItem(position));
+
+                // 삭제시 뷰 사이즈 조절
+                ViewGroup.LayoutParams params = listView.getLayoutParams();
+                params.height = (342 * getCount()) + (listView.getDividerHeight() * (getCount() - 1));
+                listView.setLayoutParams(params);
+
+
                 notifyDataSetChanged();
             }
         });
@@ -101,7 +120,6 @@ public class MyAdapter extends BaseAdapter{
         stuff_name.setText(orderinfos.get(position).getStuffName());
         stuff_cost.setText(orderinfos.get(position).getCost());
         stuff_num.setText(orderinfos.get(position).getNum());
-
         return view;
     }
 

@@ -1,5 +1,7 @@
 package com.example.moa_cardview.data;
 
+import android.net.Uri;
+
 public class OrderInfo {
     private String roomId;
     private String stuffName;
@@ -9,6 +11,7 @@ public class OrderInfo {
     private String ref_cnt;
     private String registered_on;
     private String user_id;
+    private Uri filePath;
 
     public String getId() {
         return id;
@@ -74,9 +77,23 @@ public class OrderInfo {
         this.num = num;
     }
 
+    public Uri getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(Uri filePath) {
+        this.filePath = filePath;
+    }
 
     public OrderInfo() {
     }
+
+    public OrderInfo(String roomId, String cost, Uri filePath) {
+        this.roomId = roomId;
+        this.cost = cost;
+        this.filePath = filePath;
+    }
+
 
     public OrderInfo(String roomId, String stuffName, String cost) {
         this.roomId = roomId;
