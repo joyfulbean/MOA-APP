@@ -3,6 +3,7 @@ package com.example.moa_cardview.init;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -13,11 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.moa_cardview.main.MainActivity;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -45,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // for google sign in
     private GoogleSignInClient mGoogleSignInClient;
+
     private final static int RC_SIGN_IN = 123;
 
     // for fire base
@@ -96,6 +100,15 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut(); //Sign-out Firebase
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+//        if (user != null) {
+////            Auth.GoogleSignInApi.signOut(googleApiClient); //Sign-out Google
+////        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -113,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
@@ -124,16 +138,34 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             isNew = task.getResult().getAdditionalUserInfo().isNewUser();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            isNewChecker();
-                            startActivity(intent);
-                            finish();
 
+                            if(!isHandongStudent(user)){
+                                Toast.makeText(LoginActivity.this, "한동대학교 이메일로만 로그인 가능합니다.", Toast.LENGTH_SHORT).show();
+                                FirebaseAuth.getInstance().signOut();
+                                mGoogleSignInClient.signOut();
+                            }
+                            else{
+                                isNewChecker();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } else {
                             Toast.makeText(LoginActivity.this, "Sorry auth failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+    public boolean isHandongStudent(FirebaseUser user){
+        String[] emailParser = user.getEmail().split("@");
+        if(emailParser[1].equals("handong.edu")){
+            Log.i("ishandong", "Yes");
+            return true;
+        }
+        else{
+            Log.i("ishandong", "No");
+            return false;
+        }
     }
     public void isNewChecker(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
