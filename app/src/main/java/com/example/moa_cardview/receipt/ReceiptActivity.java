@@ -2,8 +2,13 @@ package com.example.moa_cardview.receipt;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -14,6 +19,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,7 +49,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -52,26 +62,28 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
 
     private static final String urls = "http://54.180.8.235:5000/room";
     private static final String MyItemSend_urls = "http://54.180.8.235:5000/receipt";
+    private static final String image_url = "http://54.180.8.235:5000/image";
 
     private StuffInfo stuffRoomInfo = new StuffInfo();
+
+    private final int GET_GALLERY_IMAGE = 200;
 
     private ImageButton ReceiptButton;
     private String roomID;
 
     private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
     private ArrayList<OrderInfo> listInfos = new ArrayList<>();
-    EditText stuff_name;
+    private ArrayList<String> listname = new ArrayList<>();
+
+    AutoCompleteTextView stuff_name;
     EditText stuff_cost;
     TextView stuff_num;
-    ListView listView,listView2;
-    //image구현 필요.
-    //String stuff_img = "http://yebinfigthing";
+    ListView listView;
 
-    TextView myOrderAddButton, othersOrderAddButton;
+    TextView myOrderAddButton;
 
     private AdapterView.OnItemClickListener listener;
     private MyAdapter myAdapter;
-    private MyAdapter2 myAdapter2;
 
     // camera
     private ImageButton stuff_camera;
@@ -109,12 +121,9 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             Log.i("this", roomID);
         }
 
-        stuff_name = findViewById(R.id.order_myorder_product1);
         stuff_cost = findViewById(R.id.order_myorder_price1);
         stuff_num = findViewById(R.id.order_myorder_count1);
         listView = (ListView)findViewById(R.id.order_myorderothers_listview);
-
-
 
         // camera button 클릭시, 보여지는 image view, cost info, relative layout
         imagePreview = findViewById(R.id.image_preview);
@@ -135,20 +144,41 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         stuff_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                verifyStoragePermissions(ReceiptActivity.this);
                 //이미지를 선택
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
 
         //receive 받아서 방 정보 세팅
         InfoReceiveServer();
 
-        //주문 목록 세팅
-        listView2 = (ListView)findViewById(R.id.order_othersorder_listview);
+        //주문 목록 자동완성 세팅
         ListReceiveServer();
+
+        stuff_name = (AutoCompleteTextView) findViewById(R.id.order_myorder_product1);
+
+        // AutoCompleteTextView 에 아답터를 연결한다.
+        stuff_name.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, listname ));
+        //선택했을때 자동 가격 완성
+        stuff_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    for(int j = 0; j < listInfos.size(); j++){
+                        Log.i("list",parent.getAdapter().getItem(position).toString());
+                        if(parent.getAdapter().getItem(position).toString().equals(listInfos.get(j).getStuffName())) {
+                            Log.i("listing",listInfos.get(j).getStuffName());
+                            Log.i("listing",listInfos.get(j).getCost());
+                            stuff_cost.setText(listInfos.get(j).getCost());
+                            break;
+                        }
+                    }
+            }
+        });
+
 
         //null handling 필요...
         orderInfos.add(new OrderInfo(roomID,"hello","123","12"));
@@ -168,18 +198,20 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                     imageAdapter.notifyDataSetChanged();
                     //****서버에 이미지 정보 보내는 함수 필요*****
                     //****send image server (call function)*****
+                    imageTransfer(imageInfo);
                     //****INVISIBLE 할 때, 늘어났던 레이아웃 사이즈 다시 줄이기 구현 필요****
                     relativeLayoutImage.setVisibility(View.INVISIBLE); // image setting 부분 안보이게
                     isImage = false;
                     linearLayoutWrite.setVisibility(View.VISIBLE); // 다시 상품정보 입력란 보이게
                     image_cost.setText("");
                 }else {
+                    Log.i("hello","hi");
+                    Log.i("hello",stuff_name.getText().toString());
                     OrderInfo orderInfo = new OrderInfo(roomID, stuff_name.getText().toString(), stuff_cost.getText().toString(), stuff_num.getText().toString());
                     orderInfos.add(orderInfo);
                     myAdapter.notifyDataSetChanged();
-                    //서버와 받는거 부분 에러..!! 디버깅 필요.!!
-                    //서버에게 보내는건 나중에 "주문서 등록"버튼 누를때, orderInfos를 for문으로 보내는게 더 나을듯해보임.
-//                    MyItemSendServer();
+                    //서버와 받는거 부분 에러..!! 디버깅 필요.!!.
+                    MyItemSendServer();
                     //디자인 회색처리 해주세요
                     stuff_name.setText("");
                     stuff_cost.setText("");
@@ -210,18 +242,6 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                 listViewImage.setLayoutParams(paramsImage);
             }
         });
-
-
-
-        //나도 추가 버튼 (구현 아직 안됨) 추후 구현 필요
-//        othersOrderAddButton = findViewById(R.id.order_othersorder_add_button1);
-//        othersOrderAddButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(), "toast message",Toast.LENGTH_SHORT);
-//
-//            }
-//        });
 
         //* create room
         ReceiptButton = findViewById(R.id.createroom_createbutton);
@@ -262,8 +282,10 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //request코드가 0이고 OK를 선택했고 data에 뭔가가 들어 있다면
-        if (requestCode == 0 && resultCode == RESULT_OK) {
+//        if (requestCode == 0 && resultCode == RESULT_OK) {
+        if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null){
             filePath = data.getData();
+            Log.i("file", filePath.toString());
             try {
                 //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
@@ -380,10 +402,6 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                //null handling 필요...
-                //listInfos.add(new OrderInfo(roomID,"hello","123"));
-                myAdapter2 = new MyAdapter2(getApplicationContext(), listInfos);
-                listView2.setAdapter(myAdapter2);
             }
             @Override
             protected void onProgressUpdate(Void... values) {
@@ -417,16 +435,9 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);
                         OrderInfo listInfo = new OrderInfo();
-
-                        listInfo.setId(obj.getString("id"));
-                        listInfo.setRef_cnt(obj.getString("ref_cnt"));
-                        listInfo.setRegistered_on(obj.getString("registered_on"));
                         listInfo.setCost(obj.getString("stuff_cost"));
-                        //listInfo.set(obj.getString("stuff_img"));
                         listInfo.setStuffName(obj.getString("stuff_name"));
-                        listInfo.setNum(obj.getString("stuff_num"));
-                        listInfo.setUser_id(obj.getString("user_id"));
-                        Log.i("listTest", obj.getString("user_id"));
+                        listname.add(obj.getString("stuff_name"));
                         Log.i("listTest", obj.getString("stuff_name"));
 
                         listInfos.add(listInfo);
@@ -520,5 +531,80 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
 //            Log.i("ehlsi", "eeeeeee");
 //            onResume();
 //        }
+    }
+
+    public void imageTransfer(OrderInfo imageInfo){
+        File imageFile = new File(uriToFilePath(imageInfo.getFilePath()));
+        sendImageToServer(imageFile);
+    }
+
+    // 출처: https://stackoverflow.com/questions/20322528/uploading-images-to-server-android
+    public String uriToFilePath(Uri uri) {
+        String[] projection = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+
+        String imagePath = cursor.getString(column_index);
+        Log.i("Data", imagePath);
+        return imagePath;
+    }
+
+    public void sendImageToServer(File imamgeFile) {
+        try{
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file",imamgeFile.getName(), RequestBody.create(MultipartBody.FORM,imamgeFile))
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(image_url + "/" + "7" + "/" + "21600212@handong.edu")
+                    .post(requestBody)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.i("Data","fail: " + e.getMessage());
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String server_response = response.body().string();
+                    Log.i("Data","Response: " + server_response);
+                }
+            });
+        }catch (Exception e){
+            Log.i("androidTest","okhttp3 request exception: "+e.getMessage());
+        }
+    }
+
+    //출처: https://stackoverflow.com/questions/8854359/exception-open-failed-eacces-permission-denied-on-android?page=1&tab=votes#tab-top
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    /**
+     * Checks if the app has permission to write to device storage
+     *
+     * If the app does not has permission then the user will be prompted to grant permissions
+     *
+     * @param activity
+     */
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
     }
 }

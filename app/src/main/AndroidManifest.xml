@@ -24,7 +24,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true">
         <activity android:name=".receipt.ReceiptActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
