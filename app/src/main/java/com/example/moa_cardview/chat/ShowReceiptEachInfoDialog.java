@@ -53,13 +53,13 @@ public class ShowReceiptEachInfoDialog extends Dialog implements View.OnClickLis
         recyclerView.setAdapter(recyclerAdapter);
         recyclerAdapter.notifyDataSetChanged();
         //individualreceipt_popup_wholecost
-//        popupCloseButton = (ImageButton) findViewById(R.id.individualreceipt_popup_closebutton);
-//        popupCloseButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                dismiss();
-//            }
-//        });
+        popupCloseButton = (ImageButton) findViewById(R.id.individualreceipt_popup_closebutton);
+        popupCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
     }
 
     @Override

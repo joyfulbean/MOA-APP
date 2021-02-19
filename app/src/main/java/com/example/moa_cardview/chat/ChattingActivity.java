@@ -359,6 +359,7 @@ public class ChattingActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         receiveEachOrderInfo();
+                        //each_orderInfos.clear();
                     }
                 });
 
