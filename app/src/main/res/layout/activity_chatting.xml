@@ -558,6 +558,17 @@
                     android:textSize="11.43dp"
                     android:layout_marginStart="7.62dp"/>
 
+                <ImageButton
+                    android:id="@+id/chatpage_individual_receipt_button"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignTop="@id/chatpage_myname_tv"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignBottom="@id/chatpage_myname_tv"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/receipt_icon"/>
+
             </RelativeLayout>
 
             <ImageView

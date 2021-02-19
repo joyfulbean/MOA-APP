@@ -139,10 +139,12 @@ public class ChattingActivity extends AppCompatActivity {
 
     // for show all receipt info
     private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
+    private ArrayList<OrderInfo> each_orderInfos = new ArrayList<>();
     private Dialog epicDialog;
     private RelativeLayout wholereceiptButton;
     private RecyclerView recyclerView;
     public static ShowReceiptAllInfoAdapter recyclerAdapter;
+    public static ShowReceiptEachInfoAdapter each_recyclerAdapter;
     private LinearLayoutManager linearLayoutManager;
 
     public ChattingActivity() { }
@@ -352,6 +354,14 @@ public class ChattingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 roomMemberReceiveServer();
                 drawerLayout.openDrawer(drawerView);
+                ImageButton eachListButton = (ImageButton)findViewById(R.id.chatpage_individual_receipt_button);
+                eachListButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        receiveEachOrderInfo();
+                    }
+                });
+
             }
         });
 
@@ -865,6 +875,7 @@ public class ChattingActivity extends AppCompatActivity {
                     OkHttpClient client = new OkHttpClient();
                     JSONObject jsonInput = new JSONObject();
 
+                    //jsonInput.put("user_email", MyData.mail);
                     Request request = new Request.Builder()
                             .url(receiptUrls + File.separator + "7")
                             .build();
@@ -896,5 +907,72 @@ public class ChattingActivity extends AppCompatActivity {
         sendData sendData = new sendData();
         sendData.execute();
     }
+
+    //* receive orderInfo, for show all receipt info
+    public void receiveEachOrderInfo(){
+        class sendData extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                ShowReceiptEachInfoDialog showReceiptEachInfoDialog;
+                each_recyclerAdapter = new ShowReceiptEachInfoAdapter(ChattingActivity.this, each_orderInfos);
+                showReceiptEachInfoDialog = new ShowReceiptEachInfoDialog(ChattingActivity.this, each_recyclerAdapter);
+
+                showReceiptEachInfoDialog.show();
+                showReceiptEachInfoDialog.setCanceledOnTouchOutside(false);
+            }
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+            @Override
+            protected void onCancelled(String s) {
+                super.onCancelled(s);
+            }
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    JSONObject jsonInput = new JSONObject();
+
+                    Request request = new Request.Builder()
+                            .url(receiptUrls + File.separator + "7"+ File.separator + MyData.mail)
+                            .build();
+
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+
+                    JSONObject jObject = new JSONObject(responses.body().string());
+                    JSONArray jArray = jObject.getJSONArray("data");
+
+                    for (int i = 0; i < jArray.length(); i++) {
+                        JSONObject obj = jArray.getJSONObject(i);
+                        OrderInfo temp = new OrderInfo();
+                        temp.setStuffName(obj.getString("stuff_name"));
+                        temp.setCost(obj.getString("stuff_cost"));
+                        temp.setNum(Integer.toString(obj.getInt("stuff_num")));
+                        //이미지 정보 추가해야함.
+                        each_orderInfos.add(temp);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+        sendData sendData = new sendData();
+        sendData.execute();
+    }
+
 
 }
