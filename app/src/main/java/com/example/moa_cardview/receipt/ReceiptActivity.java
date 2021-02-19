@@ -180,9 +180,6 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         });
 
 
-        //null handling 필요...
-        orderInfos.add(new OrderInfo(roomID,"hello","123","12"));
-
         myAdapter = new MyAdapter(this, orderInfos, stuff_name, stuff_cost, stuff_num);
         listView.setAdapter(myAdapter);
         myAdapter.setListView(listView);
@@ -211,7 +208,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                     orderInfos.add(orderInfo);
                     myAdapter.notifyDataSetChanged();
                     //서버와 받는거 부분 에러..!! 디버깅 필요.!!.
-                    MyItemSendServer();
+//                    MyItemSendServer();
                     //디자인 회색처리 해주세요
                     stuff_name.setText("");
                     stuff_cost.setText("");

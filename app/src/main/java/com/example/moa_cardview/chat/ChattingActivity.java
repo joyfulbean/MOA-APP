@@ -49,6 +49,7 @@ import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.data.RoomMemberData;
 import com.example.moa_cardview.data.StuffInfo;
+import com.example.moa_cardview.receipt.ReceiptActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
@@ -81,6 +82,7 @@ import okhttp3.Response;
 
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static com.example.moa_cardview.receipt.ReceiptActivity.verifyStoragePermissions;
 
 public class ChattingActivity extends AppCompatActivity {
     // for server
@@ -135,7 +137,7 @@ public class ChattingActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1001;
     private static final int MY_STORAGE_ACCESS = 101;
     private static final int CAMERA_CAPTURE = 102;
-    public static final int REQUEST_CODE = 100;
+    private final int GET_GALLERY_IMAGE = 200;
 
     // for show all receipt info
     private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
@@ -219,14 +221,15 @@ public class ChattingActivity extends AppCompatActivity {
             }
         }
 
-        //gallery
+        // gallery
         galleryButton = findViewById(R.id.chatpage_photobutton);
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent,MY_STORAGE_ACCESS);
+                verifyStoragePermissions(ChattingActivity.this);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
 
@@ -427,34 +430,30 @@ public class ChattingActivity extends AppCompatActivity {
         return resizedBitmap;
     }
 
-    //for camera and gallery
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    //* for camera and gallery
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == MY_STORAGE_ACCESS){
-            if (resultCode == RESULT_OK) {
-                try {
-                    //선택한 이미지의 경로 얻어오기
-                    imgUri= data.getData();
-                    Glide.with(this).load(imgUri).into(previewImage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        if(requestCode == GET_GALLERY_IMAGE){
+            if (resultCode == RESULT_OK && data != null && data.getData() != null){
+                imgUri = data.getData();
+                Log.i("file", imgUri.toString());
+
+                Intent imgIntent = new Intent(ChattingActivity.this, ImageScreenActivity.class);
+                imgIntent.putExtra("type", GET_GALLERY_IMAGE);
+                imgIntent.putExtra("img_path", imgUri.toString());
+                imgIntent.putExtra("room_id", roomID);
+                startActivity(imgIntent);
             }
         }
         else if(requestCode == CAMERA_CAPTURE){
             //찍은 사진 가져와서 붙여주기
-            if(resultCode == RESULT_OK && data.hasExtra("data")){
-                try{
-                    //촬영한 이미지 가져오기
-                    Bitmap img = (Bitmap) data.getExtras().get("data");
-                    img = imgRotate(img);
-                    imgUri= data.getData();
-                    clickUpload();
-                    Glide.with(this).load(imgUri).into(previewImage);
-
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+            if (resultCode == RESULT_OK && data != null && data.getData() != null){
+                Bundle bundle = data.getExtras();
+                Intent imgIntent = new Intent(ChattingActivity.this, ImageScreenActivity.class);
+                imgIntent.putExtra("type", CAMERA_CAPTURE);
+                imgIntent.putExtra("img_path", bundle.toString());
+                imgIntent.putExtra("room_id", roomID);
+                startActivity(imgIntent);
             }
         }
     }

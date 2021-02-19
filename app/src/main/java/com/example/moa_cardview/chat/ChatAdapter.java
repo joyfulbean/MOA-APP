@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,6 +128,7 @@ public class ChatAdapter  extends BaseAdapter {
         StorageReference rootRef= firebaseStorage.getReference();
         //하위 폴더가 있다면 폴더명까지 포함하여
         StorageReference imgRef = rootRef.child(item.getImg());
+        Log.i("item.getImg()",item.getImg());
         if(imgRef!=null){
             //참조객체로 부터 이미지의 다운로드 URL을 얻어오기
             imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
