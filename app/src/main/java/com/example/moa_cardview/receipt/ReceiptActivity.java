@@ -48,6 +48,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -58,11 +59,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ReceiptActivity extends AppCompatActivity implements View.OnClickListener {
+public class ReceiptActivity extends AppCompatActivity {
 
     private static final String urls = "http://54.180.8.235:5000/room";
     private static final String MyItemSend_urls = "http://54.180.8.235:5000/receipt";
-    private static final String image_url = "http://54.180.8.235:5000/image";
+    private static final String image_url = "http://54.180.8.235:5000/receipt/image";
 
     private StuffInfo stuffRoomInfo = new StuffInfo();
 
@@ -190,29 +191,32 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 if(isImage){ // image
-                    OrderInfo imageInfo = new OrderInfo(roomID, image_cost.getText().toString(), filePath);
-                    imageInfos.add(imageInfo);
-                    imageAdapter.notifyDataSetChanged();
-                    //****서버에 이미지 정보 보내는 함수 필요*****
-                    //****send image server (call function)*****
-                    imageTransfer(imageInfo);
-                    //****INVISIBLE 할 때, 늘어났던 레이아웃 사이즈 다시 줄이기 구현 필요****
-                    relativeLayoutImage.setVisibility(View.INVISIBLE); // image setting 부분 안보이게
-                    isImage = false;
-                    linearLayoutWrite.setVisibility(View.VISIBLE); // 다시 상품정보 입력란 보이게
-                    image_cost.setText("");
+                    if(image_cost.getText().toString().length() != 0) {
+                        OrderInfo imageInfo = new OrderInfo(roomID, image_cost.getText().toString(), filePath);
+                        imageInfos.add(imageInfo);
+                        imageAdapter.notifyDataSetChanged();
+                        //****서버에 이미지 정보 보내는 함수 필요*****
+                        //****send image server (call function)*****
+//                        imageTransfer(imageInfo);
+                        //****INVISIBLE 할 때, 늘어났던 레이아웃 사이즈 다시 줄이기 구현 필요****
+                        relativeLayoutImage.setVisibility(View.GONE); // image setting 부분 안보이게
+                        isImage = false;
+                        linearLayoutWrite.setVisibility(View.VISIBLE); // 다시 상품정보 입력란 보이게
+                        image_cost.setText("");
+                    }else {
+                        Toast.makeText(ReceiptActivity.this, "총 가격을 입력하세요.", Toast.LENGTH_SHORT).show();
+                    }
                 }else {
-                    Log.i("hello","hi");
-                    Log.i("hello",stuff_name.getText().toString());
-                    OrderInfo orderInfo = new OrderInfo(roomID, stuff_name.getText().toString(), stuff_cost.getText().toString(), stuff_num.getText().toString());
-                    orderInfos.add(orderInfo);
-                    myAdapter.notifyDataSetChanged();
-                    //서버와 받는거 부분 에러..!! 디버깅 필요.!!.
-//                    MyItemSendServer();
-                    //디자인 회색처리 해주세요
-                    stuff_name.setText("");
-                    stuff_cost.setText("");
-                    stuff_num.setText("1");
+                    if(stuff_name.getText().toString().length() != 0 && stuff_cost.getText().toString().length() != 0 && Integer.parseInt(stuff_num.getText().toString()) > 0) {
+                        OrderInfo orderInfo = new OrderInfo(roomID, stuff_name.getText().toString(), stuff_cost.getText().toString(), stuff_num.getText().toString());
+                        orderInfos.add(orderInfo);
+                        myAdapter.notifyDataSetChanged();
+                        stuff_name.setText("");
+                        stuff_cost.setText("");
+                        stuff_num.setText("1");
+                    }else {
+                        Toast.makeText(ReceiptActivity.this, "상품 이름, 가격, 개수를 다시 확인해주세요.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 // ListView 크기 조절 - write(normal) list view
                 int totalHeight = 0;
@@ -245,6 +249,8 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         ReceiptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MtImageSendServer();
+                MyItemSendServer();
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                 intent.putExtra("room_id",roomID);
                 intent.putExtra("isNew",true);
@@ -274,7 +280,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             });
     }
 
-    // camera button
+    //* galary button
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -289,13 +295,14 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                 relativeLayoutImage.setVisibility(View.VISIBLE); //image setting 부분 보이게
                 imagePreview.setImageBitmap(bitmap);
                 isImage = true;
-                linearLayoutWrite.setVisibility(View.INVISIBLE); //  상품정보 입력 안보이게 
+                linearLayoutWrite.setVisibility(View.GONE); //  상품정보 입력 안보이게
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    //* setting the screen
     public void settingScreen(){
         // for recipe page
         TextView chatpage_title_textview = (TextView)findViewById(R.id.order_product);
@@ -311,6 +318,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         chatpage_place_textview.setText(stuffRoomInfo.getPlace());
     }
 
+    //* receive screen info
     public void InfoReceiveServer(){
         class sendData extends AsyncTask<Void, Void, String> {
             @Override
@@ -321,12 +329,6 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 settingScreen();
-//                // 아니면 여기서 추가를해줘도 될 듯 하네
-//                if(isNew.equals("1")) {
-//                    String content = MyData.name + "님이 입장 했습니다.";
-//                    sendMessageFirebase("ENTER_EXIT", content, "none");
-//                    isNew = "0";
-//                }
             }
             @Override
             protected void onProgressUpdate(Void... values) {
@@ -371,13 +373,6 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                     stuffRoomInfo.setPlace(obj.getString("place"));
                     stuffRoomInfo.setNumUsers(obj.getString("num_user"));
 
-//                    if(isNew.equals("1")){
-//                        Log.i("isNew", "true");
-//                    }
-//                    else {
-//                        Log.i("isNew", "false");
-//                    }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -390,7 +385,8 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         sendData.execute();
     }
 
-        public void ListReceiveServer(){
+    //* receive order list registered
+    public void ListReceiveServer(){
         class sendData extends AsyncTask<Void, Void, String> {
             @Override
             protected void onPreExecute() {
@@ -420,14 +416,14 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
 
                     Request request = new Request.Builder()
                             .get()
-                            .url(MyItemSend_urls + "/" + "7")
+                            .url(MyItemSend_urls + "/" + roomID)
                             .build();
 
                     Response responses = null;
                     responses = client.newCall(request).execute();
 
                     JSONObject jObject = new JSONObject(responses.body().string());
-                    JSONArray jArray = jObject.getJSONArray("data");
+                    JSONArray jArray = jObject.getJSONArray("receipt");
 
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);
@@ -452,7 +448,6 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         sendData.execute();
     }
 
-
     //* send each item to server
     public void MyItemSendServer(){
         class sendData extends AsyncTask<Void, Void, String> {
@@ -464,26 +459,29 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             protected String doInBackground(Void... voids) {
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    JSONObject jsonInput = new JSONObject();
 
-                    jsonInput.put("room_id", roomID);
-                    jsonInput.put("user_email", MyData.mail);
-                    Log.i("testing",stuff_name.getText().toString());
-                    jsonInput.put("stuff_name", stuff_name.getText().toString());
-                    Log.i("testing",stuff_cost.getText().toString());
-                    jsonInput.put("stuff_cost", Integer.parseInt(stuff_cost.getText().toString()));
-                    Log.i("testing",stuff_num.getText().toString());
-                    jsonInput.put("stuff_num", Integer.parseInt(stuff_num.getText().toString()));
-                    //jsonInput.put("stuff_img", stuff_img);
+                    JSONArray jArray = new JSONArray();
+                    for(int i=0; i<orderInfos.size(); i++) {
+                        JSONObject jsonInput = new JSONObject();
+                        jsonInput.put("room_id", roomID);
+                        jsonInput.put("user_email", MyData.mail);
+                        jsonInput.put("stuff_name", orderInfos.get(i).getStuffName());
+                        jsonInput.put("stuff_cost", Integer.parseInt(orderInfos.get(i).getCost()));
+                        jsonInput.put("stuff_num", Integer.parseInt(orderInfos.get(i).getNum()));
+                        jsonInput.put("stuff_img", "none");
+                        jArray.put(jsonInput);
+                    }
+                    JSONObject jsonInputs = new JSONObject();
+                    jsonInputs.put("data", jArray);
 
                     RequestBody reqBody = RequestBody.create(
                             MediaType.parse("application/json; charset=utf-8"),
-                            jsonInput.toString()
+                            jsonInputs.toString()
                     );
 
                     Request request = new Request.Builder()
                             .post(reqBody)
-                            .url(MyItemSend_urls + "/" + roomID + "/" + MyData.mail)
+                            .url(MyItemSend_urls + "/" + roomID)
                             .build();
 
                     Response responses = null;
@@ -501,38 +499,15 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         sendData.execute();
     }
 
-
-    @Override
-    public void onClick(View v) {
-        String temp = v.getTag().toString();
-        int position = Integer.parseInt(temp.substring(1));
-
-        Log.i("ehlsi", temp);
-
-//        if(temp.contains("D")) {
-//            OrderInfo temp_edit = myAdapter.getItem(position);
-//            orderInfos.remove(temp_edit);
-//            Log.i("ehlsi", "?????????mmmmmm");
-//            myAdapter.notifyDataSetChanged();
-//            stuff_name.setText(temp_edit.getStuffName());
-//            stuff_cost.setText(temp_edit.getCost());
-//            stuff_num.setText(temp_edit.getNum());
-//            onResume();
-//        } else {
-//            OrderInfo temp_delete = myAdapter.getItem(position);
-//            orderInfos.remove(temp_delete);
-//            stuff_name.setText(temp_delete.getStuffName());
-//            stuff_cost.setText(temp_delete.getCost());
-//            stuff_num.setText(temp_delete.getNum());
-//            myAdapter.notifyDataSetChanged();
-//            Log.i("ehlsi", "eeeeeee");
-//            onResume();
-//        }
+    //* send each image info to server
+    public void MtImageSendServer(){
+        for(int i=0; i<imageInfos.size(); i++){
+            imageTransfer(imageInfos.get(i));
+        }
     }
-
     public void imageTransfer(OrderInfo imageInfo){
         File imageFile = new File(uriToFilePath(imageInfo.getFilePath()));
-        sendImageToServer(imageFile);
+        sendImageToServer(imageFile, imageInfo.getCost());
     }
 
     // 출처: https://stackoverflow.com/questions/20322528/uploading-images-to-server-android
@@ -547,15 +522,17 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
         return imagePath;
     }
 
-    public void sendImageToServer(File imamgeFile) {
+    public void sendImageToServer(File imamgeFile, String cost) {
         try{
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("file",imamgeFile.getName(), RequestBody.create(MultipartBody.FORM,imamgeFile))
                     .build();
 
+            String tempURL = image_url + "/" + roomID + "/" + MyData.getMail() + "/" + cost;
+
             Request request = new Request.Builder()
-                    .url(image_url + "/" + "7" + "/" + "21600212@handong.edu")
+                    .url(tempURL)
                     .post(requestBody)
                     .build();
 
