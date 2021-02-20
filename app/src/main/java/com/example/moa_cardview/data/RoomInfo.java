@@ -7,7 +7,8 @@ public class RoomInfo {
     protected String place;
     protected String numUsers;
     protected String numUsersLimit;
-    protected String creatorName;
+    protected String creatorEmail;
+    protected String status;
     protected int participantsId;
 
 
@@ -59,12 +60,12 @@ public class RoomInfo {
         this.numUsersLimit = numUsersLimit;
     }
 
-    public String getCreatorName() {
-        return creatorName;
+    public String getCreatorEmail() {
+        return creatorEmail;
     }
 
-    public void setCreatorName(String creatorName) {
-        this.creatorName = creatorName;
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
     }
 
     public int getParticipantsId() {
@@ -73,5 +74,13 @@ public class RoomInfo {
 
     public void setParticipantsId(int participantsId) {
         this.participantsId = participantsId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

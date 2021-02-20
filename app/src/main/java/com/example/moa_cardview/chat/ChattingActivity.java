@@ -188,25 +188,26 @@ public class ChattingActivity extends AppCompatActivity {
 
         //* room lock
         lockButton = (SwitchButton) findViewById(R.id.chatpage_lock_button);
-        lockButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // 스위치 버튼이 체크되었는지 검사하여 텍스트뷰에 각 경우에 맞게 출력합니다.
-                if (isChecked){
-                    //수정 불가능, 방 사라짐, 토스트 메세지
-                    isLock = true;
-                    Toast.makeText(ChattingActivity.this, "방을 잠그면 주문서 수정이 안되고, 새로운 사람이 방에 들어올 수 없습니다 ", Toast.LENGTH_LONG).show();
-                }else{
-                    //수정 가능, 방떠있음, 토스트메세지
-                    isLock = false;
-                    Toast.makeText(ChattingActivity.this, "잠금을 풀면 주문서 수정이 가능하고, 새로운 사람이 방에 들어올 수 있습니다 ", Toast.LENGTH_LONG).show();
+        if(MyData.getMail().equals(chattingInfo.getCreatorEmail())) {
+            lockButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    // 스위치 버튼이 체크되었는지 검사하여 텍스트뷰에 각 경우에 맞게 출력합니다.
+                    if (isChecked) {
+                        //수정 불가능, 방 사라짐, 토스트 메세지
+                        isLock = true;
+                        Toast.makeText(ChattingActivity.this, "방을 잠그면 주문서 수정이 안되고, 새로운 사람이 방에 들어올 수 없습니다 ", Toast.LENGTH_LONG).show();
+                    } else {
+                        //수정 가능, 방떠있음, 토스트메세지
+                        isLock = false;
+                        Toast.makeText(ChattingActivity.this, "잠금을 풀면 주문서 수정이 가능하고, 새로운 사람이 방에 들어올 수 있습니다 ", Toast.LENGTH_LONG).show();
+                    }
+                    //방상태변경
+                    sendRoomidToServer();
+
                 }
-
-                //방상태변경
-                sendRoomidToServer();
-
-            }
-        });
+            });
+        }
 
         //* send account
         bankButton = findViewById(R.id.chatpage_dutchpaybutton);
@@ -584,6 +585,10 @@ public class ChattingActivity extends AppCompatActivity {
         chatpage_place_textview.setText(chattingInfo.getPlace());
 
         linkUrl = chattingInfo.getStuffLink();
+
+        if("구미중".equals(chattingInfo.getStatus())){
+            lockButton.setChecked(true);
+        }
     }
 
     //* when show people list
@@ -754,17 +759,7 @@ public class ChattingActivity extends AppCompatActivity {
                 try {
                     OkHttpClient client = new OkHttpClient();
 
-                    JSONObject jsonInput = new JSONObject();
-                    jsonInput.put("room_id", roomID);
-                    jsonInput.put("user_email", MyData.mail);
-
-                    RequestBody reqBody = RequestBody.create(
-                            MediaType.parse("application/json; charset=utf-8"),
-                            jsonInput.toString()
-                    );
-
                     Request request = new Request.Builder()
-                            .post(reqBody)
                             .url(urls + File.separator + roomID)
                             .build();
 
@@ -779,6 +774,8 @@ public class ChattingActivity extends AppCompatActivity {
                     chattingInfo.setOrderTime(obj.getString("order_time"));
                     chattingInfo.setPlace(obj.getString("place"));
                     chattingInfo.setNumUsers(obj.getString("num_user"));
+                    chattingInfo.setCreatorEmail(obj.getString("creator_email"));
+                    chattingInfo.setStatus(obj.getString("status"));
 //                    chattingInfo.setStuffCost(obj.getString("stuff_cost")+"원");
 //                    chattingInfo.setStuffLink(obj.getString("stuff_link"));
 //                    chattingInfo.setCreatorName(obj.getString("creator_name"));

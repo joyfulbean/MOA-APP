@@ -249,7 +249,7 @@ public class ReceiptActivity extends AppCompatActivity {
         ReceiptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MtImageSendServer();
+                MyImageSendServer();
                 MyItemSendServer();
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                 intent.putExtra("room_id",roomID);
@@ -500,7 +500,7 @@ public class ReceiptActivity extends AppCompatActivity {
     }
 
     //* send each image info to server
-    public void MtImageSendServer(){
+    public void MyImageSendServer(){
         for(int i=0; i<imageInfos.size(); i++){
             imageTransfer(imageInfos.get(i));
         }

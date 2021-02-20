@@ -194,7 +194,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
                     responses = client.newCall(request).execute();
 
                     JSONObject jObject = new JSONObject(responses.body().string());
-                    JSONArray jArray = jObject.getJSONArray("data");
+                    JSONArray jArray = jObject.getJSONArray("receipts");
 
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);
@@ -206,8 +206,9 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
                         //이미지 정보 추가해야함.
                         each_orderInfos.add(temp);
                     }
-
                     //get info totalCost
+                    int infoTotalCost = jObject.getInt("total_cost");
+                    Log.i("infoTotalCost", Integer.toString(infoTotalCost));
 
                     OkHttpClient clientImage = new OkHttpClient();
 
@@ -220,7 +221,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
 
 
                     JSONObject jObjectImage = new JSONObject(responsesImage.body().string());
-                    JSONArray jArrayImage = jObjectImage.getJSONArray("data");
+                    JSONArray jArrayImage = jObjectImage.getJSONArray("receipts");
 
                     Log.i("jArrayImage.length()", String.valueOf(jArrayImage.length()));
                     for (int i = 0; i < jArrayImage.length(); i++) {
@@ -229,8 +230,11 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
                         imgUrls.add(url);
                     }
                     //get image totalCost
+                    int imageTotalCost = jObjectImage.getInt("total_cost");
 
                     //sum totalCost
+                    int temp = infoTotalCost + imageTotalCost;
+                    totalCost = Integer.toString(temp);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

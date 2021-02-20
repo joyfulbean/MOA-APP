@@ -105,7 +105,7 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
 
 
         for(int i = 0; i < imgUri.size(); i++){
-            loadImageTask imageTask = new loadImageTask(postUrl + "7" + File.separator + imgUri.get(i));
+            loadImageTask imageTask = new loadImageTask(postUrl + roomId + File.separator + imgUri.get(i));
             imageTask.execute();
         }
     }
