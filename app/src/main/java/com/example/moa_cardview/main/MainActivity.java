@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     //for button...
     private FloatingActionButton floatingActionButton;
     private ImageButton upperActionButton;
-    private ImageButton searchButton;
+    private RelativeLayout searchButton;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -53,26 +54,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         loadData();
 
-        //키면 멈춤. 버그 해결 시급.
-//        upperActionButton = (ImageButton) findViewById(R.id.storepage_upbutton);
-//        upperActionButton.setOnClickListener(new View.OnClickListener() { // 이미지 버튼 이벤트 정의
-//            @Override
-//            public void onClick(View v) { //클릭 했을경우
-//                // TODO Auto-generated method stub
-//                //버튼 클릭 시 발생할 이벤트내용
-//                recyclerView = (RecyclerView) findViewById(R.id.main_thing);
-//                linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//
-//                linearLayoutManager.scrollToPositionWithOffset(0,0);
-//
-//                recyclerView.setHasFixedSize(true);
-//                recyclerView.setLayoutManager(linearLayoutManager);
-//
-//            }
-//        });
-
         //* search action
-        searchButton = (ImageButton)findViewById(R.id.storepage_searchbar);
+        searchButton = findViewById(R.id.storepage_searchbar);
         searchButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);

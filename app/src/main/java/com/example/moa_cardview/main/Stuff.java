@@ -42,6 +42,8 @@ public class Stuff extends Fragment {
     public ArrayList<StuffInfo> thingB = new ArrayList<>();
     private boolean AorB = true;
 
+    private ImageButton upperActionButton;
+
     // for refreshing
     private boolean isRefreshing = false;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -101,6 +103,8 @@ public class Stuff extends Fragment {
         //* declaring view
         View view = inflater.inflate(R.layout.fragment_stuff,container,false);
 
+
+
         //* declaring recycler & linear layout manager
         recyclerView = (RecyclerView) view.findViewById(R.id.main_thing);
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -118,6 +122,23 @@ public class Stuff extends Fragment {
                 } else if (dy == 0 && upbutton.getVisibility() != View.INVISIBLE) {
                     upbutton.setVisibility(View.INVISIBLE);
                 }
+            }
+        });
+
+
+        upperActionButton = (ImageButton) view.findViewById(R.id.storepage_upbutton);
+        upperActionButton.setOnClickListener(new View.OnClickListener() { // 이미지 버튼 이벤트 정의
+            @Override
+            public void onClick(View v) { //클릭 했을경우
+                // TODO Auto-generated method stub
+                //버튼 클릭 시 발생할 이벤트내용
+                linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                linearLayoutManager.scrollToPositionWithOffset(0,0);
+
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(linearLayoutManager);
+
             }
         });
 

@@ -15,6 +15,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -95,9 +96,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         TextView stuffPeopleNum;
         TextView stuffUrlTitle;
         ImageView stuffImage;
-        RelativeLayout expandLayout;
+        LinearLayout expandLayout;
         RelativeLayout previewLayout;
-        RelativeLayout postLayout;
+        LinearLayout postLayout;
         ImageButton enterButton;
         TextView ogTitle;
         TextView ogContent;
@@ -111,7 +112,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             stuffTitle = (TextView) itemView.findViewById(R.id.post_title_textview);
             stuffDate = (TextView) itemView.findViewById(R.id.post_date_textview);
             stuffPlace = (TextView) itemView.findViewById(R.id.post_place_textview);
-            stuffPrice = (TextView) itemView.findViewById(R.id.post_cost_textview);
+//            stuffPrice = (TextView) itemView.findViewById(R.id.post_cost_textview);
             stuffPeopleNum = (TextView) itemView.findViewById(R.id.post_pplnumber_textview);
             stuffUrlTitle = (TextView) itemView.findViewById(R.id.post_preview_tv1);
             stuffImage = itemView.findViewById(R.id.post_preview_iv);
@@ -342,7 +343,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.stuffTitle.setText(stuff.get(position).getTitle());
         holder.stuffDate.setText(stuff.get(position).getOrderDate());
         holder.stuffPlace.setText(stuff.get(position).getPlace());
-        holder.stuffPrice.setText(stuff.get(position).getStuffCost());
+//        holder.stuffPrice.setText(stuff.get(position).getStuffCost());
         holder.stuffPeopleNum.setText(stuff.get(position).getNumUsers());
         holder.ogTitle.setText(stuff.get(position).getOgTitle());
         holder.ogContent.setText(stuff.get(position).getStuffLink());
