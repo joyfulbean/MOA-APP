@@ -24,18 +24,18 @@
             android:layout_marginStart="13.33dp"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:text="방 만들기"
-            android:textColor="@color/white"
-            android:textSize="15.24dp"
-            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="방 만들기"
             android:textAlignment="center"
-            android:gravity="center"/>
+            android:textColor="@color/white"
+            android:textSize="15.24dp" />
     </RelativeLayout>
 
     <ScrollView
@@ -277,20 +277,19 @@
                 android:id="@+id/createroom_stufflayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30.48dp"
-                android:layout_marginEnd="30.48dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:orientation="vertical"
                 android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="50dp"
                     android:fontFamily="@font/bold"
                     android:text="@string/stuff_name"
                     android:textColor="@color/black"
                     android:textSize="15.24dp"
-
                     />
 
                 <EditText
@@ -302,7 +301,7 @@
                     android:layout_marginEnd="15.24dp"
                     android:background="@null"
                     android:fontFamily="@font/regular"
-                    android:hint="물품 이름"
+                    android:hint="상품 이름"
                     android:inputType="textPersonName"
                     android:textColor="@color/black"
                     android:textSize="13.71dp" />
@@ -310,13 +309,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7.62dp"
-                    android:src="@drawable/longline" />
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/longline_edit" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="40dp"
                     android:fontFamily="@font/bold"
                     android:text="@string/stuff_place"
                     android:textColor="@color/black"
@@ -338,7 +337,7 @@
                         android:layout_marginEnd="15.24dp"
                         android:background="@null"
                         android:fontFamily="@font/regular"
-                        android:text=""
+                        android:hint="배달 장소"
                         android:textColor="@color/grey"
                         android:textSize="13.71dp" />
 
@@ -348,8 +347,8 @@
                     android:layout_width="400dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="7.62dp"
-                    android:src="@drawable/shortline" />
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/longline_edit" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -399,46 +398,61 @@
                     android:id="@+id/order_date_CB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="40dp"
                     android:fontFamily="@font/bold"
                     android:text="주문 날짜"
                     android:textColor="@color/black"
-                    android:textSize="15.24dp" />
+                    android:textSize="15.24dp"
+                    />
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/order_date_RL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22.86dp"
+                    android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/createroom_stuff_date_textview"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="15.24dp"
-                        android:fontFamily="@font/regular"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="13.71dp" />
+                        android:layout_marginTop="22.86dp">
 
-                    <ImageButton
-                        android:id="@+id/createroom_stuff_date_button"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
+                        <TextView
+                            android:id="@+id/createroom_stuff_date_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="15.24dp"
+                            android:fontFamily="@font/regular"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="13.71dp" />
+
+                        <ImageButton
+                            android:id="@+id/createroom_stuff_date_button"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="15.24dp"
+                            android:background="@null"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/calendaricon" />
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="400dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_marginEnd="15.24dp"
-                        android:background="@null"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/calendaricon" />
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/longline_edit" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/order_date_line"
@@ -452,7 +466,7 @@
                     android:id="@+id/order_time_CB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:fontFamily="@font/bold"
                     android:text="주문 시간"
                     android:textColor="@color/black"
@@ -479,7 +493,7 @@
                     android:id="@+id/stuff_link_CB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:fontFamily="@font/bold"
                     android:text="상품 링크"
                     android:textColor="@color/black"
@@ -504,8 +518,8 @@
                     android:id="@+id/stuff_link_line"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7.62dp"
-                    android:src="@drawable/longline"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/longline_edit"
                     android:visibility="gone"/>
 
 

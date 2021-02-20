@@ -42,6 +42,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="23dp"
@@ -78,10 +79,15 @@
                     android:orientation="vertical"
                     android:layout_marginTop="30dp">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/individualreceipt_popup_recyclerview"
+                    <ListView
+                        android:id="@+id/each_receipt_show_list_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"></ListView>
+
+                    <ListView
+                        android:id="@+id/each_receipt_show_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></ListView>
 
                     <ImageView
                         android:id="@+id/individualreceipt_popup_wholecostline"
@@ -94,18 +100,38 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/individualreceipt_popup_wholecost"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:layout_gravity="end"
-                    android:text="총 36,000원"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
+                    android:orientation="horizontal"
                     android:layout_marginTop="23dp"
                     android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="23dp"/>
+                    android:layout_marginBottom="23dp"
+                    android:layout_marginStart="38dp">
+
+                    <TextView
+                        android:id="@+id/individualreceipt_popup_wholecost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="총 36,000원"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:layout_alignParentEnd="true"/>
+
+                    <TextView
+                        android:id="@+id/individualreceipt_edit_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/bold"
+                        android:layout_gravity="end"
+                        android:text="수정"
+                        android:textColor="@color/blue"
+                        android:textSize="18dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
 

@@ -53,56 +53,54 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/profilepage_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="640dp"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profilepage_upperlayout">
+        app:layout_constraintTop_toBottomOf="@id/profilepage_upperlayout"
+        app:layout_constraintBottom_toTopOf="@id/profilepage_lowerlayout">
 
     </androidx.viewpager.widget.ViewPager>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/create_room_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/button_plus"
+        app:backgroundTint="@color/yellow"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/profilepage_lowerlayout"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"/>
+
+    <FrameLayout
         android:id="@+id/profilepage_lowerlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_apppbar"
-            android:layout_width="match_parent"
-            android:layout_height="45.71dp"
-            android:layout_gravity="bottom"
-            android:backgroundTint="@color/white"
-            app:fabCradleMargin="7dp"
-            app:fabAlignmentMode="end"
-            app:fabCradleRoundedCornerRadius="0dp">
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        android:elevation="16dp">
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/bottom_navi"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="619dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             app:menu="@menu/bottom_menu"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
+            android:layout_gravity="bottom"
             app:cnb_menuResource="@menu/bottom_menu"
             app:cnb_iconSize="19dp"
             app:cnb_textAppearance="@style/tab_text"
-            app:cnb_minExpandedWidth="200dp"/>
+            android:elevation="18dp"
+            app:cnb_addBottomInset="true"
+            app:cnb_addLeftInset="true"
+            app:cnb_addRightInset="true"
+            app:cnb_orientationMode="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/create_room_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/button_plus"
-            app:backgroundTint="@color/yellow"
-            app:layout_anchor="@id/bottom_apppbar"
-            app:tint="@color/white"/>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

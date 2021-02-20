@@ -45,15 +45,6 @@
                     android:textSize="16dp"
                     android:layout_marginStart="23dp"/>
 
-                <ImageView
-                    android:id="@+id/wholereceipt_popup_imagemenu1"
-                    android:layout_width="match_parent"
-                    android:layout_height="380dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginStart="38dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="18dp"
-                    android:src="@drawable/menulistimage"/>
 
                 <LinearLayout
                     android:id="@+id/wholereceipt_popup_menutextlayout1"
@@ -61,11 +52,15 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/all_receipt_show_recyclerView"
+                    <ListView
+                        android:id="@+id/all_receipt_show_image_list"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                    </androidx.recyclerview.widget.RecyclerView>
+                        android:layout_height="wrap_content"></ListView>
+
+                    <ListView
+                        android:id="@+id/all_receipt_show_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></ListView>
 
                 </LinearLayout>
 

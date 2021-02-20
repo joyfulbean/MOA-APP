@@ -17,128 +17,166 @@
         app:layout_constraintEnd_toEndOf="@+id/storepage_background_layout"
         app:layout_constraintStart_toStartOf="@+id/storepage_background_layout"
         app:layout_constraintTop_toTopOf="@+id/storepage_background_layout"
-        android:background="@color/blue">
-
-        <ImageButton
-            android:id="@+id/storepage_searchbar"
-            android:layout_width="350.48dp"
-            android:layout_height="26.67dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="19.05dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="30.48dp"
-            android:layout_marginEnd="30.48dp"
-            android:src="@drawable/searchbarimage"
-            android:background="@null"
-            android:scaleType="fitCenter"/>
+        android:background="@color/blue"
+        android:elevation="18dp">
 
         <RelativeLayout
+            android:id="@+id/storepage_searchbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="55dp"
-            android:visibility="gone">
+            android:background="@drawable/white_round_box"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:clickable="true">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/storepage_tablayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/blue"
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/searchbutton"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="2dp"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:id="@+id/post_placetitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="검색"
+                android:textColor="@color/grey"
+                android:textSize="14dp"
                 android:layout_alignParentStart="true"
-                app:tabTextAppearance="@style/tab_text"
-                app:tabSelectedTextColor="@color/yellow"
-                app:tabTextColor="@color/white"
-                app:tabIndicatorColor="@color/yellow"
-                app:tabIndicatorHeight="4.57dp">
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tab_Item1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tab_Item2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tab_Item3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tab_Item4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.tabs.TabLayout>
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:layout_marginStart="18dp"/>
 
         </RelativeLayout>
+
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/storepage_searchbar"-->
+        <!--            android:layout_width="350dp"-->
+        <!--            android:layout_height="30dp"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            android:layout_marginTop="16dp"-->
+        <!--            android:layout_marginBottom="8dp"-->
+        <!--            android:layout_marginStart="30dp"-->
+        <!--            android:layout_marginEnd="30dp"-->
+        <!--            android:src="@drawable/searchbarimage"-->
+        <!--            android:background="@null"-->
+        <!--            android:scaleType="fitCenter"/>-->
+
+        <!--        <RelativeLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            android:layout_marginTop="55dp"-->
+        <!--            android:visibility="gone">-->
+
+        <!--            <com.google.android.material.tabs.TabLayout-->
+        <!--                android:id="@+id/storepage_tablayout"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:background="@color/blue"-->
+        <!--                android:layout_alignParentEnd="true"-->
+        <!--                android:layout_alignParentBottom="true"-->
+        <!--                android:layout_alignParentTop="true"-->
+        <!--                android:layout_alignParentStart="true"-->
+        <!--                app:tabTextAppearance="@style/tab_text"-->
+        <!--                app:tabSelectedTextColor="@color/yellow"-->
+        <!--                app:tabTextColor="@color/white"-->
+        <!--                app:tabIndicatorColor="@color/yellow"-->
+        <!--                app:tabIndicatorHeight="4.57dp">-->
+
+        <!--                <com.google.android.material.tabs.TabItem-->
+        <!--                    android:id="@+id/tab_Item1"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent" />-->
+
+        <!--                <com.google.android.material.tabs.TabItem-->
+        <!--                    android:id="@+id/tab_Item2"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content" />-->
+
+        <!--                <com.google.android.material.tabs.TabItem-->
+        <!--                    android:id="@+id/tab_Item3"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content" />-->
+
+        <!--                <com.google.android.material.tabs.TabItem-->
+        <!--                    android:id="@+id/tab_Item4"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content" />-->
+
+        <!--            </com.google.android.material.tabs.TabLayout>-->
+
+        <!--        </RelativeLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/storepage_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="580dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/storepage_upperlayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/storepage_lowerlayout">
 
     </androidx.viewpager.widget.ViewPager>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/create_room_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/button_plus"
+        app:backgroundTint="@color/yellow"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/storepage_lowerlayout"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"/>
+
+    <FrameLayout
         android:id="@+id/storepage_lowerlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_apppbar"
-            android:layout_width="match_parent"
-            android:layout_height="45.71dp"
-            android:layout_gravity="bottom"
-            android:backgroundTint="@color/white"
-            app:fabCradleMargin="7dp"
-            app:fabAlignmentMode="end"
-            app:fabCradleRoundedCornerRadius="0dp">
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        android:elevation="18dp">
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/bottom_navi"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="619dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             app:menu="@menu/bottom_menu"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
+            android:layout_gravity="bottom"
             app:cnb_menuResource="@menu/bottom_menu"
             app:cnb_iconSize="19dp"
             app:cnb_textAppearance="@style/tab_text"
-            app:cnb_minExpandedWidth="200dp"/>
+            app:cnb_addBottomInset="true"
+            app:cnb_addLeftInset="true"
+            app:cnb_addRightInset="true"
+            app:cnb_orientationMode="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/create_room_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/button_plus"
-            app:backgroundTint="@color/yellow"
-            app:layout_anchor="@id/bottom_apppbar"
-            app:tint="@color/white"/>
+    </FrameLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,8 +99,8 @@
 
                     <ImageView
                         android:id="@+id/chatpage_receipticon"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:fontFamily="@font/regular"
@@ -119,25 +119,41 @@
                         android:text="총 주문서 보기"
                         android:textAlignment="textStart"
                         android:textColor="@color/yellow"
-                        android:textSize="13dp" />
+                        android:textSize="14dp" />
 
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/chatpage_lock_button"
+                <LinearLayout
+                    android:id="@+id/lock_layout_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:orientation="horizontal"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/extrabold"
-                    android:text="방 잠그기"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/blue"
-                    android:textSize="13dp"
-                    android:clickable="true"/>
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/extrabold"
+                        android:text="방 잠그기"
+                        android:textColor="@color/blue"
+                        android:textSize="14dp"
+                        android:layout_gravity="center_vertical"/>
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/chatpage_lock_button"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"/>
+
+                </LinearLayout>
+
+
+
+
 
             </RelativeLayout>
 
@@ -354,7 +370,7 @@
                     android:fontFamily="@font/regular"
                     android:textColor="@color/black"
                     android:textSize="18dp"
-                    android:background="@drawable/chat_textbox"
+                    android:background="@drawable/white_round_box"
                     android:paddingStart="12dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="2dp"

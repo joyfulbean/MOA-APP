@@ -20,83 +20,83 @@
         android:background="@color/white"
         android:elevation="6dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/searchpage_searchlayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/searchpage_backbutton"
-                android:layout_width="16dp"
+                android:layout_width="54dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/backarrowblue"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@id/searchpage_searchbar"
-                android:layout_alignBottom="@id/searchpage_searchbar"
-                android:layout_marginStart="15.24dp"/>
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingStart="16dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blueborder_white_round_box"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:layout_gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/searchpage_search_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:fontFamily="@font/regular"
+                    android:gravity="center_vertical"
+                    android:hint="검색"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingStart="18dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    />
+
+                <ImageButton
+                    android:id="@+id/searchpage_delete_button"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/searchbarxbutton"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:visibility="invisible"/>
+
+                <ImageButton
+                    android:id="@+id/searchpage_searchbutton"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/searchbutton"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"/>
+
+            </RelativeLayout>
 
 
-            <ImageView
-                android:id="@+id/searchpage_searchbar"
-                android:layout_width="350dp"
-                android:layout_height="32dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="19.05dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="15.24dp"
-                android:layout_marginEnd="15.24dp"
-                android:src="@drawable/searchbar2"/>
-
-
-            <EditText
-                android:id="@+id/searchpage_search_edittext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@id/searchpage_searchbar"
-                android:layout_alignTop="@id/searchpage_searchbar"
-                android:layout_alignBottom="@id/searchpage_searchbar"
-                android:layout_marginStart="20dp"
-                android:layout_toStartOf="@+id/searchpage_delete_button"
-                android:background="@null"
-                android:fontFamily="@font/regular"
-                android:gravity="center_vertical"
-                android:hint="검색"
-                android:textColor="@color/black"
-                android:textSize="13dp" />
-
-            <ImageButton
-                android:id="@+id/searchpage_delete_button"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_alignTop="@id/searchpage_searchbar"
-                android:layout_toStartOf="@id/searchpage_searchbutton"
-                android:layout_alignBottom="@id/searchpage_searchbar"
-                android:layout_marginEnd="10dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:visibility="invisible"
-                android:src="@drawable/searchbarxbutton" />
-
-            <ImageButton
-                android:id="@+id/searchpage_searchbutton"
-                android:layout_width="22.1dp"
-                android:layout_height="22.1dp"
-                android:layout_alignTop="@id/searchpage_searchbar"
-                android:layout_alignEnd="@id/searchpage_searchbar"
-                android:layout_alignBottom="@id/searchpage_searchbar"
-                android:layout_marginEnd="5dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/searchbutton" />
-
-
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

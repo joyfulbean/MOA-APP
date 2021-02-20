@@ -27,143 +27,163 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/post_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15.24dp"
-                android:focusable="true">
+                android:layout_margin="16dp"
+                android:focusable="true"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/post_title_textview"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/post_title_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="start"
+                        android:layout_marginEnd="50dp"
+                        android:layout_toStartOf="@+id/post_price_textview"
+                        android:fontFamily="@font/bold"
+                        android:text="오뚜기 컵밥"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/blue"
+                        android:textSize="20dp" />
+
+                    <ImageButton
+                        android:id="@+id/post_threeroundbutton"
+                        android:layout_width="10dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/threeroundbutton"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_gravity="start"
-                    android:layout_marginEnd="50dp"
-                    android:layout_toStartOf="@+id/post_price_textview"
-                    android:fontFamily="@font/bold"
-                    android:text="오뚜기 컵밥"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/blue"
-                    android:textSize="19.05dp" />
+                    android:layout_marginTop="20dp">
 
-                <TextView
-                    android:id="@+id/post_cost_textview"
+                    <TextView
+                        android:id="@+id/post_placetitle_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="수령 장소:"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/post_place_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@id/post_placetitle_textview"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="하용조관"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/bold"
-                    android:gravity="end"
-                    android:text="1000원"
-                    android:textColor="@color/black"
-                    android:textSize="15.24dp" />
+                    android:layout_marginTop="12dp">
 
-                <TextView
-                    android:id="@+id/post_datetitle_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/post_title_textview"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="15.24dp"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="주문날짜:"
-                    android:textColor="@color/black"
-                    android:textSize="12.2dp" />
+                    <TextView
+                        android:id="@+id/post_datetitle_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="주문 날짜:"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp" />
 
-                <TextView
-                    android:id="@+id/post_date_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/post_title_textview"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="15.24dp"
-                    android:layout_toEndOf="@id/post_datetitle_textview"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="2020년 8월 5일"
-                    android:textColor="@color/black"
-                    android:textSize="12.2dp" />
+                    <TextView
+                        android:id="@+id/post_date_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@id/post_datetitle_textview"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="2020년 8월 25일"/>
 
-                <TextView
-                    android:id="@+id/post_placetitle_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/post_datetitle_textview"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="15.24dp"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="수령장소:"
-                    android:textColor="@color/black"
-                    android:textSize="12.2dp" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/post_place_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/post_datetitle_textview"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="15.24dp"
-                    android:layout_toEndOf="@id/post_placetitle_textview"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="하용조관"
-                    android:textColor="@color/black"
-                    android:textSize="12.2dp" />
+            </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/post_threeroundbutton"
-                    android:layout_width="10dp"
-                    android:layout_height="15dp"
-                    android:layout_below="@id/post_date_textview"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15.24dp"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/threeroundbutton"
-                    android:visibility="visible" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/expandable_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15.24dp"
-                android:layout_marginEnd="15.24dp">
+                android:layout_marginEnd="15.24dp"
+                android:orientation="vertical">
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/post_pplnumbertitle_textview"
+                    <TextView
+                        android:id="@+id/post_timetitle_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="주문 시간:"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/post_time_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@id/post_timetitle_textview"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="08:30 PM"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="0dp"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="인원:"
-                    android:textColor="@color/black"
-                    android:textSize="12.2dp" />
+                    android:layout_marginTop="12dp">
 
-                <TextView
-                    android:id="@+id/post_pplnumber_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/post_pplnumbertitle_textview"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/regular"
-                    android:gravity="start"
-                    android:text="3"
-                    android:textColor="@color/black"
-                    android:textSize="12.2dp" />
+                    <TextView
+                        android:id="@+id/post_pplnumbertitle_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular "
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="인원:"/>
+
+                    <TextView
+                        android:id="@+id/post_pplnumber_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@id/post_pplnumbertitle_textview"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="2"/>
+
+                </RelativeLayout>
+
 
 
                 <RelativeLayout
@@ -173,7 +193,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/post_pplnumbertitle_textview"
-                    android:layout_marginTop="15.24dp">
+                    android:layout_marginTop="15.24dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/post_preview_iv"
@@ -225,8 +246,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:layout_marginBottom="22.86dp"
-                    android:layout_marginTop="22.86dp"
+                    android:layout_marginBottom="32dp"
+                    android:layout_marginTop="26dp"
                     android:layout_alignParentStart="true"
                     android:layout_below="@id/post_preview_layout"
                     android:layout_alignParentEnd="true">
@@ -260,7 +281,7 @@
 
                 </RelativeLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

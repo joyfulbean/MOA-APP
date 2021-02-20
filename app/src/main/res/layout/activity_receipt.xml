@@ -6,13 +6,13 @@
     android:background="@color/white">
 
     <RelativeLayout
-        android:id="@+id/phonenumber_upperbarlayout"
+        android:id="@+id/order_upperbarlayout"
         android:layout_width="match_parent"
         android:layout_height="45.71dp"
         android:background="@color/blue">
 
         <ImageButton
-            android:id="@+id/createroom_backbutton"
+            android:id="@+id/order_backbutton"
             android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:src="@drawable/backarrow"
@@ -21,7 +21,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="13.33dp"/>
+            android:layout_marginStart="14dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/createroom_stufflayout"
+                android:id="@+id/order_stufflayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -90,33 +90,6 @@
                         android:textColor="@color/darkgrey"
                         android:textSize="14dp"
                         android:text="치코파닭"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
-
-                    <TextView
-                        android:id="@+id/order_place_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="수령 장소:"/>
-
-                    <TextView
-                        android:id="@+id/order_place"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@id/order_place_label"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="하용조관"/>
 
                 </RelativeLayout>
 
@@ -174,47 +147,39 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="30dp"
-                    android:fontFamily="@font/bold"
-                    android:text="나의 상품"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:layout_marginTop="12dp">
 
-                <LinearLayout
-                    android:id="@+id/order_myorderothers_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <ListView
-                        android:id="@+id/order_image_listview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></ListView>
+                    <TextView
+                        android:id="@+id/order_place_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="수령 장소:"/>
 
-                    <ListView
-                        android:id="@+id/order_myorderothers_listview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></ListView>
+                    <TextView
+                        android:id="@+id/order_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@id/order_place_label"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="하용조관"/>
 
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="30dp"
-                    android:src="@drawable/longline"
-                    android:layout_marginBottom="40dp"/>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/write_suff_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginBottom="40dp">
+                    android:layout_marginTop="50dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -340,89 +305,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/order_myorder_addlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"></LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/order_myorder_addimagelayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="57dp"
-                    android:visibility="gone">
-
-                    <ImageButton
-                        android:id="@+id/order_myorderimage_closebutton1"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/closeiconblack"
-                        android:background="@null"
-                        android:layout_gravity="end"
-                        android:scaleType="fitCenter"/>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginStart="15.24dp"
-                        android:layout_marginEnd="15.24dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="200dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_toStartOf="@id/order_myorderimage_price1"
-                            android:background="@null"
-                            android:src="@drawable/menulistimage"
-                            android:scaleType="fitCenter"
-                            android:layout_alignParentBottom="true"/>
-
-                        <EditText
-                            android:id="@+id/order_myorderimage_price1"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginEnd="15.24dp"
-                            android:layout_toStartOf="@+id/order_myorder_won1"
-                            android:background="@null"
-                            android:fontFamily="@font/regular"
-                            android:gravity="end"
-                            android:hint="가격"
-                            android:inputType="textPersonName"
-                            android:textColor="@color/darkgrey"
-                            android:textColorHint="@color/grey"
-                            android:textSize="14dp" />
-
-                        <TextView
-                            android:id="@+id/order_myorder_won1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignTop="@id/order_myorderimage_price1"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginStart="15.24dp"
-                            android:fontFamily="@font/regular"
-                            android:text="원"
-                            android:textColor="@color/darkgrey"
-                            android:textSize="14dp" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_alignStart="@id/order_myorderimage_price1"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="24dp"
-                            android:layout_toStartOf="@id/order_myorder_won1"
-                            android:src="@drawable/shorterline" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
                 <RelativeLayout
                     android:id="@+id/image"
                     android:layout_width="wrap_content"
@@ -487,13 +369,54 @@
                     android:id="@+id/order_myorder_addbutton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:text="+ 상품추가"
-                    android:textColor="@color/yellow"
-                    android:textSize="16dp"
-                    android:clickable="true"
-                    android:layout_gravity="end"/>
+                    android:fontFamily="@font/bold"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:text="상품 추가"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="40dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/white"
+                    android:textSize="16.76dp"
+                    android:background="@drawable/add_order_button"
+                    android:clickable="true"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="30dp"
+                    android:fontFamily="@font/bold"
+                    android:text="나의 상품"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:id="@+id/order_myorderothers_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ListView
+                        android:id="@+id/order_image_listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></ListView>
+
+                    <ListView
+                        android:id="@+id/order_myorderothers_listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></ListView>
+
+                </LinearLayout>
+
+
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/longline_edit"/>
 
             </LinearLayout>
 

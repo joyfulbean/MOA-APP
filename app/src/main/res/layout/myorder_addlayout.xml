@@ -12,7 +12,8 @@
         android:src="@drawable/closeiconblack"
         android:background="@null"
         android:layout_gravity="end"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:layout_marginTop="30dp"/>
 
     <TextView
         android:id="@+id/order_myorderothers_product1"
@@ -33,7 +34,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginStart="15.24dp"
         android:layout_marginEnd="15.24dp"
-        android:layout_marginBottom="57dp">
+        android:layout_marginBottom="30dp">
 
         <TextView
             android:id="@+id/order_myorderothers_price1"
