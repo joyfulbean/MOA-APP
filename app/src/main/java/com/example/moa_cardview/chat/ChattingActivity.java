@@ -188,26 +188,28 @@ public class ChattingActivity extends AppCompatActivity {
 
         //* room lock
         lockButton = (SwitchButton) findViewById(R.id.chatpage_lock_button);
-        if(MyData.getMail().equals(chattingInfo.getCreatorEmail())) {
-            lockButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    // 스위치 버튼이 체크되었는지 검사하여 텍스트뷰에 각 경우에 맞게 출력합니다.
-                    if (isChecked) {
-                        //수정 불가능, 방 사라짐, 토스트 메세지
-                        isLock = true;
-                        Toast.makeText(ChattingActivity.this, "방을 잠그면 주문서 수정이 안되고, 새로운 사람이 방에 들어올 수 없습니다 ", Toast.LENGTH_LONG).show();
-                    } else {
-                        //수정 가능, 방떠있음, 토스트메세지
-                        isLock = false;
-                        Toast.makeText(ChattingActivity.this, "잠금을 풀면 주문서 수정이 가능하고, 새로운 사람이 방에 들어올 수 있습니다 ", Toast.LENGTH_LONG).show();
-                    }
-                    //방상태변경
-                    sendRoomidToServer();
-
+        lockButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // 방장이 아닌경우
+                if (!MyData.getMail().equals(chattingInfo.getCreatorEmail())){
+                    lockButton.setChecked(!isChecked);
+                    Toast.makeText(ChattingActivity.this, "방 잠그기 기능은 방장만 사용 가능합니다.", Toast.LENGTH_LONG).show();
                 }
-            });
-        }
+                // 스위치 버튼이 체크되었는지 검사하여 텍스트뷰에 각 경우에 맞게 출력합니다.
+                else if (isChecked) {
+                    //수정 불가능, 방 사라짐, 토스트 메세지
+                    isLock = true;
+                    Toast.makeText(ChattingActivity.this, "방을 잠그면 주문서 수정이 안되고, 새로운 사람이 방에 들어올 수 없습니다 ", Toast.LENGTH_LONG).show();
+                    sendRoomidToServer();//방상태변경
+                } else {
+                    //수정 가능, 방떠있음, 토스트메세지
+                    isLock = false;
+                    Toast.makeText(ChattingActivity.this, "잠금을 풀면 주문서 수정이 가능하고, 새로운 사람이 방에 들어올 수 있습니다 ", Toast.LENGTH_LONG).show();
+                    sendRoomidToServer();//방상태변경
+                }
+            }
+        });
 
         //* send account
         bankButton = findViewById(R.id.chatpage_dutchpaybutton);
@@ -1030,7 +1032,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                     Request request = new Request.Builder()
                             .put(reqBody)
-                            .url(roomIDUrls + "/" + "7")
+                            .url(roomIDUrls + "/" + roomID)
                             .build();
 
                     Response responses = null;

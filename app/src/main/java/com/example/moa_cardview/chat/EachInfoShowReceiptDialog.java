@@ -3,6 +3,7 @@ package com.example.moa_cardview.chat;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -112,7 +113,12 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(activity, EditOrderListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("each_orderInfos", each_orderInfos);
+                    intent.putExtra("imgUrls", imgUrls);
+                    intent.putExtra("imageBitmap",imageBitmap);
+                    activity.startActivity(intent);
                 }
             });
         }

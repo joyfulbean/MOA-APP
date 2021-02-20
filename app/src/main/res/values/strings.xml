@@ -8,4 +8,6 @@
     <string name="stuff_place"><font color='#FF0000'>*</font>배달 장소</string>
     <string name="hello_world">Hello Square World!</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_edit_order_list">EditOrderListActivity</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>

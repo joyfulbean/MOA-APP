@@ -347,17 +347,7 @@ public class ReceiptActivity extends AppCompatActivity {
                 try {
                     OkHttpClient client = new OkHttpClient();
 
-                    JSONObject jsonInput = new JSONObject();
-                    jsonInput.put("room_id", roomID);
-                    jsonInput.put("user_email", MyData.mail);
-
-                    RequestBody reqBody = RequestBody.create(
-                            MediaType.parse("application/json; charset=utf-8"),
-                            jsonInput.toString()
-                    );
-
                     Request request = new Request.Builder()
-                            .post(reqBody)
                             .url(urls + File.separator + roomID)
                             .build();
 
@@ -423,7 +413,7 @@ public class ReceiptActivity extends AppCompatActivity {
                     responses = client.newCall(request).execute();
 
                     JSONObject jObject = new JSONObject(responses.body().string());
-                    JSONArray jArray = jObject.getJSONArray("receipt");
+                    JSONArray jArray = jObject.getJSONArray("receipts");
 
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);

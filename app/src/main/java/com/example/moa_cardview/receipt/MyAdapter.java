@@ -27,10 +27,16 @@ public class MyAdapter extends BaseAdapter{
     TextView num;
     ListView listView;
 
+    //* for edit
+    private ArrayList<OrderInfo> editInfoList = new ArrayList<>();
 
-    public MyAdapter(Context context, ArrayList<OrderInfo> data, TextView name, TextView cost, TextView num) {
+    public ArrayList<OrderInfo> getEditInfoList() {
+        return editInfoList;
+    }
+
+    public MyAdapter(Context context, ArrayList<OrderInfo> orderinfos, TextView name, TextView cost, TextView num) {
         context = context;
-        orderinfos = data;
+        this.orderinfos = orderinfos;
         mLayoutInflater = LayoutInflater.from(context);
         this.name = name;
         this.cost = cost;
@@ -82,8 +88,6 @@ public class MyAdapter extends BaseAdapter{
         deleteButton.setOnClickListener((View.OnClickListener) context);
         deleteButton.setTag("D" + position);
 
-
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,8 +109,8 @@ public class MyAdapter extends BaseAdapter{
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                editInfoList.add(getItem(position));
                 orderinfos.remove(getItem(position));
-
                 // 삭제시 뷰 사이즈 조절
                 ViewGroup.LayoutParams params = listView.getLayoutParams();
                 params.height = (342 * getCount()) + (listView.getDividerHeight() * (getCount() - 1));

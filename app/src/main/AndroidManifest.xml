@@ -27,6 +27,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".chat.ImageScreenActivity"></activity>
+        <activity android:name=".chat.EditOrderListActivity"></activity>
         <activity android:name=".receipt.ReceiptActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

@@ -2,7 +2,9 @@ package com.example.moa_cardview.data;
 
 import android.net.Uri;
 
-public class OrderInfo {
+import java.io.Serializable;
+
+public class OrderInfo implements Serializable {
     private String roomId;
     private String stuffName;
     private String cost;
