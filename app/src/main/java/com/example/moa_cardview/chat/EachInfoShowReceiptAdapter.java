@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 
 
-public class ShowReceiptEachInfoAdapter extends BaseAdapter{
+public class EachInfoShowReceiptAdapter extends BaseAdapter{
 
     private ArrayList<OrderInfo> orderInfos;
     private TextView name;
@@ -28,7 +28,7 @@ public class ShowReceiptEachInfoAdapter extends BaseAdapter{
     private Context context;
     private LayoutInflater mLayoutInflater = null;
 
-    public ShowReceiptEachInfoAdapter(Context context) {
+    public EachInfoShowReceiptAdapter(Context context) {
         this.context = context;
         mLayoutInflater = LayoutInflater.from(context);
     }

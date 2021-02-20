@@ -17,6 +17,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -33,6 +34,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,14 +44,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.moa_cardview.data.OrderInfo;
 import com.example.moa_cardview.main.MainActivity;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.data.RoomMemberData;
 import com.example.moa_cardview.data.StuffInfo;
-import com.example.moa_cardview.receipt.ReceiptActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
@@ -60,6 +60,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,9 +89,14 @@ public class ChattingActivity extends AppCompatActivity {
     // for server
     private static final String urls = "http://54.180.8.235:5000/room";
     private static final String roomMemberUrls = "http://54.180.8.235:5000/participant";
-    private static final String receiptUrls = "http://54.180.8.235:5000/receipt";
+    private static final String receiptInfoUrls = "http://54.180.8.235:5000/receipt";
+    private static final String imageInfoUrls = "http://54.180.8.235:5000/receipt/image";
+    private static final String roomIDUrls = "http://54.180.8.235:5000/room/status";
     private StuffInfo chattingInfo = new StuffInfo();
     private String roomID;
+
+    // for keypad
+    private InputMethodManager imm;
 
     // for displaying chat page info
     private LinearLayout expandLayout;
@@ -120,6 +126,7 @@ public class ChattingActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageButton backButton;
     private ImageButton exitRoom;
+    private ImageButton bankButton;
 
     // checking the new Member
     private boolean isNew = false;
@@ -130,8 +137,9 @@ public class ChattingActivity extends AppCompatActivity {
     private ImageButton cameraButton;
     private ImageButton galleryButton;
 
-    //업로드할 이미지 파일의 경로 Uri
+    //* 업로드할 이미지 파일의 경로 Uri
     private Uri imgUri;
+
 
     //상수
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1001;
@@ -140,14 +148,20 @@ public class ChattingActivity extends AppCompatActivity {
     private final int GET_GALLERY_IMAGE = 200;
 
     // for show all receipt info
+    // write info, image info, all, each
     private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
-    private ArrayList<OrderInfo> each_orderInfos = new ArrayList<>();
-    private Dialog epicDialog;
+    private ArrayList<String> imgUrls = new ArrayList<>();
     private RelativeLayout wholereceiptButton;
-    private RecyclerView recyclerView;
-    public static ShowReceiptAllInfoAdapter recyclerAdapter;
-    public static ShowReceiptEachInfoAdapter each_recyclerAdapter;
-    private LinearLayoutManager linearLayoutManager;
+    private AllImageShowReceiptAdapter imageAdapter;
+    public AllInfoShowReceiptAdapter infoAdapter;
+    public EachInfoShowReceiptAdapter eachInfoAdapter;
+    public EachImageShowReceiptAdapter eachImageAdapter;
+    private String totalCost;
+
+    //* for lock
+    private SwitchButton lockButton;
+    private boolean isLock;
+
 
     public ChattingActivity() { }
 
@@ -170,6 +184,42 @@ public class ChattingActivity extends AppCompatActivity {
         }
         setMyProfile();     // 대화 참여자 페이지에서 내 프로필 설정
         receiveServer();    // chatting room 정보 가져 오기
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        //* room lock
+        lockButton = (SwitchButton) findViewById(R.id.chatpage_lock_button);
+        lockButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // 스위치 버튼이 체크되었는지 검사하여 텍스트뷰에 각 경우에 맞게 출력합니다.
+                if (isChecked){
+                    //수정 불가능, 방 사라짐, 토스트 메세지
+                    isLock = true;
+                    Toast.makeText(ChattingActivity.this, "방을 잠그면 주문서 수정이 안되고, 새로운 사람이 방에 들어올 수 없습니다 ", Toast.LENGTH_LONG).show();
+                }else{
+                    //수정 가능, 방떠있음, 토스트메세지
+                    isLock = false;
+                    Toast.makeText(ChattingActivity.this, "잠금을 풀면 주문서 수정이 가능하고, 새로운 사람이 방에 들어올 수 있습니다 ", Toast.LENGTH_LONG).show();
+                }
+
+                //방상태변경
+                sendRoomidToServer();
+
+            }
+        });
+
+        //* send account
+        bankButton = findViewById(R.id.chatpage_dutchpaybutton);
+        bankButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = getSharedPreferences("info",MODE_PRIVATE);
+                MyData.account = preferences.getString("account", null);
+                String account_data[] = MyData.account.split(" ");
+                String account_setting = account_data[0] + account_data[1] + "\n" + "(" + account_data[2] + ")";
+                messageContent.setText(account_setting);
+            }
+        });
 
 
         //whole receipt popup
@@ -182,6 +232,7 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
+
         //* plus option functions
         expandLayoutPlus = findViewById(R.id.expandable_layout_plusoption);
         plusButton = findViewById(R.id.chatpage_plus_button);
@@ -190,11 +241,14 @@ public class ChattingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (expandLayoutPlus.getVisibility()==View.GONE) {
                     expandLayoutPlus.setVisibility(View.VISIBLE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 } else {
                     expandLayoutPlus.setVisibility(View.GONE);
                 }
             }
         });
+
+
 
         //camera
         cameraButton = findViewById(R.id.chatpage_camerabutton);
@@ -283,7 +337,6 @@ public class ChattingActivity extends AppCompatActivity {
                 messageContent.setText("");
 
                 //hide soft keyboard
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
             }
         });
@@ -361,8 +414,7 @@ public class ChattingActivity extends AppCompatActivity {
                 eachListButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        receiveEachOrderInfo();
-                        //each_orderInfos.clear();
+                        eachOrderInfoOpenDialog(MyData.getName(), MyData.getMail());
                     }
                 });
 
@@ -535,12 +587,12 @@ public class ChattingActivity extends AppCompatActivity {
     }
 
     //* when show people list
-    class MyAdapter extends ArrayAdapter<RoomMemberData> {
+    class RoomMemberAdapter extends ArrayAdapter<RoomMemberData> {
 
         Context context;
         List<RoomMemberData> rRoomMembers = new ArrayList<>();
 
-        MyAdapter (Context c, List<RoomMemberData> roomMembers) {
+        RoomMemberAdapter (Context c, List<RoomMemberData> roomMembers) {
             super(c, R.layout.chatpage_ppl_row, R.id.chatpage_pplname_tv, roomMembers);
             this.context = c;
             this.rRoomMembers = roomMembers;
@@ -554,12 +606,13 @@ public class ChattingActivity extends AppCompatActivity {
             ImageView images = row.findViewById(R.id.chatpage_otherprofile_iv);
             TextView name = row.findViewById(R.id.chatpage_pplname_tv);
             ImageButton phone = row.findViewById(R.id.chatpage_phone_button);
+            ImageButton receipt = row.findViewById(R.id.chatpage_receipt_button);
 
             //setting resources on views
-            images.setImageResource( R.drawable.profileicon2);
+            images.setImageResource(R.drawable.profileicon2);
             name.setText(rRoomMembers.get(position).getName());
 
-            if(rRoomMembers.get(position).getPhonNumber().equals("null")||rRoomMembers.get(position).getPhonNumber().isEmpty()) {
+            if(rRoomMembers.get(position).getPhonNumber().equals("null") || rRoomMembers.get(position).getPhonNumber().isEmpty()) {
                 Log.i("phone", "null input");
                 phone.setVisibility(View.GONE);
             }else {
@@ -572,25 +625,13 @@ public class ChattingActivity extends AppCompatActivity {
                     callFunction(rRoomMembers.get(position).getPhonNumber());
                 }
             });
+            receipt.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    eachOrderInfoOpenDialog(rRoomMembers.get(position).getName(), rRoomMembers.get(position).getMail());
+                }
+            });
             return row;
-        }
-    }
-
-    //* open web
-    public void openWeb(Context context, String url) {
-        if (!url.startsWith("http://") && !url.startsWith("https://"))
-            url = "http://" + url;
-
-        // Parse the URI and create the intent.
-        Uri webPage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-
-        // Find an activity to hand the intent and start that activity.
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
-        } else {
-            Toast.makeText(context, "Wrong Address. Try again.", Toast.LENGTH_LONG).show();
-            Log.d("ImplicitIntents", "Can't handle this intent!");
         }
     }
 
@@ -617,8 +658,8 @@ public class ChattingActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                MyAdapter adapter = new MyAdapter(ChattingActivity.this, roomMembers);
-                drawerList.setAdapter(adapter);
+                RoomMemberAdapter roomMemberAdapter = new RoomMemberAdapter(drawerView.getContext(), roomMembers);
+                drawerList.setAdapter(roomMemberAdapter);
             }
             @Override
             protected void onProgressUpdate(Void... values) {
@@ -846,16 +887,20 @@ public class ChattingActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                orderInfos.clear();
+                imgUrls.clear();
             }
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                ShowReceiptAllInfoDialog showReceiptAllInfoDialog;
-                recyclerAdapter = new ShowReceiptAllInfoAdapter(ChattingActivity.this, orderInfos);
-                showReceiptAllInfoDialog = new ShowReceiptAllInfoDialog(ChattingActivity.this, recyclerAdapter);
+                AllInfoShowReceiptDialog allInfoShowReceiptDialog;
 
-                showReceiptAllInfoDialog.show();
-                showReceiptAllInfoDialog.setCanceledOnTouchOutside(false);
+                imageAdapter = new AllImageShowReceiptAdapter(ChattingActivity.this);
+                infoAdapter = new AllInfoShowReceiptAdapter(ChattingActivity.this, orderInfos);
+                allInfoShowReceiptDialog = new AllInfoShowReceiptDialog(ChattingActivity.this, infoAdapter, imageAdapter, imgUrls, roomID, totalCost);
+
+                allInfoShowReceiptDialog.show();
+                allInfoShowReceiptDialog.setCanceledOnTouchOutside(false);
             }
             @Override
             protected void onProgressUpdate(Void... values) {
@@ -873,11 +918,9 @@ public class ChattingActivity extends AppCompatActivity {
             protected String doInBackground(Void... voids) {
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    JSONObject jsonInput = new JSONObject();
-
                     //jsonInput.put("user_email", MyData.mail);
                     Request request = new Request.Builder()
-                            .url(receiptUrls + File.separator + "7")
+                            .url(receiptInfoUrls + File.separator + roomID)
                             .build();
 
                     Response responses = null;
@@ -885,7 +928,7 @@ public class ChattingActivity extends AppCompatActivity {
 
 
                     JSONObject jObject = new JSONObject(responses.body().string());
-                    JSONArray jArray = jObject.getJSONArray("data");
+                    JSONArray jArray = jObject.getJSONArray("receipts");
 
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);
@@ -896,6 +939,36 @@ public class ChattingActivity extends AppCompatActivity {
                         //이미지 정보 추가해야함.
                         orderInfos.add(temp);
                     }
+                    //get info totalCost
+                    int infoTotalCost = jObject.getInt("total_cost");
+                    Log.i("infoTotalCost", Integer.toString(infoTotalCost));
+
+                    OkHttpClient clientImage = new OkHttpClient();
+
+                    Request requestImage = new Request.Builder()
+                            .url(imageInfoUrls + File.separator + roomID)
+                            .build();
+
+                    Response responsesImage = null;
+                    responsesImage = clientImage.newCall(requestImage).execute();
+
+
+                    JSONObject jObjectImage = new JSONObject(responsesImage.body().string());
+                    JSONArray jArrayImage = jObjectImage.getJSONArray("receipts");
+
+                    Log.i("jArrayImage.length()", String.valueOf(jArrayImage.length()));
+                    for (int i = 0; i < jArrayImage.length(); i++) {
+                        String url = jArrayImage.getString(i);
+                        Log.i("jArrayImage.length()", url);
+                        imgUrls.add(url);
+                    }
+                    //get image totalCost
+                    int imageTotalCost = jObjectImage.getInt("total_cost");
+
+                    //sum totalCost
+                    int temp = infoTotalCost + imageTotalCost;
+                    totalCost = Integer.toString(temp);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -909,62 +982,64 @@ public class ChattingActivity extends AppCompatActivity {
     }
 
     //* receive orderInfo, for show all receipt info
-    public void receiveEachOrderInfo(){
+    public void eachOrderInfoOpenDialog(String userName, String userEmail){
+        EachInfoShowReceiptDialog eachInfoShowReceiptDialog;
+        eachImageAdapter = new EachImageShowReceiptAdapter(ChattingActivity.this);
+        eachInfoAdapter = new EachInfoShowReceiptAdapter(ChattingActivity.this);
+        eachInfoShowReceiptDialog = new EachInfoShowReceiptDialog(ChattingActivity.this, eachInfoAdapter, eachImageAdapter, roomID, userName, userEmail, isLock);
+
+        eachInfoShowReceiptDialog.show();
+        eachInfoShowReceiptDialog.setCanceledOnTouchOutside(false);
+    }
+
+
+    //* open web
+    public void openWeb(Context context, String url) {
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
+
+        // Parse the URI and create the intent.
+        Uri webPage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
+
+        // Find an activity to hand the intent and start that activity.
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
+        } else {
+            Toast.makeText(context, "Wrong Address. Try again.", Toast.LENGTH_LONG).show();
+            Log.d("ImplicitIntents", "Can't handle this intent!");
+        }
+    }
+
+    //* user exit room
+    public void sendRoomidToServer(){
         class sendData extends AsyncTask<Void, Void, String> {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                ShowReceiptEachInfoDialog showReceiptEachInfoDialog;
-                each_recyclerAdapter = new ShowReceiptEachInfoAdapter(ChattingActivity.this, each_orderInfos);
-                showReceiptEachInfoDialog = new ShowReceiptEachInfoDialog(ChattingActivity.this, each_recyclerAdapter);
-
-                showReceiptEachInfoDialog.show();
-                showReceiptEachInfoDialog.setCanceledOnTouchOutside(false);
-            }
-            @Override
-            protected void onProgressUpdate(Void... values) {
-                super.onProgressUpdate(values);
-            }
-            @Override
-            protected void onCancelled(String s) {
-                super.onCancelled(s);
-            }
-            @Override
-            protected void onCancelled() {
-                super.onCancelled();
             }
             @Override
             protected String doInBackground(Void... voids) {
                 try {
                     OkHttpClient client = new OkHttpClient();
+
                     JSONObject jsonInput = new JSONObject();
+                    jsonInput.put("room_id", roomID);
+
+                    RequestBody reqBody = RequestBody.create(
+                            MediaType.parse("application/json; charset=utf-8"),
+                            jsonInput.toString()
+                    );
 
                     Request request = new Request.Builder()
-                            .url(receiptUrls + File.separator + "7"+ File.separator + MyData.mail)
+                            .put(reqBody)
+                            .url(roomIDUrls + "/" + "7")
                             .build();
 
                     Response responses = null;
                     responses = client.newCall(request).execute();
 
-                    JSONObject jObject = new JSONObject(responses.body().string());
-                    JSONArray jArray = jObject.getJSONArray("data");
-
-                    for (int i = 0; i < jArray.length(); i++) {
-                        JSONObject obj = jArray.getJSONObject(i);
-                        OrderInfo temp = new OrderInfo();
-                        temp.setStuffName(obj.getString("stuff_name"));
-                        temp.setCost(obj.getString("stuff_cost"));
-                        temp.setNum(Integer.toString(obj.getInt("stuff_num")));
-                        //이미지 정보 추가해야함.
-                        each_orderInfos.add(temp);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
                 return null;
@@ -973,6 +1048,5 @@ public class ChattingActivity extends AppCompatActivity {
         sendData sendData = new sendData();
         sendData.execute();
     }
-
 
 }

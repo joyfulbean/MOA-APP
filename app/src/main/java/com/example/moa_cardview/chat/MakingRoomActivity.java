@@ -71,6 +71,10 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     private LinearLayout foodLayout;
     private LinearLayout stuffLayout;
 
+    // for intput
+    private TextView title;
+    private TextView place;
+
 
     private TextView stuffAddressText;
     private TextView placeName;
@@ -111,13 +115,20 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 checkingRadio = (String) radioStuffButton.getText();
                 setting(checkingRadio);
 
-                if(isValidString()) {
-                    Log.i("isValid","It is valid");
-                    sendServer();
+                if(title.getText().toString().length() != 0 && place.getText().toString().length() != 0){
+                    if(isValidString()) {
+                        Log.i("isValid","It is valid");
+                        sendServer();
+                    }
+                    else{
+                        Toast.makeText(MakingRoomActivity.this, "사용할 수 없는 특수문자가 사용되었습니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(MakingRoomActivity.this, "*가 표시된 필수 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+
                 }
-                else{
-                    Toast.makeText(MakingRoomActivity.this, "사용할 수 없는 특수문자가 사용되었습니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show();
-                }
+
+
             }
         });
 
@@ -239,13 +250,13 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     //* getting the info
     public void setting(String checkingRadio){
         //제목
-        TextView title = findViewById(R.id.createroom_stuffTitle_edittext);
+        title = findViewById(R.id.createroom_stuffTitle_edittext);
         //날짜
         stuffDateText = findViewById(R.id.createroom_stuff_date_textview);
         //시간
         TimePicker time = findViewById(R.id.createroom_stuff_timepicker);
         //장소
-        TextView place = findViewById(R.id.createroom_stuffaddress_textview);
+        place = findViewById(R.id.createroom_stuffaddress_textview);
         //링크
         TextView link = findViewById(R.id.createroom_stuffLink_edittext);
         //가격

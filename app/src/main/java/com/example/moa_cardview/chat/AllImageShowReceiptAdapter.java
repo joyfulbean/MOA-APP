@@ -26,7 +26,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ShowReceiptAllImageAdapter extends BaseAdapter {
+public class AllImageShowReceiptAdapter extends BaseAdapter {
     private ArrayList<Bitmap> imgBitmap;
     private ImageView imageView;
     private Context context;
@@ -35,7 +35,7 @@ public class ShowReceiptAllImageAdapter extends BaseAdapter {
 
 
 
-    public ShowReceiptAllImageAdapter(Context context) {
+    public AllImageShowReceiptAdapter(Context context) {
         this.context = context;
         mLayoutInflater = LayoutInflater.from(context);
     }

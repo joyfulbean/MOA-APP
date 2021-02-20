@@ -82,5 +82,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'com.google.android.material:material:1.1.0-beta01'
 
+    //for butto
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

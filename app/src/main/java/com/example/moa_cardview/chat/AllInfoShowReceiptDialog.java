@@ -10,15 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.example.moa_cardview.R;
-import com.example.moa_cardview.receipt.ImageAdapter;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -27,13 +23,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class ShowReceiptAllInfoDialog extends Dialog implements View.OnClickListener{
+public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickListener{
 
-    public ShowReceiptAllInfoDialog(Context context, int themeResId) {
+    public AllInfoShowReceiptDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
 
-    public ShowReceiptAllInfoDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
+    public AllInfoShowReceiptDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 
@@ -43,25 +39,28 @@ public class ShowReceiptAllInfoDialog extends Dialog implements View.OnClickList
     private ImageButton popupCloseButton;
     private ArrayList<String> imgUri = new ArrayList<>();
     private String roomId;
+    private String totalCost;
+    private TextView cost;
 
     private ListView listView;
-    private ShowReceiptAllImageAdapter imageAdapter;
+    private AllImageShowReceiptAdapter imageAdapter;
 
     private ListView listViewImage;
-    private ShowReceiptAllInfoAdapter infoAdapter;
+    private AllInfoShowReceiptAdapter infoAdapter;
     private ArrayList<Bitmap> imageBitmap = new ArrayList<>();
     private static final String postUrl = "http://54.180.8.235:5000/static/receipts/";
 
 
 
 
-    public ShowReceiptAllInfoDialog(Activity a, ShowReceiptAllInfoAdapter infoAdapter, ShowReceiptAllImageAdapter imageAdapter, ArrayList<String> imgUri, String roomId) {
+    public AllInfoShowReceiptDialog(Activity a, AllInfoShowReceiptAdapter infoAdapter, AllImageShowReceiptAdapter imageAdapter, ArrayList<String> imgUri, String roomId, String totalCost) {
         super(a);
         this.activity = a;
         this.infoAdapter = infoAdapter;
         this.imageAdapter = imageAdapter;
         this.imgUri = imgUri;
         this.roomId = roomId;
+        this.totalCost = totalCost;
         setupLayout();
     }
 
@@ -75,6 +74,8 @@ public class ShowReceiptAllInfoDialog extends Dialog implements View.OnClickList
         setContentView(R.layout.whole_receipt_popup);
         listView = findViewById(R.id.all_receipt_show_list);
         listView.setAdapter(infoAdapter);
+        cost = findViewById(R.id.wholereceipt_popup_wholecost);
+        cost.setText("총 " + totalCost + "원");
 //        infoAdapter.notifyDataSetChanged();
 
 

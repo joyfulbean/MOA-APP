@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,59 +21,69 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ShowReceiptEachInfoDialog extends Dialog implements View.OnClickListener{
+public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickListener{
 
-    public ShowReceiptEachInfoDialog(Context context, int themeResId) {
+    public EachInfoShowReceiptDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
 
-    public ShowReceiptEachInfoDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
+    public EachInfoShowReceiptDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 
 
     public Activity activity;
     public Dialog dialog;
-    private ImageButton popupCloseButton;
-    private ArrayList<String> imgUri = new ArrayList<>();
     private String roomId;
-    private TextView name;
+    private String totalCost;
+    private boolean isLock;
 
-    // name
+    // screen
+    private ImageButton popupCloseButton;
+    private TextView name;
+    private TextView cost;
+    private TextView editButton;
+
+    // personal information
     private String userName;
     private String userEmail;
 
     // order info
     private ListView listView;
-    private AllImageShowReceiptAdapter imageAdapter;
+    private EachImageShowReceiptAdapter imageAdapter;
     private ArrayList<OrderInfo> each_orderInfos = new ArrayList<>();
     private static final String receiptInfoUrls = "http://54.180.8.235:5000/receipt";
 
     private ListView listViewImage;
     private EachInfoShowReceiptAdapter infoAdapter;
+    private ArrayList<String> imgUrls = new ArrayList<>();
     private ArrayList<Bitmap> imageBitmap = new ArrayList<>();
+    private static final String imageInfoUrls = "http://54.180.8.235:5000/receipt/image";
     private static final String postUrl = "http://54.180.8.235:5000/static/receipts/";
 
 
 
 
-    public ShowReceiptEachInfoDialog(Activity a, EachInfoShowReceiptAdapter infoAdapter, String roomId, String userName, String userEmail) {
+    public EachInfoShowReceiptDialog(Activity a, EachInfoShowReceiptAdapter infoAdapter, EachImageShowReceiptAdapter imageAdapter, String roomId, String userName, String userEmail, boolean isLock) {
         super(a);
         this.activity = a;
         this.infoAdapter = infoAdapter;
         this.userName = userName;
         this.userEmail = userEmail;
         this.imageAdapter = imageAdapter;
-        this.imgUri = imgUri;
         this.roomId = roomId;
+        this.isLock = isLock;
         setupLayout();
     }
 
@@ -85,10 +96,26 @@ public class ShowReceiptEachInfoDialog extends Dialog implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.individual_receipt_popup);
         listView = findViewById(R.id.each_receipt_show_list);
+        listViewImage = findViewById(R.id.each_receipt_show_list_image);
+
+        cost = findViewById(R.id.individualreceipt_popup_wholecost);
         receiveEachOrderInfo();
+
         name = findViewById(R.id.name);
         name.setText(userName);
 
+        editButton = findViewById(R.id.individualreceipt_edit_button);
+        if(isLock){
+            editButton.setVisibility(View.GONE);
+        }else {
+            editButton.setVisibility(View.VISIBLE);
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        }
 
         popupCloseButton = (ImageButton) findViewById(R.id.individualreceipt_popup_closebutton);
         popupCloseButton.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +156,17 @@ public class ShowReceiptEachInfoDialog extends Dialog implements View.OnClickLis
                 ViewGroup.LayoutParams params = listView.getLayoutParams();
                 params.height = totalHeight + (listView.getDividerHeight() * (infoAdapter.getCount() - 1));
                 listView.setLayoutParams(params);
+
+                // for image list view
+                imageAdapter.setImgBitmap(imageBitmap);
+                listViewImage.setAdapter(imageAdapter);
+
+                for(int i = 0; i < imgUrls.size(); i++){
+                    eachLoadImageTask imageTask = new eachLoadImageTask(postUrl + roomId + File.separator + imgUrls.get(i));
+                    imageTask.execute();
+                }
+
+                cost.setText("총 " + totalCost + "원");
             }
             @Override
             protected void onProgressUpdate(Void... values) {
@@ -168,6 +206,32 @@ public class ShowReceiptEachInfoDialog extends Dialog implements View.OnClickLis
                         //이미지 정보 추가해야함.
                         each_orderInfos.add(temp);
                     }
+
+                    //get info totalCost
+
+                    OkHttpClient clientImage = new OkHttpClient();
+
+                    Request requestImage = new Request.Builder()
+                            .url(imageInfoUrls + File.separator + roomId + File.separator + userEmail)
+                            .build();
+
+                    Response responsesImage = null;
+                    responsesImage = clientImage.newCall(requestImage).execute();
+
+
+                    JSONObject jObjectImage = new JSONObject(responsesImage.body().string());
+                    JSONArray jArrayImage = jObjectImage.getJSONArray("data");
+
+                    Log.i("jArrayImage.length()", String.valueOf(jArrayImage.length()));
+                    for (int i = 0; i < jArrayImage.length(); i++) {
+                        String url = jArrayImage.getString(i);
+                        Log.i("jArrayImage.length()", url);
+                        imgUrls.add(url);
+                    }
+                    //get image totalCost
+
+                    //sum totalCost
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -178,6 +242,53 @@ public class ShowReceiptEachInfoDialog extends Dialog implements View.OnClickLis
         }
         sendData sendData = new sendData();
         sendData.execute();
+    }
+
+    public class eachLoadImageTask extends AsyncTask<Bitmap, Void, Bitmap> {
+        private String url;
+
+        public eachLoadImageTask(String url) {
+            this.url = url;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Bitmap... params) {
+
+            Bitmap imgBitmap = null;
+
+            try {
+                URL url1 = new URL(url);
+                URLConnection conn = url1.openConnection();
+                conn.connect();
+                int nSize = conn.getContentLength();
+                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream(), nSize);
+                imgBitmap = BitmapFactory.decodeStream(bis);
+                bis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return imgBitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bit) {
+            super.onPostExecute(bit);
+            imageBitmap.add(bit);
+            imageAdapter.notifyDataSetChanged();
+
+            // ListView 크기 조절 - image view
+            int totalHeightImage = 0;
+            for (int i = 0; i < imageAdapter.getCount(); i++) {
+                View listItem = imageAdapter.getView(i, null, listViewImage);
+                listItem.measure(0, 0);
+                totalHeightImage += listItem.getMeasuredHeight();
+                Log.i("view sizezze image", String.valueOf(listItem.getMeasuredHeight())); //result 623
+            }
+            ViewGroup.LayoutParams paramsImage = listViewImage.getLayoutParams();
+            paramsImage.height = totalHeightImage + (listViewImage.getDividerHeight() * (imageAdapter.getCount() - 1));
+            listViewImage.setLayoutParams(paramsImage);
+        }
     }
 
 }
