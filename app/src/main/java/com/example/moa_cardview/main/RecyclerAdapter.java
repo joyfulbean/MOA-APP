@@ -93,6 +93,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         TextView stuffDate;
         TextView stuffPlace;
         TextView stuffPrice;
+        TextView stuffTime;
         TextView stuffPeopleNum;
         TextView stuffUrlTitle;
         ImageView stuffImage;
@@ -103,6 +104,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         TextView ogTitle;
         TextView ogContent;
         ImageButton threeroundbutton;
+        TextView time;
+        TextView date;
 
 
         public MyViewHolder(final View itemView) {
@@ -111,7 +114,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             //* for displaying screen info
             stuffTitle = (TextView) itemView.findViewById(R.id.post_title_textview);
             stuffDate = (TextView) itemView.findViewById(R.id.post_date_textview);
+            date = (TextView) itemView.findViewById(R.id.post_datetitle_textview);
             stuffPlace = (TextView) itemView.findViewById(R.id.post_place_textview);
+            stuffTime = (TextView) itemView.findViewById(R.id.post_time_textview);
+            time = (TextView) itemView.findViewById(R.id.post_timetitle_textview);
 //            stuffPrice = (TextView) itemView.findViewById(R.id.post_cost_textview);
             stuffPeopleNum = (TextView) itemView.findViewById(R.id.post_pplnumber_textview);
             stuffUrlTitle = (TextView) itemView.findViewById(R.id.post_preview_tv1);
@@ -130,6 +136,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                     openWeb(context, stuff.get(getAdapterPosition()).getStuffLink());
                 }
             });
+
 
             threeroundbutton = itemView.findViewById(R.id.post_threeroundbutton);
             threeroundbutton.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +188,58 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 }
             });
         }
+    }
+
+    //* initial card view info
+    @Override
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        holder.stuffTitle.setText(stuff.get(position).getTitle());
+        //날짜
+        String order_date = stuff.get(position).getOrderDate();
+
+        if (order_date == null){
+//            Log.i("suff________", "???1");
+            holder.date.setText("");
+            holder.stuffDate.setText("");
+//            holder.date.setVisibility(View.GONE);
+//            holder.stuffDate.setVisibility(View.GONE);
+        }
+        else{
+            holder.stuffDate.setText(order_date);
+//            Log.i("suff________", order_date);
+        }
+        //시간
+        String order_time = stuff.get(position).getOrderTime();
+
+        if (order_time == null){
+//            Log.i("suff________", "???2");
+//            holder.time.setVisibility(View.GONE);
+//            holder.stuffTime.setVisibility(View.GONE);
+            holder.time.setText("");
+            holder.stuffTime.setText("");
+        }
+        else{
+            holder.stuffTime.setText(order_time);
+//            Log.i("suff________", order_time);
+        }
+        //장소들
+        holder.stuffPlace.setText(stuff.get(position).getPlace());
+//        holder.stuffPrice.setText(stuff.get(position).getStuffCost());
+        //사람수
+        holder.stuffPeopleNum.setText(stuff.get(position).getNumUsers());
+
+        holder.ogTitle.setText(stuff.get(position).getOgTitle());
+        holder.ogContent.setText(stuff.get(position).getStuffLink());
+
+        //날짜가 null이면 흰색보여지기, 시간이 null이면 비우기.
+
+        boolean isExpandable = stuff.get(position).isExpandable();
+
+        if (isExpandable)
+            Picasso.get().load(stuff.get(position).getImageUrl()).into(holder.stuffImage);
+
+        holder.expandLayout.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
+        //여기서 이미지를 띄우면 될 듯
     }
 
     public void popupLeave(final int position, View v){
@@ -337,26 +396,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         }
     }
 
-    //* initial card view info
-    @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.stuffTitle.setText(stuff.get(position).getTitle());
-        holder.stuffDate.setText(stuff.get(position).getOrderDate());
-        holder.stuffPlace.setText(stuff.get(position).getPlace());
-//        holder.stuffPrice.setText(stuff.get(position).getStuffCost());
-        holder.stuffPeopleNum.setText(stuff.get(position).getNumUsers());
-        holder.ogTitle.setText(stuff.get(position).getOgTitle());
-        holder.ogContent.setText(stuff.get(position).getStuffLink());
-
-
-        boolean isExpandable = stuff.get(position).isExpandable();
-
-        if (isExpandable)
-            Picasso.get().load(stuff.get(position).getImageUrl()).into(holder.stuffImage);
-
-        holder.expandLayout.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
-        //여기서 이미지를 띄우면 될 듯
-    }
 
     //* the number of card view
     @Override

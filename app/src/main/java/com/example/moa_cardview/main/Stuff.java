@@ -251,8 +251,8 @@ public class Stuff extends Fragment {
                         JSONObject obj = jArray.getJSONObject(i);
                         StuffInfo temp = new StuffInfo();
                         temp.setTitle(obj.getString("title"));
-                        //temp.setOrderDate(obj.getString("order_date"));
-                        //temp.setOrderTime(obj.getString("order_time"));
+                        temp.setOrderDate(obj.getString("order_date"));
+                        temp.setOrderTime(obj.getString("order_time"));
                         temp.setPlace(obj.getString("place"));
                         temp.setNumUsers(obj.getString("num_user"));
                         //temp.setStuffCost(obj.getString("stuff_cost")+"원");
