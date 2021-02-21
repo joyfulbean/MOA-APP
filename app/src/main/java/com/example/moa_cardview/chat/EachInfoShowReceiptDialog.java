@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.moa_cardview.R;
+import com.example.moa_cardview.data.OrderArrayList;
 import com.example.moa_cardview.data.OrderInfo;
 
 import org.json.JSONArray;
@@ -48,7 +50,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
     public Dialog dialog;
     private String roomId;
     private String totalCost;
-    private boolean isLock;
+    private boolean who;
 
     // screen
     private ImageButton popupCloseButton;
@@ -69,6 +71,8 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
     private ListView listViewImage;
     private EachInfoShowReceiptAdapter infoAdapter;
     private ArrayList<String> imgUrls = new ArrayList<>();
+    private ArrayList<Integer> imageCost = new ArrayList<>();
+    private ArrayList<OrderInfo> imgEachOrderInfos = new ArrayList<>();
     private ArrayList<Bitmap> imageBitmap = new ArrayList<>();
     private static final String imageInfoUrls = "http://54.180.8.235:5000/receipt/image";
     private static final String postUrl = "http://54.180.8.235:5000/static/receipts/";
@@ -76,7 +80,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
 
 
 
-    public EachInfoShowReceiptDialog(Activity a, EachInfoShowReceiptAdapter infoAdapter, EachImageShowReceiptAdapter imageAdapter, String roomId, String userName, String userEmail, boolean isLock) {
+    public EachInfoShowReceiptDialog(Activity a, EachInfoShowReceiptAdapter infoAdapter, EachImageShowReceiptAdapter imageAdapter, String roomId, String userName, String userEmail, boolean who) {
         super(a);
         this.activity = a;
         this.infoAdapter = infoAdapter;
@@ -84,7 +88,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
         this.userEmail = userEmail;
         this.imageAdapter = imageAdapter;
         this.roomId = roomId;
-        this.isLock = isLock;
+        this.who = who;
         setupLayout();
     }
 
@@ -106,19 +110,23 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
         name.setText(userName);
 
         editButton = findViewById(R.id.individualreceipt_edit_button);
-        if(isLock){
+        if(!who){
             editButton.setVisibility(View.GONE);
         }else {
             editButton.setVisibility(View.VISIBLE);
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    OrderArrayList orderArrayList = new OrderArrayList(each_orderInfos, imgEachOrderInfos);
                     Intent intent = new Intent(activity, EditOrderListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("each_orderInfos", each_orderInfos);
-                    intent.putExtra("imgUrls", imgUrls);
-                    intent.putExtra("imageBitmap",imageBitmap);
+                    intent.putExtra("image_url", imgUrls);
+                    intent.putExtra("image_cost", imageCost);
+//                    intent.putExtra("imgEachOrderInfos", imgEachOrderInfos);
+                    intent.putExtra("room_id", roomId);
                     activity.startActivity(intent);
+                    dismiss();
                 }
             });
         }
@@ -148,6 +156,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                //* for write list view
                 infoAdapter.setOrderInfos(each_orderInfos);
                 listView.setAdapter(infoAdapter);
 
@@ -231,9 +240,19 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
 
                     Log.i("jArrayImage.length()", String.valueOf(jArrayImage.length()));
                     for (int i = 0; i < jArrayImage.length(); i++) {
-                        String url = jArrayImage.getString(i);
+                        JSONObject obj = jArrayImage.getJSONObject(i);
+
+                        String url = obj.getString("image_path");
                         Log.i("jArrayImage.length()", url);
                         imgUrls.add(url);
+
+                        int cost = obj.getInt("image_cost");
+                        imageCost.add(cost);
+
+                        OrderInfo temp = new OrderInfo();
+                        temp.setFilePath(Uri.parse(url));
+                        temp.setCost(Integer.toString(cost));
+                        imgEachOrderInfos.add(temp);
                     }
                     //get image totalCost
                     int imageTotalCost = jObjectImage.getInt("total_cost");

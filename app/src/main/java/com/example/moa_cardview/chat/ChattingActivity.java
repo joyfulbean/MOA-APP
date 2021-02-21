@@ -68,6 +68,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -212,15 +213,21 @@ public class ChattingActivity extends AppCompatActivity {
         });
 
         //* send account
+        //* send account
         bankButton = findViewById(R.id.chatpage_dutchpaybutton);
         bankButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences preferences = getSharedPreferences("info",MODE_PRIVATE);
                 MyData.account = preferences.getString("account", null);
-                String account_data[] = MyData.account.split(" ");
-                String account_setting = account_data[0] + account_data[1] + "\n" + "(" + account_data[2] + ")";
-                messageContent.setText(account_setting);
+                if (MyData.account == null) { // <-- safe if called_from is null
+                    Toast.makeText(ChattingActivity.this, "프로필에 본인의 계좌번호를 먼저 등록해 주세요.", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    String account_data[] = MyData.account.split(" ");
+                    String account_setting = account_data[0] + account_data[1] + "\n" + "(" + account_data[2] + ")";
+                    messageContent.setText(account_setting);
+                }
             }
         });
 
@@ -254,7 +261,7 @@ public class ChattingActivity extends AppCompatActivity {
 
 
         //camera
-        cameraButton = findViewById(R.id.chatpage_camerabutton);
+        /*cameraButton = findViewById(R.id.chatpage_camerabutton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -276,7 +283,7 @@ public class ChattingActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.CAMERA},
                         MY_PERMISSIONS_REQUEST_CAMERA);
             }
-        }
+        }*/
 
         // gallery
         galleryButton = findViewById(R.id.chatpage_photobutton);
@@ -417,7 +424,7 @@ public class ChattingActivity extends AppCompatActivity {
                 eachListButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        eachOrderInfoOpenDialog(MyData.getName(), MyData.getMail());
+                        eachOrderInfoOpenDialog(MyData.getName(), MyData.getMail(), true);
                     }
                 });
 
@@ -588,7 +595,7 @@ public class ChattingActivity extends AppCompatActivity {
 
         linkUrl = chattingInfo.getStuffLink();
 
-        if("구미중".equals(chattingInfo.getStatus())){
+        if("구매중".equals(chattingInfo.getStatus())){
             lockButton.setChecked(true);
         }
     }
@@ -621,7 +628,7 @@ public class ChattingActivity extends AppCompatActivity {
 
             if(rRoomMembers.get(position).getPhonNumber().equals("null") || rRoomMembers.get(position).getPhonNumber().isEmpty()) {
                 Log.i("phone", "null input");
-                phone.setVisibility(View.GONE);
+                phone.setVisibility(View.INVISIBLE);
             }else {
                 Log.i("phone", rRoomMembers.get(position).getPhonNumber());
             }
@@ -635,7 +642,7 @@ public class ChattingActivity extends AppCompatActivity {
             receipt.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    eachOrderInfoOpenDialog(rRoomMembers.get(position).getName(), rRoomMembers.get(position).getMail());
+                    eachOrderInfoOpenDialog(rRoomMembers.get(position).getName(), rRoomMembers.get(position).getMail(), false);
                 }
             });
             return row;
@@ -778,6 +785,7 @@ public class ChattingActivity extends AppCompatActivity {
                     chattingInfo.setNumUsers(obj.getString("num_user"));
                     chattingInfo.setCreatorEmail(obj.getString("creator_email"));
                     chattingInfo.setStatus(obj.getString("status"));
+                    chattingInfo.setStuffLink(obj.getString("stuff_link"));
 //                    chattingInfo.setStuffCost(obj.getString("stuff_cost")+"원");
 //                    chattingInfo.setStuffLink(obj.getString("stuff_link"));
 //                    chattingInfo.setCreatorName(obj.getString("creator_name"));
@@ -957,7 +965,9 @@ public class ChattingActivity extends AppCompatActivity {
 
                     Log.i("jArrayImage.length()", String.valueOf(jArrayImage.length()));
                     for (int i = 0; i < jArrayImage.length(); i++) {
-                        String url = jArrayImage.getString(i);
+                        JSONObject obj = jArrayImage.getJSONObject(i);
+
+                        String url = obj.getString("image_path");
                         Log.i("jArrayImage.length()", url);
                         imgUrls.add(url);
                     }
@@ -981,11 +991,11 @@ public class ChattingActivity extends AppCompatActivity {
     }
 
     //* receive orderInfo, for show all receipt info
-    public void eachOrderInfoOpenDialog(String userName, String userEmail){
+    public void eachOrderInfoOpenDialog(String userName, String userEmail, boolean who){
         EachInfoShowReceiptDialog eachInfoShowReceiptDialog;
         eachImageAdapter = new EachImageShowReceiptAdapter(ChattingActivity.this);
         eachInfoAdapter = new EachInfoShowReceiptAdapter(ChattingActivity.this);
-        eachInfoShowReceiptDialog = new EachInfoShowReceiptDialog(ChattingActivity.this, eachInfoAdapter, eachImageAdapter, roomID, userName, userEmail, isLock);
+        eachInfoShowReceiptDialog = new EachInfoShowReceiptDialog(ChattingActivity.this, eachInfoAdapter, eachImageAdapter, roomID, userName, userEmail, who);
 
         eachInfoShowReceiptDialog.show();
         eachInfoShowReceiptDialog.setCanceledOnTouchOutside(false);
@@ -1046,6 +1056,13 @@ public class ChattingActivity extends AppCompatActivity {
         }
         sendData sendData = new sendData();
         sendData.execute();
+    }
+
+    public void edit_room_info(View view) {
+        Intent intent = new Intent(ChattingActivity.this, EditRoomActivity.class);
+        intent.putExtra("stuff_info", (Serializable) chattingInfo);
+        intent.putExtra("room_id", roomID);
+        startActivity(intent);
     }
 
 }

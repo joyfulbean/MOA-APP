@@ -19,8 +19,6 @@ public class EachImageShowReceiptAdapter extends BaseAdapter {
     private String roomId;
     private LayoutInflater mLayoutInflater = null;
 
-
-
     public EachImageShowReceiptAdapter(Context context) {
         this.context = context;
         mLayoutInflater = LayoutInflater.from(context);

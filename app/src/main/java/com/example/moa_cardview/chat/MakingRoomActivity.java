@@ -159,11 +159,11 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             public void onClick(View view) {
                 if(orderTimeCB.isChecked()) {
                     findViewById(R.id.createroom_stuff_timepicker).setVisibility(View.VISIBLE);
-                    findViewById(R.id.order_time_line).setVisibility(View.VISIBLE);
+//                    findViewById(R.id.order_time_line).setVisibility(View.VISIBLE);
                 }
                 else {
                     findViewById(R.id.createroom_stuff_timepicker).setVisibility(View.GONE);
-                    findViewById(R.id.order_time_line).setVisibility(View.GONE);
+//                    findViewById(R.id.order_time_line).setVisibility(View.GONE);
                 }
             }
         });

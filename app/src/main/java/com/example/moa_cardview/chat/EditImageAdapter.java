@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditImageAdapter extends BaseAdapter {
-    Context context = null;
-    LayoutInflater mLayoutInflater = null;
-    ArrayList<OrderInfo> orderinfos;
-    ListView listView;
+    private Context context = null;
+    private LayoutInflater mLayoutInflater = null;
+    private ArrayList<OrderInfo> imageInfo;
+    private ArrayList<Bitmap> imgBitmap;
+    private ArrayList<OrderInfo> deleteImageInfo = new ArrayList<>();
+    private ListView listView;
 
-    public EditImageAdapter(Context context, ArrayList<OrderInfo> data) {
-        context = context;
-        orderinfos = data;
+
+    public void setImgBitmap(ArrayList<Bitmap> imgBitmap) {
+        this.imgBitmap = imgBitmap;
+    }
+
+    public ArrayList<OrderInfo> getDeleteImageInfo(){
+        return deleteImageInfo;
+    }
+
+    public EditImageAdapter(Context context, ArrayList<OrderInfo> imageUrls) {
+        this.context = context;
+        this.imageInfo = imageUrls;
         mLayoutInflater = LayoutInflater.from(context);
     }
 
@@ -37,7 +49,7 @@ public class EditImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return orderinfos.size();
+        return imgBitmap.size();
     }
 
     @Override
@@ -46,8 +58,8 @@ public class EditImageAdapter extends BaseAdapter {
     }
 
     @Override
-    public OrderInfo getItem(int position) {
-        return orderinfos.get(position);
+    public Bitmap getItem(int position) {
+        return imgBitmap.get(position);
     }
 
     @Override
@@ -56,34 +68,25 @@ public class EditImageAdapter extends BaseAdapter {
 
 
         ImageView image = view.findViewById(R.id.image);
+        image.setImageBitmap(imgBitmap.get(position));
+
         TextView cost = (TextView) view.findViewById(R.id.order_myorderimage_price1);
+        cost.setText(imageInfo.get(position).getCost());
 
-        Uri filePath = orderinfos.get(position).getFilePath();
-
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(), filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        image.setImageBitmap(bitmap);
-
-        cost.setText(orderinfos.get(position).getCost());
 
         ImageButton deleteButton = (ImageButton) view.findViewById(R.id.order_myorderimage_closebutton1);
-        deleteButton.setOnClickListener((View.OnClickListener) context);
-        deleteButton.setTag("D" + position);
-
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                orderinfos.remove(getItem(position));
+                deleteImageInfo.add(imageInfo.get(position));
+                Log.i("??????????? delte", imageInfo.get(position).getFilePath().toString());
+                imgBitmap.remove(position);
+                imageInfo.remove(position);
 
                 // 삭제시 뷰 사이즈 조절
                 ViewGroup.LayoutParams params = listView.getLayoutParams();
                 params.height = (623 * getCount()) + (listView.getDividerHeight() * (getCount() - 1));
                 listView.setLayoutParams(params);
-
                 notifyDataSetChanged();
             }
         });
