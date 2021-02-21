@@ -13,15 +13,17 @@
 
         <ImageButton
             android:id="@+id/order_backbutton"
-            android:layout_width="16dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/backarrow"
             android:background="@null"
             android:scaleType="fitCenter"
+            android:src="@drawable/backarrow"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginStart="12dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="14dp"/>
+            android:layout_alignParentBottom="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,7 +31,7 @@
             android:fontFamily="@font/bold"
             android:text="주문서"
             android:textColor="@color/white"
-            android:textSize="15.24dp"
+            android:textSize="16dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -62,14 +64,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:fontFamily="@font/bold"
-                    android:text="주문정보"
+                    android:text="주문 정보"
                     android:textColor="@color/black"
                     android:textSize="16dp"/>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp">
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="16dp">
 
                     <TextView
                         android:id="@+id/order_product_label"
@@ -96,7 +99,36 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
+                        android:id="@+id/order_place_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="수령 장소:"/>
+
+                    <TextView
+                        android:id="@+id/order_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@id/order_place_label"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:text="하용조관"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="16dp">
 
                     <TextView
                         android:id="@+id/order_date_label"
@@ -123,7 +155,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="16dp">
 
                     <TextView
                         android:id="@+id/order_time_label"
@@ -147,39 +180,22 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
-
-                    <TextView
-                        android:id="@+id/order_place_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="수령 장소:"/>
-
-                    <TextView
-                        android:id="@+id/order_place"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@id/order_place_label"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="하용조관"/>
-
-                </RelativeLayout>
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/bold"
+                    android:text="상품 추가"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
 
                 <LinearLayout
                     android:id="@+id/write_suff_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="50dp">
+                    android:layout_marginTop="30dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -223,8 +239,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginTop="9dp"
-                        android:layout_marginStart="15.24dp"
-                        android:layout_marginEnd="15.24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/longline_edit" />
 
                     <RelativeLayout
@@ -376,8 +392,8 @@
                     android:text="상품 추가"
                     android:paddingStart="40dp"
                     android:paddingEnd="40dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
                     android:textColor="@color/white"
                     android:textSize="16.76dp"
                     android:background="@drawable/add_order_button"
@@ -413,10 +429,6 @@
 
 
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/longline_edit"/>
 
             </LinearLayout>
 

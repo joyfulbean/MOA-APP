@@ -10,4 +10,5 @@
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_edit_order_list">EditOrderListActivity</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="tip_words">사진을 넣을 경우 <font color='#7B88FF'>장바구니</font>를 찍어주세요</string>
 </resources>

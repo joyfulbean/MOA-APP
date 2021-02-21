@@ -1,94 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.MainActivity"
-    android:orientation="vertical">
+    android:background="@color/white"
+    tools:context=".init.LoadingActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/splash_logo_imageview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="100dp"
-        android:orientation="vertical"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp">
+        android:src="@drawable/logosmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="110dp"/>
 
+    <TextView
+        android:id="@+id/google_signIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign In with Google"
+        android:background="@drawable/blue_round_button"
+        android:textColor="@color/white"
+        android:paddingStart="60dp"
+        android:paddingEnd="60dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/splash_logo_imageview"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:paddingTop="20sp"
-            android:shadowColor="#0E0E0E"
-            android:text="Sign In"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="45sp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:shadowColor="#0E0E0E"
-            android:text="Sign-In with Google using Firebase!"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="14sp" />
-
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="100dp"/>
-
-
-        <Button
-            android:id="@+id/google_signIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:text="Sign In with Google"
-            android:textColor="#fff" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp"
-            android:layout_marginTop="160dp">
-
-
-
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:gravity="bottom"
-            android:includeFontPadding="false"
-            android:shadowColor="#0E0E0E"
-            android:text="Taimoor Sikander - Coding with T"
-            android:textColor="#000000"
-            android:textSize="14sp" />
-
-
-    </LinearLayout>
-
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

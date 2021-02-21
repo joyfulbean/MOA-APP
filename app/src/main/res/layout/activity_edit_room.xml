@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/phonenumber_upperbarlayout_for_edit_room"
+        android:layout_width="match_parent"
+        android:layout_height="45.71dp"
+        android:background="@color/blue">
+
+        <ImageButton
+            android:id="@+id/createroom_backbutton_for_edit_room"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/backarrow"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="13.33dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="방 정보 수정"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="15.24dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/edit_room_stufflayout_for_edit_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/stuff_name"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_room_stuffTitle_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginTop="22.86dp"
+                    android:layout_marginEnd="15.24dp"
+                    android:background="@null"
+                    android:fontFamily="@font/regular"
+                    android:hint="상품 이름"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/longline_edit" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/stuff_place"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22.86dp">
+
+                    <EditText
+                        android:id="@+id/edit_room_stuffaddress_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="15.24dp"
+                        android:layout_marginEnd="15.24dp"
+                        android:background="@null"
+                        android:fontFamily="@font/regular"
+                        android:hint="배달 장소"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/longline_edit" />
+
+                <CheckBox
+                    android:id="@+id/edit_order_date_CB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:fontFamily="@font/bold"
+                    android:text="주문 날짜"
+                    android:textColor="@color/black"
+                    android:textSize="15.24dp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/edit_order_date_RL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22.86dp">
+
+                        <TextView
+                            android:id="@+id/edit_room_stuff_date_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="15.24dp"
+                            android:fontFamily="@font/regular"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="13.71dp" />
+
+                        <ImageButton
+                            android:id="@+id/edit_room_stuff_date_button"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="15.24dp"
+                            android:background="@null"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/calendaricon" />
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="400dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/longline_edit" />
+
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/edit_order_time_CB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/bold"
+                    android:text="주문 시간"
+                    android:textColor="@color/black"
+                    android:textSize="15.24dp" />
+
+                <TimePicker
+                    android:id="@+id/edit_room_stuff_timepicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:timePickerMode="spinner"
+                    android:visibility="gone"/>
+
+                <CheckBox
+                    android:id="@+id/edit_stuff_link_CB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/bold"
+                    android:text="상품 링크"
+                    android:textColor="@color/black"
+                    android:textSize="15.24dp" />
+
+                <EditText
+                    android:id="@+id/edit_room_stuffLink_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginTop="22.86dp"
+                    android:layout_marginEnd="15.24dp"
+                    android:background="@null"
+                    android:fontFamily="@font/regular"
+                    android:hint="상품 링크"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:textSize="13.71dp"
+                    android:visibility="gone"/>
+
+                <ImageView
+                    android:id="@+id/edit_stuff_link_line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/longline_edit"
+                    android:visibility="gone"/>
+
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="240dp"
+                android:layout_height="38.1dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="45.71dp"
+                android:layout_marginBottom="38.1dp">
+
+                <ImageButton
+                    android:id="@+id/edit_room_edit_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/big_button" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="저장하기"
+                    android:textColor="@color/white"
+                    android:textSize="16.76dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

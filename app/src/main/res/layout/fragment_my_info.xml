@@ -24,8 +24,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:text="이름:"
-            android:textSize="12.2dp"
-            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:textColor="@color/darkgrey"
             android:fontFamily="@font/regular" />
 
         <TextView
@@ -37,8 +37,8 @@
             android:layout_toEndOf="@id/profileinfo_name_textview1"
             android:fontFamily="@font/regular"
             android:text="정수현"
-            android:textColor="@color/black"
-            android:textSize="12.2dp"/>
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp"/>
 
         <TextView
             android:id="@+id/profileinfo_email_textview1"
@@ -49,8 +49,8 @@
             android:layout_marginTop="15.24dp"
             android:fontFamily="@font/regular"
             android:text="이메일:"
-            android:textColor="@color/black"
-            android:textSize="12.2dp" />
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/profileinfo_email_textview2"
@@ -62,8 +62,8 @@
             android:layout_toEndOf="@id/profileinfo_email_textview1"
             android:fontFamily="@font/regular"
             android:text="21800663@handong.edu"
-            android:textColor="@color/black"
-            android:textSize="12.2dp" />
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/profileinfo_community_textview1"
@@ -74,8 +74,8 @@
             android:layout_marginTop="15.24dp"
             android:fontFamily="@font/regular"
             android:text="커뮤니티:"
-            android:textColor="@color/black"
-            android:textSize="12.2dp" />
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/profileinfo_community_textview2"
@@ -87,8 +87,8 @@
             android:layout_toEndOf="@id/profileinfo_community_textview1"
             android:fontFamily="@font/regular"
             android:text="한동대학교"
-            android:textColor="@color/black"
-            android:textSize="12.2dp" />
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp" />
 
     </RelativeLayout>
 
@@ -96,7 +96,7 @@
         android:id="@+id/profileinfo_lineseparater1"
         android:layout_width="380.95dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/longline"
+        android:src="@drawable/longline_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileinfo_layout1"
@@ -124,8 +124,8 @@
             android:layout_alignParentTop="true"
             android:fontFamily="@font/regular"
             android:text="전화번호:"
-            android:textColor="@color/black"
-            android:textSize="12.2dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp"
             android:gravity="center_vertical"/>
 
         <TextView
@@ -138,13 +138,13 @@
             android:fontFamily="@font/regular"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="12.2dp"
+            android:textSize="14dp"
             android:gravity="center_vertical"/>
 
         <ImageButton
             android:id="@+id/profileinfo_phonenumber_button"
-            android:layout_width="102.86dp"
-            android:layout_height="22.86dp"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
             android:src="@drawable/small_button"
             android:scaleType="fitCenter"
             android:background="@null"
@@ -161,7 +161,7 @@
             android:fontFamily="@font/bold"
             android:text="전화번호 등록"
             android:textColor="@color/white"
-            android:textSize="11.43dp"
+            android:textSize="14dp"
             android:textAlignment="gravity"
             android:gravity="center"/>
 
@@ -171,7 +171,7 @@
         android:id="@+id/profileinfo_lineseparater2"
         android:layout_width="380.95dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/longline"
+        android:src="@drawable/longline_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileinfo_layout2"
@@ -197,8 +197,8 @@
             android:layout_alignParentTop="true"
             android:fontFamily="@font/regular"
             android:text="계좌은행:"
-            android:textColor="@color/black"
-            android:textSize="12.2dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp"
             android:gravity="center_vertical"/>
 
         <TextView
@@ -210,8 +210,8 @@
             android:layout_marginStart="3.81dp"
             android:fontFamily="@font/regular"
             android:text=""
-            android:textColor="@color/black"
-            android:textSize="12.2dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp"
             android:gravity="center_vertical"/>
 
         <TextView
@@ -223,8 +223,8 @@
             android:fontFamily="@font/regular"
             android:layout_marginTop="15.24dp"
             android:text="계좌번호:"
-            android:textColor="@color/black"
-            android:textSize="12.2dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp"
             android:gravity="center_vertical"/>
 
         <TextView
@@ -237,7 +237,7 @@
             android:layout_marginTop="15.24dp"
             android:fontFamily="@font/regular"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/darkgrey"
             android:textSize="12.2dp"
             android:gravity="center_vertical"/>
 
@@ -257,8 +257,8 @@
             android:fontFamily="@font/regular"
             android:layout_marginTop="15.24dp"
             android:text="예금주:"
-            android:textColor="@color/black"
-            android:textSize="12.2dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="14dp"
             android:gravity="center_vertical"/>
 
         <TextView
@@ -271,14 +271,14 @@
             android:layout_marginTop="15.24dp"
             android:fontFamily="@font/regular"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/darkgrey"
             android:textSize="12.2dp"
             android:gravity="center_vertical"/>
 
         <ImageButton
             android:id="@+id/profileinfo_bank_button"
-            android:layout_width="102.86dp"
-            android:layout_height="22.86dp"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/profileinfo_bankname_textview1"
             android:layout_marginStart="196dp"
@@ -298,7 +298,7 @@
             android:text="계좌 등록"
             android:textAlignment="gravity"
             android:textColor="@color/white"
-            android:textSize="11.43dp" />
+            android:textSize="14dp" />
 
     </RelativeLayout>
 
@@ -306,61 +306,26 @@
         android:id="@+id/profileinfo_lineseparater3"
         android:layout_width="380.95dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/longline"
+        android:src="@drawable/longline_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileinfo_layout3"
         android:layout_marginTop="22.86dp" />
 
-    <RelativeLayout
-        android:id="@+id/profileinfo_layout4"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileinfo_lineseparater3"
-        android:layout_marginStart="30.48dp"
-        android:layout_marginEnd="30.48dp"
-        android:layout_marginTop="22.86dp">
-
-        <ImageButton
-            android:id="@+id/logout_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/small_button_white"
-            android:elevation="0dp"
-            android:fontFamily="@font/bold"
-            android:text="로그아웃"
-            android:textColor="@color/blue"
-            android:textSize="12.2dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/logout_button"
-            android:layout_alignTop="@id/logout_button"
-            android:layout_alignBottom="@id/logout_button"
-            android:layout_alignEnd="@id/logout_button"
-            android:fontFamily="@font/bold"
-            android:gravity="center"
-            android:text="로그아웃"
-            android:textAlignment="gravity"
-            android:textColor="@color/blue"
-            android:textSize="11.43dp" />
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/profileinfo_lineseparater4"
-        android:layout_width="380.95dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/longline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileinfo_layout4"
-        android:layout_marginTop="22.86dp" />
+        android:layout_marginStart="30.48dp"
+        android:layout_marginTop="22.86dp"
+        android:fontFamily="@font/bold"
+        android:text="로그아웃"
+        android:textAlignment="gravity"
+        android:textColor="@color/blue"
+        android:textSize="14dp"
+        android:clickable="true"/>
 
 
 

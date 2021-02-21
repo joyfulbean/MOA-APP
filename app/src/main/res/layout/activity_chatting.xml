@@ -41,7 +41,7 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/backarrow"
                         android:paddingTop="18dp"
-                        android:paddingBottom="18dp" />
+                        android:paddingBottom="18dp"/>
 
                     <TextView
                         android:id="@+id/chatpage_title_textview"
@@ -94,7 +94,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:clickable="true">
 
                     <ImageView
@@ -121,7 +123,6 @@
                         android:textColor="@color/yellow"
                         android:textSize="14dp" />
 
-
                 </RelativeLayout>
 
                 <LinearLayout
@@ -131,6 +132,7 @@
                     android:orientation="horizontal"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp">
 
                     <TextView
@@ -145,15 +147,13 @@
 
                     <com.kyleduo.switchbutton.SwitchButton
                         android:id="@+id/chatpage_lock_button"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"/>
+                        android:layout_gravity="start"
+                        android:layout_marginStart="6dp"
+                        app:kswTintColor="@color/blue"/>
 
                 </LinearLayout>
-
-
-
-
 
             </RelativeLayout>
 
@@ -261,7 +261,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp">
 
                     <TextView
                         android:id="@+id/chatpage_timetitle_textview"
@@ -286,20 +287,33 @@
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
+                    <TextView
+                        android:id="@+id/chatpage_info_edit_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/bold"
+                        android:layout_gravity="end"
+                        android:text="수정"
+                        android:textColor="@color/blue"
+                        android:textSize="14dp"
+                        android:clickable="true"
+                        android:layout_alignParentEnd="true"
+                        android:onClick="edit_room_info"/>
+
                 </RelativeLayout>
 
             </LinearLayout>
 
             <ImageButton
                 android:id="@+id/chatpage_arrow_button"
-                android:layout_width="10dp"
-                android:layout_height="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="8dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:src="@drawable/downbutton" />
+                android:src="@drawable/downbutton"
+                android:layout_marginBottom="10dp"/>
 
         </LinearLayout>
 
@@ -325,8 +339,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chatpage_message_listview"
-            android:orientation="vertical"
-            android:gravity="bottom">
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/chatpage_lowerlayout"
@@ -403,43 +416,17 @@
                     android:layout_height="match_parent"
                     android:id="@+id/test"></ImageView>
 
-                <ImageButton
-                    android:id="@+id/chatpage_camerabutton"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/camerabutton"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/chatpage_photobutton"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="spread"
-                    app:layout_constraintVertical_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="카메라"
-                    android:fontFamily="@font/extrabold"
-                    app:layout_constraintTop_toBottomOf="@id/chatpage_camerabutton"
-                    app:layout_constraintStart_toStartOf="@id/chatpage_camerabutton"
-                    app:layout_constraintEnd_toEndOf="@id/chatpage_camerabutton"
-                    android:textAlignment="center"
-                    android:textSize="14dp"
-                    android:layout_marginTop="6dp"/>
-
 
                 <ImageButton
                     android:id="@+id/chatpage_photobutton"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/photobutton"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/chatpage_dutchpaybutton"
-                    app:layout_constraintStart_toEndOf="@id/chatpage_camerabutton"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="spread"
                     app:layout_constraintVertical_weight="1" />
@@ -460,8 +447,8 @@
                     android:id="@+id/chatpage_dutchpaybutton"
                     app:layout_constraintVertical_chainStyle="spread"
                     app:layout_constraintVertical_weight="1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/bankaccountbutton"
                     android:scaleType="fitCenter"
                     android:background="@null"

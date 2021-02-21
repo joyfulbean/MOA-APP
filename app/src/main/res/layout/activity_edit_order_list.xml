@@ -189,6 +189,66 @@
 
                 </LinearLayout>
 
+                <RelativeLayout
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginEnd="15.24dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/image_preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@id/order_myorderimage_price_image"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:layout_alignParentBottom="true"/>
+
+                    <EditText
+                        android:id="@+id/order_myorderimage_price_image"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="15.24dp"
+                        android:layout_toStartOf="@+id/order_myorder_won1_image"
+                        android:background="@null"
+                        android:fontFamily="@font/regular"
+                        android:gravity="end"
+                        android:hint="가격"
+                        android:inputType="number"
+                        android:textColor="@color/darkgrey"
+                        android:textColorHint="@color/grey"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/order_myorder_won1_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/order_myorderimage_price_image"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="15.24dp"
+                        android:fontFamily="@font/regular"
+                        android:text="원"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignStart="@id/order_myorderimage_price_image"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_toStartOf="@id/order_myorder_won1_image"
+                        android:src="@drawable/shorterline" />
+
+                </RelativeLayout>
+
                 <TextView
                     android:id="@+id/receipt_edit_addbutton"
                     android:layout_width="wrap_content"
@@ -227,154 +287,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"></ListView>
                     <ListView
+                        android:id="@+id/edit_receipt_edit_image_listview_insert"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></ListView>
+                    <ListView
                         android:id="@+id/edit_receipt_edit_image_listview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"></ListView>
 
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/receipt_edit_addimagelayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="57dp"
-                    android:visibility="gone">
-
-                    <ImageButton
-                        android:id="@+id/receipt_edit_myorderimage_closebutton1"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/closeiconblack"
-                        android:background="@null"
-                        android:layout_gravity="end"
-                        android:scaleType="fitCenter"/>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginStart="15.24dp"
-                        android:layout_marginEnd="15.24dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="200dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_toStartOf="@id/receipt_edit_myorderimage_price"
-                            android:background="@null"
-                            android:src="@drawable/menulistimage"
-                            android:scaleType="fitCenter"
-                            android:layout_alignParentBottom="true"/>
-
-                        <EditText
-                            android:id="@+id/receipt_edit_myorderimage_price"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginEnd="15.24dp"
-                            android:layout_toStartOf="@+id/order_myorder_won1"
-                            android:background="@null"
-                            android:fontFamily="@font/regular"
-                            android:gravity="end"
-                            android:hint="가격"
-                            android:inputType="textPersonName"
-                            android:textColor="@color/darkgrey"
-                            android:textColorHint="@color/grey"
-                            android:textSize="14dp" />
-
-                        <TextView
-                            android:id="@+id/receipt_edit_myorder_won"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignTop="@id/receipt_edit_myorderimage_price"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginStart="15.24dp"
-                            android:fontFamily="@font/regular"
-                            android:text="원"
-                            android:textColor="@color/darkgrey"
-                            android:textSize="14dp" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_alignStart="@id/receipt_edit_myorderimage_price"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="24dp"
-                            android:layout_toStartOf="@id/receipt_edit_myorder_won"
-                            android:src="@drawable/shorterline" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginStart="15.24dp"
-                    android:layout_marginEnd="15.24dp"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/image_preview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@id/receipt_edit_myorderimage_price_image"
-                        android:background="@null"
-                        android:scaleType="fitCenter"
-                        android:layout_alignParentBottom="true"/>
-
-                    <EditText
-                        android:id="@+id/receipt_edit_myorderimage_price_image"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="15.24dp"
-                        android:layout_toStartOf="@+id/order_myorder_won1_image"
-                        android:background="@null"
-                        android:fontFamily="@font/regular"
-                        android:gravity="end"
-                        android:hint="가격"
-                        android:inputType="number"
-                        android:textColor="@color/darkgrey"
-                        android:textColorHint="@color/grey"
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/receipt_edit_myorder_won1_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/receipt_edit_myorderimage_price_image"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginStart="15.24dp"
-                        android:fontFamily="@font/regular"
-                        android:text="원"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignStart="@id/receipt_edit_myorderimage_price_image"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="24dp"
-                        android:layout_toStartOf="@id/receipt_edit_myorder_won1_image"
-                        android:src="@drawable/shorterline" />
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/longline_edit"/>
 
             </LinearLayout>
 

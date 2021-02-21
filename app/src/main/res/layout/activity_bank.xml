@@ -18,15 +18,14 @@
 
         <ImageButton
             android:id="@+id/bank_backbutton"
-            android:layout_width="16dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/backarrow"
             android:background="@null"
             android:scaleType="fitCenter"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="13.33dp"/>
+            android:src="@drawable/backarrow"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginStart="12dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +33,7 @@
             android:fontFamily="@font/bold"
             android:text="계좌 등록"
             android:textColor="@color/white"
-            android:textSize="15.24dp"
+            android:textSize="16dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -59,7 +58,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
             android:text="은행 이름"
-            android:textSize="15.24dp"
+            android:textSize="16dp"
             android:textColor="@color/black"
             android:layout_marginTop="38.1dp"/>
 
@@ -73,7 +72,7 @@
             android:hint="ex) 기업"
             android:inputType="textPersonName"
             android:fontFamily="@font/regular"
-            android:textSize="13.71dp"
+            android:textSize="14dp"
             android:textColor="@color/black"
             android:background="@null"/>
 
@@ -88,7 +87,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
             android:text="계좌번호"
-            android:textSize="15.24dp"
+            android:textSize="16dp"
             android:textColor="@color/black"
             android:layout_marginTop="38.1dp"/>
 
@@ -102,7 +101,7 @@
             android:hint="계좌번호"
             android:inputType="numberSigned"
             android:fontFamily="@font/regular"
-            android:textSize="13.71dp"
+            android:textSize="14dp"
             android:textColor="@color/black"
             android:background="@null"/>
 
@@ -122,7 +121,7 @@
             android:hint="계좌번호 확인"
             android:inputType="numberSigned"
             android:fontFamily="@font/regular"
-            android:textSize="13.71dp"
+            android:textSize="14dp"
             android:textColor="@color/black"
             android:background="@null"/>
 
@@ -137,7 +136,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
             android:text="예금주"
-            android:textSize="15.24dp"
+            android:textSize="16dp"
             android:textColor="@color/black"
             android:layout_marginTop="38.1dp"/>
 
@@ -151,7 +150,7 @@
             android:hint="예금주"
             android:inputType="textPersonName"
             android:fontFamily="@font/regular"
-            android:textSize="13.71dp"
+            android:textSize="14dp"
             android:textColor="@color/black"
             android:background="@null"/>
 
@@ -181,7 +180,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
         android:text="전화번호 등록하기"
-        android:textSize="16.76dp"
+        android:textSize="18dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/bank_finish_button"
         app:layout_constraintTop_toTopOf="@id/bank_finish_button"

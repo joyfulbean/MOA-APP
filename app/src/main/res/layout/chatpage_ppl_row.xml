@@ -34,8 +34,8 @@
         android:layout_height="18dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@id/chatpage_phone_button"
-        android:layout_marginEnd="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/receipt_icon"/>
@@ -45,9 +45,9 @@
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_toStartOf="@id/chatpage_receipt_button"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/phoneicon"/>

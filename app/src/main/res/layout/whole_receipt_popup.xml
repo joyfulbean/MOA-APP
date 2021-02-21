@@ -27,14 +27,15 @@
 
                 <ImageButton
                     android:id="@+id/wholereceipt_popup_closebutton"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/closeiconblack"
                     android:scaleType="fitCenter"
                     android:background="@null"
                     android:layout_gravity="end"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="14dp"
+                    android:padding="8dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"

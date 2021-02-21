@@ -7,39 +7,56 @@
     tools:context=".chat.ImageScreenActivity">
 
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/layout"
-            android:layout_width="match_parent"
-            android:layout_height="86dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="삭제" />
-
-            <Button
-                android:id="@+id/send_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="전송" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/pre_image"
-            android:layout_width="wrap_content"
-            android:layout_height="373dp"
-            android:layout_toStartOf="@id/layout"
-            android:background="@null"
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/backarrowblue"
             android:scaleType="fitCenter"
-            android:src="@drawable/menulistimage" />
+            android:background="@null"
+            android:paddingTop="22dp"
+            android:paddingBottom="22dp"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전송"
+            android:textColor="@color/blue"
+            android:fontFamily="@font/bold"
+            android:textSize="18dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:layout_marginEnd="24dp"
+            android:paddingStart="20dp"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/pre_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/layout"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menulistimage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
