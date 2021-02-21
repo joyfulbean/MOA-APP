@@ -1,6 +1,8 @@
 package com.example.moa_cardview.data;
 
-public class StuffInfo extends RoomInfo {
+import java.io.Serializable;
+
+public class StuffInfo extends RoomInfo implements Serializable {
     private String stuffLink;
     private String stuffCost;
     private String orderDate;

@@ -1,6 +1,8 @@
 package com.example.moa_cardview.data;
 
-public class RoomInfo {
+import java.io.Serializable;
+
+public class RoomInfo implements Serializable {
     protected String roomId;
     protected String category;
     protected String title;

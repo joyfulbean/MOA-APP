@@ -1,6 +1,8 @@
 package com.example.moa_cardview.data;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 
@@ -121,5 +123,18 @@ public class OrderInfo implements Serializable {
         this.registered_on = registered_on;
         this.user_id = user_id;
     }
-
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int i) {
+//        dest.writeString(roomId);
+//        dest.writeString(stuffName);
+//        dest.writeString(cost);
+//        dest.writeString(num);
+//        dest.writeString(filePath.toString());
+//    }
 }
