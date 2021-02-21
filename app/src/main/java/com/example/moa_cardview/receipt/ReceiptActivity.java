@@ -1,11 +1,13 @@
 package com.example.moa_cardview.receipt;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -18,6 +20,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -36,6 +39,9 @@ import com.example.moa_cardview.R;
 import com.example.moa_cardview.chat.ChatAdapter;
 import com.example.moa_cardview.chat.ChatMessageItem;
 import com.example.moa_cardview.chat.ChattingActivity;
+import com.example.moa_cardview.chat.EachImageShowReceiptAdapter;
+import com.example.moa_cardview.chat.EachInfoShowReceiptAdapter;
+import com.example.moa_cardview.chat.EachInfoShowReceiptDialog;
 import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.data.OrderInfo;
 import com.example.moa_cardview.data.StuffInfo;
@@ -70,6 +76,7 @@ public class ReceiptActivity extends AppCompatActivity {
     private final int GET_GALLERY_IMAGE = 200;
 
     private ImageButton ReceiptButton;
+    private ImageButton backButton;
     private String roomID;
 
     private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
@@ -97,12 +104,9 @@ public class ReceiptActivity extends AppCompatActivity {
     private ListView listViewImage;
     private ArrayList<OrderInfo> imageInfos = new ArrayList<>();
     private ImageAdapter imageAdapter;
-//    private
-    //상수
-    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1001;
-    private static final int MY_STORAGE_ACCESS = 101;
-    private static final int CAMERA_CAPTURE = 102;
-    public static final int REQUEST_CODE = 100;
+
+    // for keypad
+    private InputMethodManager imm;
 
 
 
@@ -121,6 +125,11 @@ public class ReceiptActivity extends AppCompatActivity {
             roomID = message;
             Log.i("this", roomID);
         }
+        // 커스텀 다이얼로그를 호출할 버튼을 정의한다.
+        CustomDialog customDialog = new CustomDialog(ReceiptActivity.this);
+        customDialog.callFunction();
+
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         stuff_cost = findViewById(R.id.order_myorder_price1);
         stuff_num = findViewById(R.id.order_myorder_count1);
@@ -241,6 +250,8 @@ public class ReceiptActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams paramsImage = listViewImage.getLayoutParams();
                 paramsImage.height = totalHeightImage + (listViewImage.getDividerHeight() * (imageAdapter.getCount() - 1));
                 listViewImage.setLayoutParams(paramsImage);
+
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
 
@@ -255,6 +266,15 @@ public class ReceiptActivity extends AppCompatActivity {
                 intent.putExtra("room_id",roomID);
                 intent.putExtra("isNew",true);
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        //* back page
+        backButton = findViewById(R.id.order_backbutton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });

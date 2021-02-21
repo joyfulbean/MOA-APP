@@ -21,22 +21,27 @@ public class MyAdapter extends BaseAdapter{
 
     Context context = null;
     LayoutInflater mLayoutInflater = null;
-    ArrayList<OrderInfo> orderinfos;
+    ArrayList<OrderInfo> orderInfos;
     TextView name;
     TextView cost;
     TextView num;
     ListView listView;
 
     //* for edit
-    private ArrayList<OrderInfo> editInfoList = new ArrayList<>();
+    private ArrayList<OrderInfo> deleteInfoList = new ArrayList<>();
+    private ArrayList<OrderInfo> insertInfoList = new ArrayList<>();
 
     public ArrayList<OrderInfo> getEditInfoList() {
-        return editInfoList;
+        return deleteInfoList;
+    }
+
+    public void addItem(OrderInfo orderInfo){
+        orderInfos.add(orderInfo);
     }
 
     public MyAdapter(Context context, ArrayList<OrderInfo> orderinfos, TextView name, TextView cost, TextView num) {
         context = context;
-        this.orderinfos = orderinfos;
+        this.orderInfos = orderinfos;
         mLayoutInflater = LayoutInflater.from(context);
         this.name = name;
         this.cost = cost;
@@ -47,15 +52,9 @@ public class MyAdapter extends BaseAdapter{
         this.listView = listView;
     }
 
-    public MyAdapter(Context context, ArrayList<OrderInfo> data) {
-        context = context;
-        orderinfos = data;
-        mLayoutInflater = LayoutInflater.from(context);
-    }
-
     @Override
     public int getCount() {
-        return orderinfos.size();
+        return orderInfos.size();
     }
 
     @Override
@@ -65,7 +64,7 @@ public class MyAdapter extends BaseAdapter{
 
     @Override
     public OrderInfo getItem(int position) {
-        return orderinfos.get(position);
+        return orderInfos.get(position);
     }
 
     @Override
@@ -95,7 +94,7 @@ public class MyAdapter extends BaseAdapter{
                 name.setText(temp_edit.getStuffName());
                 cost.setText(temp_edit.getCost());
                 num.setText(temp_edit.getNum());
-                orderinfos.remove(getItem(position));
+                orderInfos.remove(getItem(position));
 
                 // 삭제시 뷰 사이즈 조절
                 ViewGroup.LayoutParams params = listView.getLayoutParams();
@@ -109,8 +108,7 @@ public class MyAdapter extends BaseAdapter{
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editInfoList.add(getItem(position));
-                orderinfos.remove(getItem(position));
+                orderInfos.remove(getItem(position));
                 // 삭제시 뷰 사이즈 조절
                 ViewGroup.LayoutParams params = listView.getLayoutParams();
                 params.height = (342 * getCount()) + (listView.getDividerHeight() * (getCount() - 1));
@@ -120,11 +118,9 @@ public class MyAdapter extends BaseAdapter{
                 notifyDataSetChanged();
             }
         });
-
-        stuff_name.setText(orderinfos.get(position).getStuffName());
-        stuff_cost.setText(orderinfos.get(position).getCost());
-        stuff_num.setText(orderinfos.get(position).getNum());
+        stuff_name.setText(orderInfos.get(position).getStuffName());
+        stuff_cost.setText(orderInfos.get(position).getCost());
+        stuff_num.setText(orderInfos.get(position).getNum());
         return view;
     }
-
 }
