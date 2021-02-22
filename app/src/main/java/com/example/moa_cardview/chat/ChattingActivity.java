@@ -816,6 +816,7 @@ public class ChattingActivity extends AppCompatActivity {
                 sendMessageFirebase("ENTER_EXIT", content, "none");
                 Intent intent3 = new Intent(ChattingActivity.this, MainActivity.class);
                 startActivity(intent3);
+                finish();
             }
             @Override
             protected String doInBackground(Void... voids) {
@@ -907,7 +908,7 @@ public class ChattingActivity extends AppCompatActivity {
                 allInfoShowReceiptDialog = new AllInfoShowReceiptDialog(ChattingActivity.this, infoAdapter, imageAdapter, imgUrls, roomID, totalCost);
 
                 allInfoShowReceiptDialog.show();
-                allInfoShowReceiptDialog.setCanceledOnTouchOutside(false);
+                allInfoShowReceiptDialog.setCanceledOnTouchOutside(true);
             }
             @Override
             protected void onProgressUpdate(Void... values) {
@@ -998,7 +999,7 @@ public class ChattingActivity extends AppCompatActivity {
         eachInfoShowReceiptDialog = new EachInfoShowReceiptDialog(ChattingActivity.this, eachInfoAdapter, eachImageAdapter, roomID, userName, userEmail, who);
 
         eachInfoShowReceiptDialog.show();
-        eachInfoShowReceiptDialog.setCanceledOnTouchOutside(false);
+        eachInfoShowReceiptDialog.setCanceledOnTouchOutside(true);
     }
 
 
@@ -1059,10 +1060,15 @@ public class ChattingActivity extends AppCompatActivity {
     }
 
     public void edit_room_info(View view) {
-        Intent intent = new Intent(ChattingActivity.this, EditRoomActivity.class);
-        intent.putExtra("stuff_info", (Serializable) chattingInfo);
-        intent.putExtra("room_id", roomID);
-        startActivity(intent);
+        if (!MyData.getMail().equals(chattingInfo.getCreatorEmail())){
+            Toast.makeText(ChattingActivity.this, "방 수정 기능은 방장만 사용 가능합니다.", Toast.LENGTH_LONG).show();
+        }else {
+            Intent intent = new Intent(ChattingActivity.this, EditRoomActivity.class);
+            intent.putExtra("stuff_info", (Serializable) chattingInfo);
+            intent.putExtra("room_id", roomID);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }

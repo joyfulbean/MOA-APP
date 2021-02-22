@@ -27,6 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
     //* for tab & view page
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private ChipNavigationBar chipNavigationBar;
 
     //* for creating room
     private FloatingActionButton floatingActionButton;
@@ -65,18 +66,20 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         //* under tab bar (store & profile)
-        ChipNavigationBar chipNavigationBar = findViewById(R.id.bottom_navi);
+        chipNavigationBar = findViewById(R.id.bottom_navi);
         chipNavigationBar.setItemSelected(R.id.profile, true);
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int id) {
                 switch (id) {
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                        overridePendingTransition(0, 0);
+//                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        finish();
                     case R.id.store:
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         overridePendingTransition(0, 0);
+                        finish();
                 }
             }
         });
@@ -90,10 +93,16 @@ public class ProfileActivity extends AppCompatActivity {
                 //버튼 클릭 시 발생할 이벤트내용
                 Intent intent = new Intent(ProfileActivity.this, MakingRoomActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        chipNavigationBar.setClickable(true);
+        super.onBackPressed();
+    }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragments = new ArrayList<>();

@@ -42,7 +42,8 @@
             android:layout_alignParentTop="true"
             android:gravity="center"
             android:layout_marginEnd="24dp"
-            android:paddingStart="20dp"/>
+            android:paddingStart="20dp"
+            android:clickable="true"/>
 
     </RelativeLayout>
 

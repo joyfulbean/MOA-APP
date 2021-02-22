@@ -179,7 +179,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
-        android:text="전화번호 등록하기"
+        android:text="계좌번호 등록하기"
         android:textSize="18dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/bank_finish_button"

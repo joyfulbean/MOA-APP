@@ -30,16 +30,21 @@
         android:id="@+id/imgbox_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3.81dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
         android:layout_marginStart="7.62dp"
         android:layout_toEndOf="@id/other_msgbox_profile_imageview"
         android:background="@drawable/back_et_othermymsgbox"
         android:layout_below="@+id/msgbox_name"
         android:maxWidth="250dp"
+        android:maxHeight="300dp"
         android:paddingStart="10dp"
         android:paddingTop="8dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="8dp" />
+        android:paddingBottom="8dp"
+        android:adjustViewBounds="true"/>
+
+
 
     <TextView
         android:id="@+id/msgbox_time"

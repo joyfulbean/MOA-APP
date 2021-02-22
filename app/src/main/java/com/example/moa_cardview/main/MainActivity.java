@@ -79,12 +79,14 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(int id) {
                 switch (id){
                     case R.id.store:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0, 0);
+//                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        finish();
                         //todolist2: db에서 받아오는 코드 1
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0, 0);
+                        finish();
                         //todolist3: db에서 받아오는 코드 2
                 }
             }
@@ -101,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        chipNavigationBar.setClickable(true);
+        super.onBackPressed();
     }
 
     //* 내 phone에 저장되어 있는 프로필정보 읽어오기

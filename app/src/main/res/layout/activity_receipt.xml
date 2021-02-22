@@ -259,7 +259,7 @@
                             android:layout_marginStart="15.24dp"
                             android:background="@null"
                             android:fontFamily="@font/regular"
-                            android:hint="가격"
+                            android:hint="상품 한개 가격"
                             android:inputType="number"
                             android:textColor="@color/darkgrey"
                             android:textColorHint="@color/grey"

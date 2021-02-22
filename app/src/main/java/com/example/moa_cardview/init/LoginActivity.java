@@ -59,6 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
+            MyData.setName(user.getDisplayName());
+            MyData.setMail(user.getEmail());
+            MyData.setPhotoUrl(user.getPhotoUrl());
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();

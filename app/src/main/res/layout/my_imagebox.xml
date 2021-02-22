@@ -13,10 +13,8 @@
         android:text="name"
         android:textColor="@color/black"
         android:layout_marginEnd="7.62dp"
-        android:layout_toLeftOf="@+id/iv"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentRight="true"
-        android:textSize="10dp" />
+        android:layout_alignParentEnd="true"
+        android:textSize="12dp" />
 
     <ImageView
         android:id="@+id/imgbox_content"
@@ -43,12 +41,12 @@
         android:id="@+id/msgbox_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/msgbox_content"
-        android:layout_marginEnd="7.62dp"
-        android:layout_toStartOf="@+id/msgbox_content"
-
-        android:fontFamily="@font/regular"
         android:text="13:35"
-        android:textSize="9.14dp" />
+        android:textColor="@color/grey"
+        android:layout_toStartOf="@id/imgbox_content"
+        android:layout_alignBottom="@id/imgbox_content"
+        android:textSize="10dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/regular" />
 
 </RelativeLayout>

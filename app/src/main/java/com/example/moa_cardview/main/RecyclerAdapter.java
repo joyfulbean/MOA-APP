@@ -64,7 +64,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private String contents;
     private String imageUrl;
 
+    private boolean isThreeRoundButton = true;
 
+    public void setThreeRoundButton(boolean threeRoundButton) {
+        isThreeRoundButton = threeRoundButton;
+    }
 
     // for is new
     private static final String urls = "http://54.180.8.235:5000/participant";
@@ -139,6 +143,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
 
             threeroundbutton = itemView.findViewById(R.id.post_threeroundbutton);
+            if(!isThreeRoundButton){
+                threeroundbutton.setVisibility(View.GONE);
+            }
             threeroundbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {

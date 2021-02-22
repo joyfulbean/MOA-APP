@@ -18,7 +18,10 @@ import com.example.moa_cardview.data.MyData;
 import com.example.moa_cardview.init.LoginActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -49,9 +52,12 @@ public class MyInfo extends Fragment {
     // for intent
     private ImageButton phoneNumberButton;
     private ImageButton bankButton;
-    private ImageButton logout;
+    private TextView logout;
 
     private int REQUEST_TEST = 777;
+
+    // for google sign in
+    private GoogleSignInClient mGoogleSignInClient;
 
     public MyInfo() {
         // Required empty public constructor
@@ -144,6 +150,7 @@ public class MyInfo extends Fragment {
                 Intent intent = new Intent (getActivity(), BankActivity.class);
                 startActivity(intent);
                 refresh();
+
             }
         });
 
@@ -153,17 +160,35 @@ public class MyInfo extends Fragment {
             public void onClick(View view) {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 try {
+                    createRequest();
                     mAuth.signOut();
+                    mGoogleSignInClient.signOut();
                     Toast.makeText(getContext() , "User Sign out!", Toast.LENGTH_SHORT).show();
                 }catch (Exception e) {
                     Toast.makeText(getContext() , "Error Sign out!", Toast.LENGTH_SHORT).show();
                 }
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
+
             }
         });
 
         return v;
+    }
+
+    private void createRequest() {
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+        // Build a GoogleSignInClient with the options specified by gso.
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            MyData.setName(user.getDisplayName());
+            MyData.setMail(user.getEmail());
+        }
     }
 
     private void refresh(){
@@ -186,7 +211,7 @@ public class MyInfo extends Fragment {
                 phone.setText(MyData.phoneNumber);
             }
 //        } else if (requestCode == REQUEST_ANOTHER) {
-//            ...
+//            …
         }
     }
 

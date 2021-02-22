@@ -46,6 +46,7 @@ public class BankActivity extends AppCompatActivity {
             public void onClick(View view) {
                 saveData();
                 loadPhoneData();
+                finish();
             }
         });
 
