@@ -13,7 +13,6 @@
         android:text="name"
         android:textColor="@color/black"
         android:layout_marginEnd="7.62dp"
-        android:layout_toLeftOf="@+id/iv"
         android:layout_marginRight="16dp"
         android:layout_alignParentRight="true"
         android:textSize="10dp" />

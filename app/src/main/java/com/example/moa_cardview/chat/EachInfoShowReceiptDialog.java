@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.moa_cardview.R;
 import com.example.moa_cardview.data.OrderArrayList;
@@ -51,6 +52,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
     private String roomId;
     private String totalCost;
     private boolean who;
+    private String status;
 
     // screen
     private ImageButton popupCloseButton;
@@ -80,7 +82,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
 
 
 
-    public EachInfoShowReceiptDialog(Activity a, EachInfoShowReceiptAdapter infoAdapter, EachImageShowReceiptAdapter imageAdapter, String roomId, String userName, String userEmail, boolean who) {
+    public EachInfoShowReceiptDialog(Activity a, EachInfoShowReceiptAdapter infoAdapter, EachImageShowReceiptAdapter imageAdapter, String roomId, String userName, String userEmail, boolean who, String status) {
         super(a);
         this.activity = a;
         this.infoAdapter = infoAdapter;
@@ -89,6 +91,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
         this.imageAdapter = imageAdapter;
         this.roomId = roomId;
         this.who = who;
+        this.status = status;
         setupLayout();
     }
 
@@ -110,6 +113,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
         name.setText(userName);
 
         editButton = findViewById(R.id.individualreceipt_edit_button);
+
         if(!who){
             editButton.setVisibility(View.GONE);
         }else {
@@ -117,16 +121,20 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    OrderArrayList orderArrayList = new OrderArrayList(each_orderInfos, imgEachOrderInfos);
-                    Intent intent = new Intent(activity, EditOrderListActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("each_orderInfos", each_orderInfos);
-                    intent.putExtra("image_url", imgUrls);
-                    intent.putExtra("image_cost", imageCost);
-//                    intent.putExtra("imgEachOrderInfos", imgEachOrderInfos);
-                    intent.putExtra("room_id", roomId);
-                    activity.startActivity(intent);
-                    dismiss();
+                    if (!status.equals("모집중")){
+                        Toast.makeText(getContext(), "구매 진행 중이기 때문에\n 주문서를 수정할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Intent intent = new Intent(activity, EditOrderListActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("each_orderInfos", each_orderInfos);
+                        intent.putExtra("image_url", imgUrls);
+                        intent.putExtra("image_cost", imageCost);
+                        intent.putExtra("room_id", roomId);
+                        activity.startActivity(intent);
+                        dismiss();
+                    }
+
                 }
             });
         }

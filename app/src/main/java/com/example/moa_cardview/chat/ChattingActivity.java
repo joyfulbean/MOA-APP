@@ -195,18 +195,18 @@ public class ChattingActivity extends AppCompatActivity {
                 // 방장이 아닌경우
                 if (!MyData.getMail().equals(chattingInfo.getCreatorEmail())){
                     lockButton.setChecked(!isChecked);
-                    Toast.makeText(ChattingActivity.this, "방 잠그기 기능은 방장만 사용 가능합니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ChattingActivity.this, "방 잠그기 기능은 방장만 사용 가능합니다.", Toast.LENGTH_SHORT).show();
                 }
                 // 스위치 버튼이 체크되었는지 검사하여 텍스트뷰에 각 경우에 맞게 출력합니다.
                 else if (isChecked) {
                     //수정 불가능, 방 사라짐, 토스트 메세지
                     isLock = true;
-                    Toast.makeText(ChattingActivity.this, "방을 잠그면 주문서 수정이 안되고, 새로운 사람이 방에 들어올 수 없습니다 ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ChattingActivity.this, "방을 잠그면 주문서 수정이 안되고, 새로운 사람이 방에 들어올 수 없습니다 ", Toast.LENGTH_SHORT).show();
                     sendRoomidToServer();//방상태변경
                 } else {
                     //수정 가능, 방떠있음, 토스트메세지
                     isLock = false;
-                    Toast.makeText(ChattingActivity.this, "잠금을 풀면 주문서 수정이 가능하고, 새로운 사람이 방에 들어올 수 있습니다 ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ChattingActivity.this, "잠금을 풀면 주문서 수정이 가능하고, 새로운 사람이 방에 들어올 수 있습니다 ", Toast.LENGTH_SHORT).show();
                     sendRoomidToServer();//방상태변경
                 }
             }
@@ -221,7 +221,7 @@ public class ChattingActivity extends AppCompatActivity {
                 SharedPreferences preferences = getSharedPreferences("info",MODE_PRIVATE);
                 MyData.account = preferences.getString("account", null);
                 if (MyData.account == null) { // <-- safe if called_from is null
-                    Toast.makeText(ChattingActivity.this, "프로필에 본인의 계좌번호를 먼저 등록해 주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ChattingActivity.this, "프로필에 본인의 계좌번호를 먼저 등록해 주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     String account_data[] = MyData.account.split(" ");
@@ -258,32 +258,6 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
-
-
-        //camera
-        /*cameraButton = findViewById(R.id.chatpage_camerabutton);
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_CAPTURE);
-            }
-        });
-        //camera permission check
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-
-        //아직 부여받지 않았으므로 요청
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CAMERA)) {
-            }
-            //퍼미션 부여 받음
-            else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
-            }
-        }*/
 
         // gallery
         galleryButton = findViewById(R.id.chatpage_photobutton);
@@ -559,7 +533,7 @@ public class ChattingActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "Camera Permission is approved", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Camera Permission is disapproved ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Camera Permission is disapproved ", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
@@ -593,11 +567,13 @@ public class ChattingActivity extends AppCompatActivity {
         TextView chatpage_place_textview = (TextView)findViewById(R.id.chatpage_place_textview);
         chatpage_place_textview.setText(chattingInfo.getPlace());
 
+        String status = chattingInfo.getStatus();
+        if(!status.equals("모집중") && !status.equals("생성중")){
+            lockButton.setCheckedImmediatelyNoEvent(true);
+        }
+
         linkUrl = chattingInfo.getStuffLink();
 
-        if("구매중".equals(chattingInfo.getStatus())){
-            lockButton.setChecked(true);
-        }
     }
 
     //* when show people list
@@ -786,6 +762,7 @@ public class ChattingActivity extends AppCompatActivity {
                     chattingInfo.setCreatorEmail(obj.getString("creator_email"));
                     chattingInfo.setStatus(obj.getString("status"));
                     chattingInfo.setStuffLink(obj.getString("stuff_link"));
+
 //                    chattingInfo.setStuffCost(obj.getString("stuff_cost")+"원");
 //                    chattingInfo.setStuffLink(obj.getString("stuff_link"));
 //                    chattingInfo.setCreatorName(obj.getString("creator_name"));
@@ -996,7 +973,7 @@ public class ChattingActivity extends AppCompatActivity {
         EachInfoShowReceiptDialog eachInfoShowReceiptDialog;
         eachImageAdapter = new EachImageShowReceiptAdapter(ChattingActivity.this);
         eachInfoAdapter = new EachInfoShowReceiptAdapter(ChattingActivity.this);
-        eachInfoShowReceiptDialog = new EachInfoShowReceiptDialog(ChattingActivity.this, eachInfoAdapter, eachImageAdapter, roomID, userName, userEmail, who);
+        eachInfoShowReceiptDialog = new EachInfoShowReceiptDialog(ChattingActivity.this, eachInfoAdapter, eachImageAdapter, roomID, userName, userEmail, who, chattingInfo.getStatus());
 
         eachInfoShowReceiptDialog.show();
         eachInfoShowReceiptDialog.setCanceledOnTouchOutside(true);
@@ -1016,7 +993,7 @@ public class ChattingActivity extends AppCompatActivity {
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
         } else {
-            Toast.makeText(context, "Wrong Address. Try again.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Wrong Address. Try again.", Toast.LENGTH_SHORT).show();
             Log.d("ImplicitIntents", "Can't handle this intent!");
         }
     }
@@ -1061,7 +1038,7 @@ public class ChattingActivity extends AppCompatActivity {
 
     public void edit_room_info(View view) {
         if (!MyData.getMail().equals(chattingInfo.getCreatorEmail())){
-            Toast.makeText(ChattingActivity.this, "방 수정 기능은 방장만 사용 가능합니다.", Toast.LENGTH_LONG).show();
+            Toast.makeText(ChattingActivity.this, "방 수정 기능은 방장만 사용 가능합니다.", Toast.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(ChattingActivity.this, EditRoomActivity.class);
             intent.putExtra("stuff_info", (Serializable) chattingInfo);
