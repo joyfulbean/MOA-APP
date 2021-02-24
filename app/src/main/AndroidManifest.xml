@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.moa_cardview">
+    package="com.handong.moa">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -26,16 +26,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chat.EditRoomActivity"></activity>
-        <activity android:name=".chat.ImageScreenActivity"></activity>
-        <activity android:name=".chat.EditOrderListActivity"></activity>
-        <activity android:name=".receipt.ReceiptActivity">
+        <activity android:name="com.handong.moa.chat.EditRoomActivity"></activity>
+        <activity android:name="com.handong.moa.chat.ImageScreenActivity"></activity>
+        <activity android:name="com.handong.moa.chat.EditOrderListActivity"></activity>
+        <activity android:name="com.handong.moa.receipt.ReceiptActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".profile.BankActivity" />
-        <activity android:name=".profile.PhoneNumberActivity" />
+        <activity android:name="com.handong.moa.profile.BankActivity" />
+        <activity android:name="com.handong.moa.profile.PhoneNumberActivity" />
 
         <uses-library
             android:name="com.google.android.maps"
@@ -46,38 +46,38 @@
             android:value="true" />
 
         <activity
-            android:name=".main.SearchActivity"
+            android:name="com.handong.moa.main.SearchActivity"
             android:label="@string/title_activity_search"
-            android:parentActivityName=".main.MainActivity"
+            android:parentActivityName="com.handong.moa.main.MainActivity"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".profile.ProfileActivity" />
+        <activity android:name="com.handong.moa.profile.ProfileActivity" />
         <activity
-            android:name=".chat.ChattingActivity"
+            android:name="com.handong.moa.chat.ChattingActivity"
             android:label=".ChattingActivity"
-            android:parentActivityName=".main.MainActivity"
+            android:parentActivityName="com.handong.moa.main.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".chat.MakingRoomActivity"
+            android:name="com.handong.moa.chat.MakingRoomActivity"
             android:label=".MakingRoomActivity"
-            android:parentActivityName=".main.MainActivity">
+            android:parentActivityName="com.handong.moa.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.MainActivity"
+            android:name="com.handong.moa.main.MainActivity"
             android:label=".MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".init.LoadingActivity"
+            android:name="com.handong.moa.init.LoadingActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -86,7 +86,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".init.LoginActivity"
+            android:name="com.handong.moa.init.LoginActivity"
             android:allowBackup="true"
             android:label=".LoginActivity"
             android:windowSoftInputMode="adjustPan">

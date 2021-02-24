@@ -6,7 +6,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.example.moa_cardview"
+        applicationId "com.handong.moa"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
@@ -78,6 +78,11 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-storage:19.2.1'
 
+    //for firebase
+    implementation 'com.google.firebase:firebase-analytics'
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:26.5.0')
+
     //for photo upload
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'com.google.android.material:material:1.1.0-beta01'
@@ -86,4 +91,14 @@ dependencies {
     implementation 'com.kyleduo.switchbutton:library:2.0.0'
 
 }
-apply plugin: 'com.google.gms.google-services'
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == "androidx.appcompat") {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion "1.+"
+            }
+        }
+    }
+}

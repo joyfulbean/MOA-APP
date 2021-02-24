@@ -1,74 +1,41 @@
 {
   "project_info": {
-    "project_number": "365022898622",
-    "firebase_url": "https://moamoa-ac3f5.firebaseio.com",
-    "project_id": "moamoa-ac3f5",
-    "storage_bucket": "moamoa-ac3f5.appspot.com"
+    "project_number": "991856634075",
+    "project_id": "hgumoa",
+    "storage_bucket": "hgumoa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:365022898622:android:5eefae3aeb7f39378671ef",
+        "mobilesdk_app_id": "1:991856634075:android:96d2123d018866871384fe",
         "android_client_info": {
-          "package_name": "com.example.moa_cardview"
+          "package_name": "com.handong.moa"
         }
       },
       "oauth_client": [
         {
-          "client_id": "365022898622-22l2f4l59ktl3jg7555oo8f20ll6mfe8.apps.googleusercontent.com",
+          "client_id": "991856634075-ts2lvt5jttqncvu06bnip3e23lqhe3h5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.moa_cardview",
-            "certificate_hash": "114634c67ca2e8252872f754a02a1c0680e1df5b"
-          }
-        },
-        {
-          "client_id": "365022898622-52cth7qtpa86hr81sv1nplmce24chn34.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.moa_cardview",
-            "certificate_hash": "41bc359fa1498222203789874272c0ff0c1de2f9"
-          }
-        },
-        {
-          "client_id": "365022898622-goqvm6g8elgtkc8e8e53gjrd5th2959a.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.moa_cardview",
-            "certificate_hash": "6fd40a176aa887c663efac317a8dc5567758668e"
-          }
-        },
-        {
-          "client_id": "365022898622-lnqdhm0vl9p999q5b0jgs2dh5a47pmah.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.moa_cardview",
-            "certificate_hash": "fcd7d3fe4982b6f010dc20d71f439d952dd62cd7"
-          }
-        },
-        {
-          "client_id": "365022898622-ru2t84u367q84q9bhi9g5ehj2278nhva.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.moa_cardview",
+            "package_name": "com.handong.moa",
             "certificate_hash": "ee15c1937f3cab1f2715fff92795feb83b41f90f"
           }
         },
         {
-          "client_id": "365022898622-jo9i3p81c1q5ivg4scvtqci3msqclfeh.apps.googleusercontent.com",
+          "client_id": "991856634075-9almlb87a7au17qf3mqi56psg17dm7e8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAmR9UfzaR74VheoUA0CtYrP1wSDF8hgME"
+          "current_key": "AIzaSyBeEaN_0WAhRq9geeWl-1uG4eBiNRaJZXs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "365022898622-jo9i3p81c1q5ivg4scvtqci3msqclfeh.apps.googleusercontent.com",
+              "client_id": "991856634075-9almlb87a7au17qf3mqi56psg17dm7e8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

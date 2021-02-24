@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "MOA_CARDVIEW"
+rootProject.name = "MOA"
