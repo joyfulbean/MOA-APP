@@ -7,6 +7,7 @@ public class MyData {
     public static String account;
     public static String name;
     public static String mail;
+    public static String uid;
     public static Uri photoUrl;
 
     public static String getName() {
@@ -31,5 +32,13 @@ public class MyData {
 
     public static void setPhotoUrl(Uri photoUrl) {
         MyData.photoUrl = photoUrl;
+    }
+
+    public static String getUid() {
+        return uid;
+    }
+
+    public static void setUid(String uid) {
+        MyData.uid = uid;
     }
 }

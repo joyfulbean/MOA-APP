@@ -74,13 +74,10 @@ public class ChatAdapter  extends BaseAdapter {
 
         //메세지가 내 메세지인지 auth 확인
         if(item.getImg().equals("none")){
-            if (item.getName().equals(MyData.name)) {
+            if (item.getUid().equals(MyData.uid)) {
                 itemView = layoutInflater.inflate(R.layout.my_msgbox, viewGroup, false);
                 setting(item, itemView);
-            } else if (item.getName().equals("MOA")) {
-                itemView = layoutInflater.inflate(R.layout.moabox, viewGroup, false);
-                setting(item, itemView);
-            } else if (item.getName().equals("ENTER_EXIT")) {
+            } else if (item.getUid().equals("ENTER_EXIT")) {
                 itemView = layoutInflater.inflate(R.layout.enter_exit_box, viewGroup, false);
                 TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
                 msgboxContent.setText(item.getMessage());
@@ -90,7 +87,7 @@ public class ChatAdapter  extends BaseAdapter {
             }
         }
         else{
-            if (item.getName().equals(MyData.name)) {
+            if (item.getUid().equals(MyData.uid)) {
                 itemView = layoutInflater.inflate(R.layout.my_imagebox, viewGroup, false);
                 imgSetting(item, itemView);
             } else {

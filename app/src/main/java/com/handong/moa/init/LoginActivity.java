@@ -30,6 +30,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     // for server
     private static final String urls = "http://54.180.8.235:5000/user";
     boolean isNew;
+    boolean mysqlIsNew;
 
     // for google sign in
     private GoogleSignInClient mGoogleSignInClient;
@@ -57,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
+            MyData.setUid(user.getUid());
             MyData.setName(user.getDisplayName());
             MyData.setMail(user.getEmail());
             MyData.setPhotoUrl(user.getPhotoUrl());
@@ -93,6 +96,8 @@ public class LoginActivity extends AppCompatActivity {
         if(user != null){
             MyData.setName(user.getDisplayName());
             MyData.setMail(user.getEmail());
+            MyData.setUid(user.getUid());
+            MyData.setPhotoUrl(user.getPhotoUrl());
         }
     }
 
@@ -139,7 +144,6 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             isNew = task.getResult().getAdditionalUserInfo().isNewUser();
                             FirebaseUser user = mAuth.getCurrentUser();
-
                             if(!isHandongStudent(user)){
                                 Toast.makeText(LoginActivity.this, "한동대학교 이메일로만 로그인 가능합니다.", Toast.LENGTH_SHORT).show();
                                 FirebaseAuth.getInstance().signOut();
@@ -171,14 +175,67 @@ public class LoginActivity extends AppCompatActivity {
     public void isNewChecker(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
+            isNewServer();
+            MyData.setUid(user.getUid());
             MyData.setName(user.getDisplayName());
             MyData.setMail(user.getEmail());
             MyData.setPhotoUrl(user.getPhotoUrl());
-            if(isNew) {
-                sendServer();
-            }
         }
         isNew = false;
+    }
+    public void isNewServer(){
+        class sendData extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if(mysqlIsNew) {
+                    sendServer();
+                }
+                mysqlIsNew = false;
+            }
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+            @Override
+            protected void onCancelled(String s) {
+                super.onCancelled(s);
+            }
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+
+                    Request request = new Request.Builder()
+                            .url(urls + File.separator + MyData.mail)
+                            .build();
+
+                    Response responses = null;
+                    responses = client.newCall(request).execute();
+
+                    //json array로 받아서 파싱수 thing에 저장해준다.
+                    // 가장 큰 JSONObject를 가져옵니다.
+                    JSONObject obj = new JSONObject(responses.body().string());
+                    mysqlIsNew = obj.getBoolean("is_new");
+                    responses.close();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+        sendData sendData = new sendData();
+        sendData.execute();
     }
     public void sendServer(){
         class sendData extends AsyncTask<Void, Void, String> {
@@ -211,6 +268,7 @@ public class LoginActivity extends AppCompatActivity {
                     jsonInput.put("name", MyData.name);
                     jsonInput.put("email", MyData.mail);
                     jsonInput.put("photo_url", MyData.photoUrl);
+                    jsonInput.put("uid", MyData.uid);
 
                     RequestBody reqBody = RequestBody.create(
                             MediaType.parse("application/json; charset=utf-8"),

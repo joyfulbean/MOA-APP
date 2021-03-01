@@ -449,14 +449,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     };
 
     //send message on firebase
-    private void sendMessageFirebase(String name, String content, String image, String roomID){
+    private void sendMessageFirebase(String name, String content, String image, String roomID, String uid){
         FirebaseDatabase firebaseDatabase;
         DatabaseReference roodIdReference;
 
         Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
         String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
 
-        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image);
+        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image, uid);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         roodIdReference = firebaseDatabase.getReference(roomID);
@@ -470,7 +470,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 String content = MyData.name + "님이 퇴장 하셨습니다.";
-                sendMessageFirebase("ENTER_EXIT", content, "none", roomID);
+                sendMessageFirebase("ENTER_EXIT", content, "none", roomID, "ENTER_EXIT");
                 //Intent intent3 = new Intent(ChattingActivity.this, MainActivity.class);
                 //startActivity(intent3);
             }

@@ -304,7 +304,7 @@ public class ChattingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = MyData.name;
                 String content = messageContent.getText().toString();
-                sendMessageFirebase(name, content, "none");
+                sendMessageFirebase(name, content, "none", MyData.uid);
 
                 //flush EditText
                 messageContent.setText("");
@@ -430,11 +430,11 @@ public class ChattingActivity extends AppCompatActivity {
     }
 
     //send message on firebase
-    private void sendMessageFirebase(String name, String content, String image){
+    private void sendMessageFirebase(String name, String content, String image, String uid){
         Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
         String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
 
-        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image);
+        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image, uid);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         roodIdReference = firebaseDatabase.getReference(roomID);
@@ -643,7 +643,7 @@ public class ChattingActivity extends AppCompatActivity {
                 // 아니면 여기서 추가를해줘도 될 듯 하네
                 if(isNew) {
                     String content = MyData.name + "님이 입장 했습니다.";
-                    sendMessageFirebase("ENTER_EXIT", content, "none");
+                    sendMessageFirebase("ENTER_EXIT", content, "none", "ENTER_EXIT");
                     isNew = false;
                     saveNewParticipant();
                 }
@@ -711,7 +711,7 @@ public class ChattingActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 String content = MyData.name + "님이 퇴장 하셨습니다.";
-                sendMessageFirebase("ENTER_EXIT", content, "none");
+                sendMessageFirebase("ENTER_EXIT", content, "none", "ENTER_EXIT");
                 Intent intent3 = new Intent(ChattingActivity.this, MainActivity.class);
                 startActivity(intent3);
                 finish();

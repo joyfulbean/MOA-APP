@@ -5,17 +5,19 @@ public class ChatMessageItem {
     private String message;
     private String time;
     private String img;
+    private String uid;
 
     //firebase DB에 객체로 값을 읽어올 때..
     //파라미터가 비어있는 생성자가 필요함.
     public ChatMessageItem() {
     }
 
-    public ChatMessageItem(String name, String message, String time, String img) {
+    public ChatMessageItem(String name, String message, String time, String img, String uid) {
         this.name = name;
         this.message = message;
         this.time = time;
         this.img = img;
+        this.uid = uid;
     }
     //Getter & Setter
     public String getName() {
@@ -48,5 +50,13 @@ public class ChatMessageItem {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
