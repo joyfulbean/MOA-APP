@@ -128,7 +128,6 @@ public class ChattingActivity extends AppCompatActivity {
     // for displaying plus option
     private ConstraintLayout expandLayoutPlus;
     private ImageButton plusButton;
-    private ImageButton cameraButton;
     private ImageButton galleryButton;
 
     //* 업로드할 이미지 파일의 경로 Uri
@@ -136,9 +135,6 @@ public class ChattingActivity extends AppCompatActivity {
 
 
     //상수
-    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1001;
-    private static final int MY_STORAGE_ACCESS = 101;
-    private static final int CAMERA_CAPTURE = 102;
     private final int GET_GALLERY_IMAGE = 200;
 
     // for show all receipt info
@@ -445,19 +441,6 @@ public class ChattingActivity extends AppCompatActivity {
         roodIdReference.push().setValue(messageItem);
     }
 
-    //for camera
-    private Bitmap imgRotate(Bitmap bmp){
-        int width = bmp.getWidth();
-        int height = bmp.getHeight();
-
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-
-        Bitmap resizedBitmap = Bitmap.createBitmap(bmp,0,0,width,height,matrix,true);
-        bmp.recycle();
-
-        return resizedBitmap;
-    }
 
     //* for camera and gallery
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -472,63 +455,6 @@ public class ChattingActivity extends AppCompatActivity {
                 imgIntent.putExtra("img_path", imgUri.toString());
                 imgIntent.putExtra("room_id", roomID);
                 startActivity(imgIntent);
-            }
-        }
-        else if(requestCode == CAMERA_CAPTURE){
-            //찍은 사진 가져와서 붙여주기
-            if (resultCode == RESULT_OK && data != null && data.getData() != null){
-                Bundle bundle = data.getExtras();
-                Intent imgIntent = new Intent(ChattingActivity.this, ImageScreenActivity.class);
-                imgIntent.putExtra("type", CAMERA_CAPTURE);
-                imgIntent.putExtra("img_path", bundle.toString());
-                imgIntent.putExtra("room_id", roomID);
-                startActivity(imgIntent);
-            }
-        }
-    }
-
-    //upload image on firebase
-    public void clickUpload() {
-        //firebase storage에 업로드하기
-        //1. FirebaseStorage을 관리하는 객체 얻어오기
-        FirebaseStorage firebaseStorage= FirebaseStorage.getInstance();
-
-        //2. 업로드할 파일의 node를 참조하는 객체
-        //파일 명이 중복되지 않도록 날짜를 이용
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyyMMddhhmmss");
-        String filename= sdf.format(new Date())+ ".png";//현재 시간으로 파일명 지정 20191023142634
-        //원래 확장자는 파일의 실제 확장자를 얻어와서 사용해야함. 그러려면 이미지의 절대 주소를 구해야함.
-
-        StorageReference imgRef = firebaseStorage.getReference(roomID + "/" + filename);
-        //uploads라는 폴더가 없으면 자동 생성
-
-        //참조 객체를 통해 이미지 파일 업로드
-//        imgRef.putFile(imgUri);
-        //업로드한 파일의 경로를 firebaseDB에 저장하면 게시판 같은 앱도 구현할 수 있음.
-        UploadTask uploadTask =imgRef.putFile(imgUri);
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(ChattingActivity.this, "업로드", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    //for camera permissions
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Camera Permission is approved", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Camera Permission is disapproved ", Toast.LENGTH_SHORT).show();
-                }
-                return;
             }
         }
     }

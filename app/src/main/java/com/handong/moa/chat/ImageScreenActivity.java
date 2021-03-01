@@ -29,7 +29,6 @@ public class ImageScreenActivity extends AppCompatActivity {
     private String imgPath;
     private Uri imgUri;
     private String roomID;
-    private static final int CAMERA_CAPTURE = 102;
     private final int GET_GALLERY_IMAGE = 200;
     private int where;
 
