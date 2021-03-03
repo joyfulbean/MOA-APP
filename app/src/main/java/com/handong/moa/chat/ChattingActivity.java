@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -59,9 +60,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -190,12 +194,12 @@ public class ChattingActivity extends AppCompatActivity {
                 else if (isChecked) {
                     //수정 불가능, 방 사라짐, 토스트 메세지
                     isLock = true;
-                    Toast.makeText(ChattingActivity.this, "방을 잠그면 주문서 수정이 안되고, 새로운 사람이 방에 들어올 수 없습니다 ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChattingActivity.this, "방이 잠겼습니다.\n주문서를 수정할 수 없으며, 방을 들어오거나 나갈 수 없습니다.", Toast.LENGTH_LONG).show();
                     sendRoomidToServer();//방상태변경
                 } else {
                     //수정 가능, 방떠있음, 토스트메세지
                     isLock = false;
-                    Toast.makeText(ChattingActivity.this, "잠금을 풀면 주문서 수정이 가능하고, 새로운 사람이 방에 들어올 수 있습니다 ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChattingActivity.this, "방 잠금이 풀렸습니다.", Toast.LENGTH_SHORT).show();
                     sendRoomidToServer();//방상태변경
                 }
             }
@@ -304,7 +308,7 @@ public class ChattingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = MyData.name;
                 String content = messageContent.getText().toString();
-                sendMessageFirebase(name, content, "none", MyData.uid);
+                sendMessageFirebase(name, content, "none", MyData.uid, MyData.getPhotoUrl().toString());
 
                 //flush EditText
                 messageContent.setText("");
@@ -430,11 +434,11 @@ public class ChattingActivity extends AppCompatActivity {
     }
 
     //send message on firebase
-    private void sendMessageFirebase(String name, String content, String image, String uid){
+    private void sendMessageFirebase(String name, String content, String image, String uid, String url){
         Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
         String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
 
-        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image, uid);
+        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image, uid, url);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         roodIdReference = firebaseDatabase.getReference(roomID);
@@ -518,7 +522,8 @@ public class ChattingActivity extends AppCompatActivity {
             ImageButton receipt = row.findViewById(R.id.chatpage_receipt_button);
 
             //setting resources on views
-            images.setImageResource(R.drawable.profileicon2);
+            RoomMemberLoadImageTask imageTask = new RoomMemberLoadImageTask(rRoomMembers.get(position).getPhotoUrl(), images);
+            imageTask.execute();
             name.setText(rRoomMembers.get(position).getName());
 
             if(rRoomMembers.get(position).getPhonNumber().equals("null") || rRoomMembers.get(position).getPhonNumber().isEmpty()) {
@@ -541,6 +546,42 @@ public class ChattingActivity extends AppCompatActivity {
                 }
             });
             return row;
+        }
+    }
+    //* for profile photo
+    public class RoomMemberLoadImageTask extends AsyncTask<Bitmap, Void, Bitmap> {
+        private String url;
+        private ImageView images;
+
+        public RoomMemberLoadImageTask(String url, ImageView images) {
+            this.url = url;
+            this.images = images;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Bitmap... params) {
+
+            Bitmap imgBitmap = null;
+
+            try {
+                URL url1 = new URL(url);
+                URLConnection conn = url1.openConnection();
+                conn.connect();
+                int nSize = conn.getContentLength();
+                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream(), nSize);
+                imgBitmap = BitmapFactory.decodeStream(bis);
+                bis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return imgBitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bit) {
+            super.onPostExecute(bit);
+            images.setImageBitmap(bit);
         }
     }
 
@@ -643,7 +684,7 @@ public class ChattingActivity extends AppCompatActivity {
                 // 아니면 여기서 추가를해줘도 될 듯 하네
                 if(isNew) {
                     String content = MyData.name + "님이 입장 했습니다.";
-                    sendMessageFirebase("ENTER_EXIT", content, "none", "ENTER_EXIT");
+                    sendMessageFirebase("ENTER_EXIT", content, "none", "ENTER_EXIT", "none");
                     isNew = false;
                     saveNewParticipant();
                 }
@@ -711,7 +752,7 @@ public class ChattingActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 String content = MyData.name + "님이 퇴장 하셨습니다.";
-                sendMessageFirebase("ENTER_EXIT", content, "none", "ENTER_EXIT");
+                sendMessageFirebase("ENTER_EXIT", content, "none", "ENTER_EXIT", "none");
                 Intent intent3 = new Intent(ChattingActivity.this, MainActivity.class);
                 startActivity(intent3);
                 finish();

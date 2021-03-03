@@ -3,7 +3,11 @@ package com.handong.moa.chat;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
@@ -33,6 +42,7 @@ public class ChatAdapter  extends BaseAdapter {
     private String MOAcontent;
     private Context context;
     private boolean copy;
+    private ImageView msgImage;
 
     public boolean isCopy() {
         return copy;
@@ -76,14 +86,14 @@ public class ChatAdapter  extends BaseAdapter {
         if(item.getImg().equals("none")){
             if (item.getUid().equals(MyData.uid)) {
                 itemView = layoutInflater.inflate(R.layout.my_msgbox, viewGroup, false);
-                setting(item, itemView);
+                setting(item, itemView, false, "none");
             } else if (item.getUid().equals("ENTER_EXIT")) {
                 itemView = layoutInflater.inflate(R.layout.enter_exit_box, viewGroup, false);
                 TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
                 msgboxContent.setText(item.getMessage());
             } else {
                 itemView = layoutInflater.inflate(R.layout.other_msgbox, viewGroup, false);
-                setting(item, itemView);
+                setting(item, itemView, true, item.getUrl());
             }
         }
         else{
@@ -98,12 +108,16 @@ public class ChatAdapter  extends BaseAdapter {
         return itemView;
     }
 
-    public void setting(ChatMessageItem item, View itemView){
+    public void setting(ChatMessageItem item, View itemView, boolean isYou, String url){
         //만들어진 itemView에 값들 설정
         TextView msgboxName = itemView.findViewById(R.id.msgbox_name);
         TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
         TextView msgboxTime = itemView.findViewById(R.id.msgbox_time);
-
+        if(isYou) {
+            msgImage = itemView.findViewById(R.id.other_msgbox_profile_imageview);
+            ChatLoadImageTask imageTask = new ChatLoadImageTask(url);
+            imageTask.execute();
+        }
         msgboxName.setText(item.getName());
         msgboxContent.setText(item.getMessage());
         msgboxTime.setText(item.getTime());
@@ -152,5 +166,40 @@ public class ChatAdapter  extends BaseAdapter {
 
         //복사가 되었다면 토스트메시지 노출
         Toast.makeText(context, MOAcontent,Toast.LENGTH_SHORT).show();
+    }
+
+    //* for photo
+    public class ChatLoadImageTask extends AsyncTask<Bitmap, Void, Bitmap> {
+        private String url;
+
+        public ChatLoadImageTask(String url) {
+            this.url = url;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Bitmap... params) {
+
+            Bitmap imgBitmap = null;
+
+            try {
+                URL url1 = new URL(url);
+                URLConnection conn = url1.openConnection();
+                conn.connect();
+                int nSize = conn.getContentLength();
+                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream(), nSize);
+                imgBitmap = BitmapFactory.decodeStream(bis);
+                bis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return imgBitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bit) {
+            super.onPostExecute(bit);
+            msgImage.setImageBitmap(bit);
+        }
     }
 }

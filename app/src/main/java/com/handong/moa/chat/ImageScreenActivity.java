@@ -87,7 +87,7 @@ public class ImageScreenActivity extends AppCompatActivity {
                 StorageReference imgRef = firebaseStorage.getReference(filePath);
                 UploadTask uploadTask =imgRef.putFile(imgUri);
 
-                sendMessageFirebase(MyData.getName(), "none", filePath, MyData.uid);
+                sendMessageFirebase(MyData.getName(), "none", filePath, MyData.uid, MyData.getPhotoUrl().toString());
 
                 finish();
             }
@@ -95,11 +95,11 @@ public class ImageScreenActivity extends AppCompatActivity {
     }
 
     //send message on firebase
-    private void sendMessageFirebase(String name, String content, String image, String uid){
+    private void sendMessageFirebase(String name, String content, String image, String uid, String url){
         Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
         String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
 
-        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image, uid);
+        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image, uid, url);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         roodIdReference = firebaseDatabase.getReference(roomID);
