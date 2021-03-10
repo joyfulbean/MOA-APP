@@ -96,6 +96,8 @@ public class ReceiptActivity extends AppCompatActivity {
     // for keypad
     private InputMethodManager imm;
 
+    private ImageButton imageDeleteButton;
+
 
 
     @Override
@@ -165,15 +167,15 @@ public class ReceiptActivity extends AppCompatActivity {
         stuff_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    for(int j = 0; j < listInfos.size(); j++){
-                        Log.i("list",parent.getAdapter().getItem(position).toString());
-                        if(parent.getAdapter().getItem(position).toString().equals(listInfos.get(j).getStuffName())) {
-                            Log.i("listing",listInfos.get(j).getStuffName());
-                            Log.i("listing",listInfos.get(j).getCost());
-                            stuff_cost.setText(listInfos.get(j).getCost());
-                            break;
-                        }
+                for(int j = 0; j < listInfos.size(); j++){
+                    Log.i("list",parent.getAdapter().getItem(position).toString());
+                    if(parent.getAdapter().getItem(position).toString().equals(listInfos.get(j).getStuffName())) {
+                        Log.i("listing",listInfos.get(j).getStuffName());
+                        Log.i("listing",listInfos.get(j).getCost());
+                        stuff_cost.setText(listInfos.get(j).getCost());
+                        break;
                     }
+                }
             }
         });
 
@@ -181,6 +183,18 @@ public class ReceiptActivity extends AppCompatActivity {
         myAdapter = new MyAdapter(this, orderInfos, stuff_name, stuff_cost, stuff_num);
         listView.setAdapter(myAdapter);
         myAdapter.setListView(listView);
+
+        //이미지 삭제
+        imageDeleteButton = findViewById(R.id.order_myorderimage_beforeadd_closebutton);
+        imageDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relativeLayoutImage.setVisibility(View.GONE);
+                linearLayoutWrite.setVisibility(View.VISIBLE);
+                isImage = false;
+                image_cost.setText("");
+            }
+        });
 
         //상품추가 버튼
         myOrderAddButton = findViewById(R.id.order_myorder_addbutton);
@@ -271,21 +285,21 @@ public class ReceiptActivity extends AppCompatActivity {
         ImageButton minus = findViewById(R.id.order_minusbutton1);
         ImageButton plus = findViewById(R.id.order_plusbutton1);
 
-            minus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int total_num = Integer.parseInt(stuff_num.getText().toString()) - 1;
-                    stuff_num.setText(Integer.toString(total_num));
-                }
-            });
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int total_num = Integer.parseInt(stuff_num.getText().toString()) - 1;
+                stuff_num.setText(Integer.toString(total_num));
+            }
+        });
 
-            plus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int total_num = Integer.parseInt(stuff_num.getText().toString()) + 1;
-                    stuff_num.setText(Integer.toString(total_num));
-                }
-            });
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int total_num = Integer.parseInt(stuff_num.getText().toString()) + 1;
+                stuff_num.setText(Integer.toString(total_num));
+            }
+        });
     }
 
     //* galary button

@@ -7,19 +7,21 @@
 
     <ImageButton
         android:id="@+id/order_myorderimage_closebutton1"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/closeiconblack"
         android:background="@null"
         android:layout_gravity="end"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:padding="14dp"
+        android:layout_marginTop="30dp"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="15.24dp"
-        android:layout_marginEnd="15.24dp">
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
 
         <ImageView
             android:id="@+id/image"
@@ -46,7 +48,8 @@
             android:inputType="number"
             android:textColor="@color/darkgrey"
             android:textColorHint="@color/grey"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:textAlignment="textEnd"/>
 
         <TextView
             android:id="@+id/order_myorder_won1"
@@ -60,15 +63,6 @@
             android:text="원"
             android:textColor="@color/darkgrey"
             android:textSize="14dp" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignStart="@id/order_myorderimage_price1"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="24dp"
-            android:layout_toStartOf="@id/order_myorder_won1"
-            android:src="@drawable/shorterline" />
 
     </RelativeLayout>
 

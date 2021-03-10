@@ -16,6 +16,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -381,6 +384,14 @@ public class ChattingActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout)findViewById(R.id.chatpage_drawerlayout);
         drawerView = (View)findViewById(R.id.chatpage_drawer);
 
+        // 뒤에 잠그기 버튼 안눌리게 해주는 기능 - touch가 뒤에 layout으로 안넘어간다.
+        drawerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+
         ImageButton peopleListButton = (ImageButton)findViewById(R.id.chatpage_drawer_button);
         peopleListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -468,7 +479,10 @@ public class ChattingActivity extends AppCompatActivity {
         ImageView myImage = findViewById(R.id.chatpage_myprofile_iv);
         TextView myName = findViewById(R.id.chatpage_myname_tv);
 
-        myImage.setImageResource(R.drawable.profileicon2);
+        RoomMemberLoadImageTask imageTask = new RoomMemberLoadImageTask(MyData.getPhotoUrl().toString(), myImage);
+        imageTask.execute();
+        myImage.setBackground(new ShapeDrawable(new OvalShape()));
+        myImage.setClipToOutline(true);
         myName.setText(MyData.getName());
     }
 
@@ -516,14 +530,16 @@ public class ChattingActivity extends AppCompatActivity {
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.chatpage_ppl_row, parent, false);
-            ImageView images = row.findViewById(R.id.chatpage_otherprofile_iv);
+            ImageView memberImages = row.findViewById(R.id.chatpage_otherprofile_iv);
             TextView name = row.findViewById(R.id.chatpage_pplname_tv);
             ImageButton phone = row.findViewById(R.id.chatpage_phone_button);
             ImageButton receipt = row.findViewById(R.id.chatpage_receipt_button);
 
             //setting resources on views
-            RoomMemberLoadImageTask imageTask = new RoomMemberLoadImageTask(rRoomMembers.get(position).getPhotoUrl(), images);
+            RoomMemberLoadImageTask imageTask = new RoomMemberLoadImageTask(rRoomMembers.get(position).getPhotoUrl(), memberImages);
             imageTask.execute();
+            memberImages.setBackground(new ShapeDrawable(new OvalShape()));
+            memberImages.setClipToOutline(true);
             name.setText(rRoomMembers.get(position).getName());
 
             if(rRoomMembers.get(position).getPhonNumber().equals("null") || rRoomMembers.get(position).getPhonNumber().isEmpty()) {
@@ -582,6 +598,8 @@ public class ChattingActivity extends AppCompatActivity {
         protected void onPostExecute(Bitmap bit) {
             super.onPostExecute(bit);
             images.setImageBitmap(bit);
+            images.setBackground(new ShapeDrawable(new OvalShape()));
+            images.setClipToOutline(true);
         }
     }
 
