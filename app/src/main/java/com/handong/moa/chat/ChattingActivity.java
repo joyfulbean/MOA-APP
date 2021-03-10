@@ -538,8 +538,6 @@ public class ChattingActivity extends AppCompatActivity {
             //setting resources on views
             RoomMemberLoadImageTask imageTask = new RoomMemberLoadImageTask(rRoomMembers.get(position).getPhotoUrl(), memberImages);
             imageTask.execute();
-            memberImages.setBackground(new ShapeDrawable(new OvalShape()));
-            memberImages.setClipToOutline(true);
             name.setText(rRoomMembers.get(position).getName());
 
             if(rRoomMembers.get(position).getPhonNumber().equals("null") || rRoomMembers.get(position).getPhonNumber().isEmpty()) {
@@ -598,8 +596,6 @@ public class ChattingActivity extends AppCompatActivity {
         protected void onPostExecute(Bitmap bit) {
             super.onPostExecute(bit);
             images.setImageBitmap(bit);
-            images.setBackground(new ShapeDrawable(new OvalShape()));
-            images.setClipToOutline(true);
         }
     }
 
