@@ -58,7 +58,11 @@ public class BankActivity extends AppCompatActivity {
         String tempCheckBankAccount = checkingBankAccount.getText().toString();
         String tempBankPeopleName = bankPeopleName.getText().toString();
 
+
         if(tempBankAccount.equals(tempCheckBankAccount)) {
+            MyData.accountNumber = tempBankAccount;
+            MyData.accountName = tempBankPeopleName;
+            MyData.bankName = tempBankName;
             String account = tempBankName + " " + tempBankAccount + " " + tempBankPeopleName;
             MyData.account = account;
 

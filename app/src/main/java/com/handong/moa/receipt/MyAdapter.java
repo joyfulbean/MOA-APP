@@ -115,7 +115,7 @@ public class MyAdapter extends BaseAdapter{
             }
         });
         stuff_name.setText(orderInfos.get(position).getStuffName());
-        stuff_cost.setText(orderInfos.get(position).getCost());
+        stuff_cost.setText(orderInfos.get(position).getCost() + " 원");
         stuff_num.setText(orderInfos.get(position).getNum());
         return view;
     }

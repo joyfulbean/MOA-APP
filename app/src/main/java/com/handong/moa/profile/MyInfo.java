@@ -55,6 +55,7 @@ public class MyInfo extends Fragment {
     private TextView logout;
 
     private int REQUEST_TEST = 777;
+    private int REQUEST_BANK = 888;
 
     // for google sign in
     private GoogleSignInClient mGoogleSignInClient;
@@ -148,8 +149,9 @@ public class MyInfo extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (getActivity(), BankActivity.class);
-                startActivity(intent);
-                refresh();
+                startActivityForResult(intent, REQUEST_BANK);
+//                startActivity(intent);
+//                refresh();
 
             }
         });
@@ -210,8 +212,18 @@ public class MyInfo extends Fragment {
                 //Toast.makeText(getActivity(), "Success: " + MyData.phoneNumber, Toast.LENGTH_SHORT).show();
                 phone.setText(MyData.phoneNumber);
             }
-//        } else if (requestCode == REQUEST_ANOTHER) {
-//            …
+        }
+        else if(requestCode == REQUEST_BANK) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getActivity(), "Result: " + MyData.account, Toast.LENGTH_SHORT).show();
+                bankName.setText(MyData.bankName);
+                bankAccount.setText(MyData.accountNumber);
+                bankPeopleName.setText(MyData.accountName);
+            } else {   // RESULT_CANCEL
+                bankName.setText(MyData.bankName);
+                bankAccount.setText(MyData.accountNumber);
+                bankPeopleName.setText(MyData.accountName);
+            }
         }
     }
 

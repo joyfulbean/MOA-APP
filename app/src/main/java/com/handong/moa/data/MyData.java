@@ -5,6 +5,9 @@ import android.net.Uri;
 public class MyData {
     public static String phoneNumber;
     public static String account;
+    public static String accountName;
+    public static String bankName;
+    public static String accountNumber;
     public static String name;
     public static String mail;
     public static String uid;
