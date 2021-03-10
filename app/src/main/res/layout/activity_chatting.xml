@@ -317,19 +317,24 @@
 
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/chatpage_message_listview"
+        <ScrollView
+            android:id="@+id/chatpage_message_scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
             app:layout_constraintBottom_toTopOf="@id/chatpage_bottomsheet"
-            app:layout_constraintTop_toBottomOf="@id/chatpage_postbar_layout"
-            android:stackFromBottom="false"
-            android:transcriptMode="alwaysScroll"
-            android:layout_weight="1"
-            android:divider="#ffffff"
-            android:dividerHeight="0dp"/>
+            app:layout_constraintTop_toBottomOf="@id/chatpage_postbar_layout">
+
+            <ListView
+                android:id="@+id/chatpage_message_listview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:stackFromBottom="false"
+                android:transcriptMode="alwaysScroll"
+                android:layout_weight="1"
+                android:divider="#ffffff"
+                android:dividerHeight="0dp"/>
+
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/chatpage_bottomsheet"
@@ -338,7 +343,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chatpage_message_listview"
+            app:layout_constraintTop_toBottomOf="@id/chatpage_message_scrollview"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -363,7 +368,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/chatpage_typein_edittext"/>
@@ -400,7 +405,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="12dp"/>
+                    android:layout_marginBottom="10dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

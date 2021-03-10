@@ -55,7 +55,7 @@
             android:name="com.handong.moa.chat.ChattingActivity"
             android:label=".ChattingActivity"
             android:parentActivityName="com.handong.moa.main.MainActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

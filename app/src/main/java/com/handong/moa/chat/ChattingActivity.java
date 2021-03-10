@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -316,8 +317,10 @@ public class ChattingActivity extends AppCompatActivity {
                 //flush EditText
                 messageContent.setText("");
 
-                //hide soft keyboard
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+                // hide soft keyboard
+                imm.showSoftInputFromInputMethod(getCurrentFocus().getWindowToken(),0);
+                imm.showSoftInput(messageContent, InputMethodManager.SHOW_FORCED);
+                // imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
             }
         });
 
@@ -442,6 +445,30 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View focusView = getCurrentFocus();
+        if (focusView != null) {
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            Rect buttonRect = new Rect();
+            messageSendButton.getGlobalVisibleRect(buttonRect);
+            Rect plusRect = new Rect();
+            expandLayoutPlus.getGlobalVisibleRect(plusRect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if (!rect.contains(x, y) && !buttonRect.contains(x, y) && !plusRect.contains(x, y)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+                expandLayoutPlus.setVisibility(View.GONE);
+            }
+            if(plusRect.contains(x, y)){
+                expandLayoutPlus.setVisibility(View.GONE);
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     //send message on firebase
