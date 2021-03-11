@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.handong.moa.R;
+import com.handong.moa.data.ServerInfo;
 import com.handong.moa.data.StuffInfo;
 
 import org.json.JSONArray;
@@ -37,7 +38,7 @@ import okhttp3.Response;
  */
 public class Stuff extends Fragment {
     // for server
-    private static final String urls = "http://54.180.8.235:5000/room";
+    private static final String urls = ServerInfo.getUrl() + "room";
     public ArrayList<StuffInfo> thingA = new ArrayList<>();
     public ArrayList<StuffInfo> thingB = new ArrayList<>();
     private boolean AorB = true;

@@ -34,6 +34,7 @@ import com.handong.moa.R;
 import com.handong.moa.chat.ChattingActivity;
 import com.handong.moa.data.MyData;
 import com.handong.moa.data.OrderInfo;
+import com.handong.moa.data.ServerInfo;
 import com.handong.moa.data.StuffInfo;
 
 import org.json.JSONArray;
@@ -55,9 +56,9 @@ import okhttp3.Response;
 
 public class ReceiptActivity extends AppCompatActivity {
 
-    private static final String urls = "http://54.180.8.235:5000/room";
-    private static final String MyItemSend_urls = "http://54.180.8.235:5000/receipt";
-    private static final String image_url = "http://54.180.8.235:5000/receipt/image";
+    private static final String urls = ServerInfo.getUrl() + "room";
+    private static final String MyItemSend_urls = ServerInfo.getUrl() + "receipt";
+    private static final String image_url = ServerInfo.getUrl() + "receipt/image";
 
     private StuffInfo stuffRoomInfo = new StuffInfo();
 

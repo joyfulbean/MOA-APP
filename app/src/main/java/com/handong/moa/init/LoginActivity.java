@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.handong.moa.data.ServerInfo;
 import com.handong.moa.main.MainActivity;
 import com.handong.moa.data.MyData;
 import com.handong.moa.R;
@@ -42,7 +43,7 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
     // for server
-    private static final String urls = "http://54.180.8.235:5000/user";
+    private static final String urls = ServerInfo.getUrl() + "user";
     boolean isNew;
     boolean mysqlIsNew;
 

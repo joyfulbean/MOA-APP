@@ -163,11 +163,11 @@ public class ChatAdapter  extends BaseAdapter {
         MOAcontent = item.getMessage(); // 텍스트뷰 글자 가져옴
         //클립보드 사용 코드
         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText("ID", "클립보드에 복사되었습니다."); //클립보드에 ID라는 이름표로 id 값을 복사하여 저장
+        ClipData clipData = ClipData.newPlainText("ID", MOAcontent); //클립보드에 ID라는 이름표로 id 값을 복사하여 저장
         clipboardManager.setPrimaryClip(clipData);
 
         //복사가 되었다면 토스트메시지 노출
-        Toast.makeText(context, MOAcontent,Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "클립보드에 복사되었습니다.",Toast.LENGTH_SHORT).show();
     }
 
     //* for photo

@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
-            android:text="은행 이름"
+            android:text="@string/bank_name"
             android:textSize="16dp"
             android:textColor="@color/black"
             android:layout_marginTop="38.1dp"/>
@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
-            android:text="계좌번호"
+            android:text="@string/bank_number"
             android:textSize="16dp"
             android:textColor="@color/black"
             android:layout_marginTop="38.1dp"/>

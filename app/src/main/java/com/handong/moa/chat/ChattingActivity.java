@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handong.moa.data.OrderInfo;
+import com.handong.moa.data.ServerInfo;
 import com.handong.moa.main.MainActivity;
 import com.handong.moa.data.MyData;
 import com.handong.moa.R;
@@ -58,6 +59,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.handong.moa.profile.BankActivity;
 import com.kyleduo.switchbutton.SwitchButton;
 
 import org.json.JSONArray;
@@ -89,11 +91,11 @@ import static com.handong.moa.receipt.ReceiptActivity.verifyStoragePermissions;
 
 public class ChattingActivity extends AppCompatActivity {
     // for server
-    private static final String urls = "http://54.180.8.235:5000/room";
-    private static final String roomMemberUrls = "http://54.180.8.235:5000/participant";
-    private static final String receiptInfoUrls = "http://54.180.8.235:5000/receipt";
-    private static final String imageInfoUrls = "http://54.180.8.235:5000/receipt/image";
-    private static final String roomIDUrls = "http://54.180.8.235:5000/room/status";
+    private static final String urls = ServerInfo.getUrl() + "room";
+    private static final String roomMemberUrls = ServerInfo.getUrl() + "participant";
+    private static final String receiptInfoUrls = ServerInfo.getUrl() + "receipt";
+    private static final String imageInfoUrls = ServerInfo.getUrl() + "receipt/image";
+    private static final String roomIDUrls = ServerInfo.getUrl() + "room/status";
     private StuffInfo chattingInfo = new StuffInfo();
     private String roomID;
 
@@ -217,12 +219,15 @@ public class ChattingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SharedPreferences preferences = getSharedPreferences("info",MODE_PRIVATE);
                 MyData.account = preferences.getString("account", null);
-                if (MyData.account == null) { // <-- safe if called_from is null
+                if (MyData.accountNumber == null || MyData.bankName == null || MyData.accountNumber.equals("") || MyData.bankName.equals("")) { // <-- safe if called_from is null
                     Toast.makeText(ChattingActivity.this, "프로필에 본인의 계좌번호를 먼저 등록해 주세요.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent (getApplication(), BankActivity.class);
+                    startActivity(intent);
                 }
                 else{
-                    String account_data[] = MyData.account.split(" ");
-                    String account_setting = account_data[0] + account_data[1] + "\n" + "(" + account_data[2] + ")";
+                    String account_setting = MyData.bankName + MyData.accountNumber;
+                    if(MyData.accountName != null && !MyData.accountName.equals(""))
+                        account_setting += "\n" + "(" + MyData.accountName + ")";
                     messageContent.setText(account_setting);
                 }
             }
@@ -318,8 +323,6 @@ public class ChattingActivity extends AppCompatActivity {
                 messageContent.setText("");
 
                 // hide soft keyboard
-                imm.showSoftInputFromInputMethod(getCurrentFocus().getWindowToken(),0);
-                imm.showSoftInput(messageContent, InputMethodManager.SHOW_FORCED);
                 // imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
             }
         });
@@ -448,6 +451,7 @@ public class ChattingActivity extends AppCompatActivity {
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+
         View focusView = getCurrentFocus();
         if (focusView != null) {
             Rect rect = new Rect();
@@ -464,7 +468,7 @@ public class ChattingActivity extends AppCompatActivity {
                 focusView.clearFocus();
                 expandLayoutPlus.setVisibility(View.GONE);
             }
-            if(plusRect.contains(x, y)){
+            if(!plusRect.contains(x, y)){
                 expandLayoutPlus.setVisibility(View.GONE);
             }
         }

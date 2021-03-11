@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.handong.moa.R;
+import com.handong.moa.data.ServerInfo;
 import com.handong.moa.main.RecyclerAdapter;
 import com.handong.moa.data.StuffInfo;
 import com.handong.moa.main.Stuff;
@@ -37,7 +38,7 @@ import okhttp3.Response;
  */
 public class MyRoom extends Fragment {
     // for server
-    private static final String urls = "http://54.180.8.235:5000/room/my/";
+    private static final String urls = ServerInfo.getUrl() + "room/my/";
     public ArrayList<StuffInfo> thingA = new ArrayList<>();
     public ArrayList<StuffInfo> thingB = new ArrayList<>();
     private boolean AorB = true;

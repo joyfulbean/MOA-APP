@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.handong.moa.R;
 import com.handong.moa.data.OrderInfo;
+import com.handong.moa.data.ServerInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,7 +68,7 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
     private ListView listView;
     private EachImageShowReceiptAdapter imageAdapter;
     private ArrayList<OrderInfo> each_orderInfos = new ArrayList<>();
-    private static final String receiptInfoUrls = "http://54.180.8.235:5000/receipt";
+    private static final String receiptInfoUrls = ServerInfo.getUrl() + "receipt";
 
     private ListView listViewImage;
     private EachInfoShowReceiptAdapter infoAdapter;
@@ -75,8 +76,8 @@ public class EachInfoShowReceiptDialog extends Dialog implements View.OnClickLis
     private ArrayList<Integer> imageCost = new ArrayList<>();
     private ArrayList<OrderInfo> imgEachOrderInfos = new ArrayList<>();
     private ArrayList<Bitmap> imageBitmap = new ArrayList<>();
-    private static final String imageInfoUrls = "http://54.180.8.235:5000/receipt/image";
-    private static final String postUrl = "http://54.180.8.235:5000/static/receipts/";
+    private static final String imageInfoUrls = ServerInfo.getUrl() + "receipt/image";
+    private static final String postUrl = ServerInfo.getUrl() + "static/receipts/";
 
 
 

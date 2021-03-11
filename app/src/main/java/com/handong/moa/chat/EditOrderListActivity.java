@@ -29,6 +29,7 @@ import androidx.core.app.ActivityCompat;
 import com.handong.moa.R;
 import com.handong.moa.data.MyData;
 import com.handong.moa.data.OrderInfo;
+import com.handong.moa.data.ServerInfo;
 import com.handong.moa.receipt.ImageAdapter;
 import com.handong.moa.receipt.MyAdapter;
 
@@ -53,9 +54,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class EditOrderListActivity extends AppCompatActivity {
-    private static final String postUrl = "http://54.180.8.235:5000/static/receipts/";
-    private static final String MyItemSend_urls = "http://54.180.8.235:5000/receipt";
-    private static final String image_url = "http://54.180.8.235:5000/receipt/image";
+    private static final String postUrl = ServerInfo.getUrl() + "static/receipts/";
+    private static final String MyItemSend_urls = ServerInfo.getUrl() + "receipt";
+    private static final String image_url = ServerInfo.getUrl() + "receipt/image";
 
     private ArrayList<OrderInfo> eachOrderInfos;
     private ArrayList<OrderInfo> imgEachOrderInfos = new ArrayList<>();

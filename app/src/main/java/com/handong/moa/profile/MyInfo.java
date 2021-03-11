@@ -113,11 +113,9 @@ public class MyInfo extends Fragment {
             phone.setText(MyData.phoneNumber);
 
             if(MyData.account != null) {
-                String str = MyData.account;
-                String[] array = str.split(" ");
-                bankName.setText(array[0]);
-                bankAccount.setText(array[1]);
-                bankPeopleName.setText(array[2]);
+                bankName.setText(MyData.bankName);
+                bankAccount.setText(MyData.accountNumber);
+                bankPeopleName.setText(MyData.accountName);
             }
 
         }

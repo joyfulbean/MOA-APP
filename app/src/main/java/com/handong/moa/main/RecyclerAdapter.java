@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.handong.moa.R;
 import com.handong.moa.chat.ChatMessageItem;
 import com.handong.moa.chat.ChattingActivity;
+import com.handong.moa.data.ServerInfo;
 import com.handong.moa.receipt.ReceiptActivity;
 import com.handong.moa.data.MyData;
 import com.handong.moa.data.StuffInfo;
@@ -71,7 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     // for is new
-    private static final String urls = "http://54.180.8.235:5000/participant";
+    private static final String urls = ServerInfo.getUrl() + "participant";
     private boolean isNew;
 
 

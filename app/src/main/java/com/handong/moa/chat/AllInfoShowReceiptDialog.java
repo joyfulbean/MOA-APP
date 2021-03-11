@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.handong.moa.R;
+import com.handong.moa.data.ServerInfo;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -48,7 +49,7 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
     private ListView listViewImage;
     private AllInfoShowReceiptAdapter infoAdapter;
     private ArrayList<Bitmap> imageBitmap = new ArrayList<>();
-    private static final String postUrl = "http://54.180.8.235:5000/static/receipts/";
+    private static final String postUrl = ServerInfo.getUrl() + "static/receipts/";
 
 
 

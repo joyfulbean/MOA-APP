@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.handong.moa.R;
+import com.handong.moa.data.ServerInfo;
 import com.handong.moa.data.StuffInfo;
 import com.handong.moa.util.Utils;
 
@@ -38,8 +39,8 @@ import okhttp3.Response;
 public class EditRoomActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     public static final int REQUEST_CODE = 100;
     // for server
-    private static final String urls = "http://54.180.8.235:5000/room";
-    private static final String imageUrls = "http://54.180.8.235:5000/room/og";
+    private static final String urls = ServerInfo.getUrl() + "room";
+    private static final String imageUrls = ServerInfo.getUrl() + "room/og";
     private StuffInfo stuffRoomInfo = new StuffInfo();
     private String roomID;
 

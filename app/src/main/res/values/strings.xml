@@ -6,6 +6,8 @@
 
     <string name="stuff_name"><font color='#FF0000'>*</font>상품 이름</string>
     <string name="stuff_place"><font color='#FF0000'>*</font>배달 장소</string>
+    <string name="bank_name"><font color='#FF0000'>*</font>은행 이름</string>
+    <string name="bank_number"><font color='#FF0000'>*</font>계좌번호</string>
     <string name="hello_world">Hello Square World!</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_edit_order_list">EditOrderListActivity</string>

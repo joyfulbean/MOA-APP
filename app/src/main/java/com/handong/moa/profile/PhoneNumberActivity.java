@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.handong.moa.R;
 import com.handong.moa.data.MyData;
+import com.handong.moa.data.ServerInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +28,7 @@ import okhttp3.Response;
 
 public class PhoneNumberActivity extends AppCompatActivity {
     //* for server
-    private static final String urls = "http://54.180.8.235:5000/user/phone";
+    private static final String urls = ServerInfo.getUrl() + "user/phone";
 
     //* for getting phone number
     private EditText phoneNumber;
