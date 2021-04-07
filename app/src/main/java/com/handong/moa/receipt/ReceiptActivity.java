@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -54,6 +55,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.handong.moa.R.drawable.write_darkgray_btn;
+
 public class ReceiptActivity extends AppCompatActivity {
 
     private static final String urls = ServerInfo.getUrl() + "room";
@@ -96,8 +99,11 @@ public class ReceiptActivity extends AppCompatActivity {
 
     // for keypad
     private InputMethodManager imm;
-
     private ImageButton imageDeleteButton;
+
+    // add - 2021.04.07
+    private ImageButton writeButton;
+    private ImageButton imageButton;
 
 
 
@@ -105,6 +111,47 @@ public class ReceiptActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt);
+
+        // add - 2021.04.07
+        final Drawable drawableWriteDark = getResources().getDrawable(R.drawable.write_darkgray_btn);
+        final Drawable drawableWriteLight = getResources().getDrawable(R.drawable.write_lightgray_btn);
+
+        final Drawable drawableImageeDark = getResources().getDrawable(R.drawable.photo_darkgray_btn);
+        final Drawable drawableImageLight = getResources().getDrawable(R.drawable.photo_lightgray_btn);
+
+        final Drawable drawDeleteImage = getResources().getDrawable(R.drawable.camerabuttongrey);
+
+        writeButton = findViewById(R.id.write_darkgray_btn);
+        writeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                relativeLayoutImage.setVisibility(View.GONE); // image setting 부분 안보이게
+                isImage = false;
+                linearLayoutWrite.setVisibility(View.VISIBLE); // 다시 상품정보 입력란 보이게
+                writeButton.setImageDrawable(drawableWriteDark);
+                imageButton.setImageDrawable(drawableImageLight);
+            }
+        });
+        imageButton = findViewById(R.id.photo_lightgray_btn);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePreview.setImageDrawable(drawDeleteImage);
+                linearLayoutWrite.setVisibility(View.GONE); // 다시 상품정보 입력란 보이게
+                isImage = true;
+                relativeLayoutImage.setVisibility(View.VISIBLE); // image setting 부분 안보이게
+                writeButton.setImageDrawable(drawableWriteLight);
+                imageButton.setImageDrawable(drawableImageeDark);
+            }
+        });
+        //이미지 삭제
+        imageDeleteButton = findViewById(R.id.order_myorderimage_beforeadd_closebutton);
+        imageDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagePreview.setImageDrawable(drawDeleteImage);
+            }
+        });
 
         //get the room id
         Intent secondIntent = getIntent();
@@ -138,11 +185,9 @@ public class ReceiptActivity extends AppCompatActivity {
         listViewImage.setAdapter(imageAdapter);
         imageAdapter.setListView(listViewImage);
 
-        //camera button
-        stuff_camera = findViewById(R.id.order_myorder_camerabutton1);
 
         // camera button click
-        stuff_camera.setOnClickListener(new View.OnClickListener() {
+        imagePreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 verifyStoragePermissions(ReceiptActivity.this);
@@ -185,17 +230,7 @@ public class ReceiptActivity extends AppCompatActivity {
         listView.setAdapter(myAdapter);
         myAdapter.setListView(listView);
 
-        //이미지 삭제
-        imageDeleteButton = findViewById(R.id.order_myorderimage_beforeadd_closebutton);
-        imageDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                relativeLayoutImage.setVisibility(View.GONE);
-                linearLayoutWrite.setVisibility(View.VISIBLE);
-                isImage = false;
-                image_cost.setText("");
-            }
-        });
+
 
         //상품추가 버튼
         myOrderAddButton = findViewById(R.id.order_myorder_addbutton);
@@ -203,7 +238,7 @@ public class ReceiptActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isImage){ // image
-                    if(image_cost.getText().toString().length() != 0) {
+                    if(image_cost.getText().toString().length() != 0 && imagePreview.getDrawable() != drawDeleteImage) {
                         OrderInfo imageInfo = new OrderInfo(roomID, image_cost.getText().toString(), filePath);
                         imageInfos.add(imageInfo);
                         imageAdapter.notifyDataSetChanged();
@@ -216,7 +251,7 @@ public class ReceiptActivity extends AppCompatActivity {
                         linearLayoutWrite.setVisibility(View.VISIBLE); // 다시 상품정보 입력란 보이게
                         image_cost.setText("");
                     }else {
-                        Toast.makeText(ReceiptActivity.this, "총 가격을 입력하세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ReceiptActivity.this, "사진 추가 또는 총 가격을 입력하세요.", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     if(stuff_name.getText().toString().length() != 0 && stuff_cost.getText().toString().length() != 0 && Integer.parseInt(stuff_num.getText().toString()) > 0) {
@@ -317,8 +352,6 @@ public class ReceiptActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 relativeLayoutImage.setVisibility(View.VISIBLE); //image setting 부분 보이게
                 imagePreview.setImageBitmap(bitmap);
-                isImage = true;
-                linearLayoutWrite.setVisibility(View.GONE); //  상품정보 입력 안보이게
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -326,7 +359,7 @@ public class ReceiptActivity extends AppCompatActivity {
     }
 
     //* setting the screen
-    public void settingScreen(){
+    /*public void settingScreen(){
         // for recipe page
         TextView chatpage_title_textview = (TextView)findViewById(R.id.order_product);
         chatpage_title_textview.setText(stuffRoomInfo.getTitle());
@@ -339,7 +372,7 @@ public class ReceiptActivity extends AppCompatActivity {
 
         TextView chatpage_place_textview = (TextView)findViewById(R.id.order_place);
         chatpage_place_textview.setText(stuffRoomInfo.getPlace());
-    }
+    }*/
 
     //* receive screen info
     public void InfoReceiveServer(){
@@ -351,7 +384,7 @@ public class ReceiptActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                settingScreen();
+//                settingScreen();
             }
             @Override
             protected void onProgressUpdate(Void... values) {
