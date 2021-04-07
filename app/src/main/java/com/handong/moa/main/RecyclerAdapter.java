@@ -97,17 +97,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         TextView stuffTitle;
         TextView stuffDate;
         TextView stuffPlace;
-        TextView stuffPrice;
         TextView stuffTime;
         TextView stuffPeopleNum;
-        TextView stuffUrlTitle;
-        ImageView stuffImage;
-        LinearLayout expandLayout;
-        RelativeLayout previewLayout;
         LinearLayout postLayout;
-        ImageButton enterButton;
-        TextView ogTitle;
-        TextView ogContent;
+
+        TextView enterButton;
+
         ImageButton threeroundbutton;
         TextView time;
         TextView date;
@@ -118,30 +113,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
             //* for displaying screen info
             stuffTitle = (TextView) itemView.findViewById(R.id.post_title_textview);
-            stuffDate = (TextView) itemView.findViewById(R.id.post_date_textview);
-            date = (TextView) itemView.findViewById(R.id.post_datetitle_textview);
             stuffPlace = (TextView) itemView.findViewById(R.id.post_place_textview);
             stuffTime = (TextView) itemView.findViewById(R.id.post_time_textview);
             time = (TextView) itemView.findViewById(R.id.post_timetitle_textview);
-//            stuffPrice = (TextView) itemView.findViewById(R.id.post_cost_textview);
             stuffPeopleNum = (TextView) itemView.findViewById(R.id.post_pplnumber_textview);
-            stuffUrlTitle = (TextView) itemView.findViewById(R.id.post_preview_tv1);
-            stuffImage = itemView.findViewById(R.id.post_preview_iv);
-
-            expandLayout = itemView.findViewById(R.id.expandable_layout);
-
-            ogTitle = itemView.findViewById(R.id.post_preview_tv1);
-            ogContent = itemView.findViewById(R.id.post_preview_tv2);
-
-            //* link -> web
-            previewLayout = itemView.findViewById(R.id.post_preview_layout);
-            previewLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openWeb(context, stuff.get(getAdapterPosition()).getStuffLink());
-                }
-            });
-
 
             threeroundbutton = itemView.findViewById(R.id.post_threeroundbutton);
             if(!isThreeRoundButton){
@@ -175,19 +150,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 }
             });
 
-            // expand card view when click it
-            postLayout = itemView.findViewById(R.id.post_layout);
-            postLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    StuffInfo items = stuff.get(getAdapterPosition());
-                    items.setExpandable(!items.isExpandable());
-                    notifyItemChanged(getAdapterPosition());
-
-                }
-            });
-
-            enterButton = itemView.findViewById(R.id.post_createbutton);
+            enterButton = itemView.findViewById(R.id.post_createbutton_textview);
             enterButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
@@ -205,49 +168,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         //날짜
         String order_date = stuff.get(position).getOrderDate();
 
-        if (order_date == null){
-//            Log.i("suff________", "???1");
-            holder.date.setText("");
-            holder.stuffDate.setText("");
-//            holder.date.setVisibility(View.GONE);
-//            holder.stuffDate.setVisibility(View.GONE);
-        }
-        else{
-            holder.stuffDate.setText(order_date);
-//            Log.i("suff________", order_date);
-        }
         //시간
         String order_time = stuff.get(position).getOrderTime();
 
-        if (order_time == null){
-//            Log.i("suff________", "???2");
-//            holder.time.setVisibility(View.GONE);
-//            holder.stuffTime.setVisibility(View.GONE);
+        if (order_date == null && order_time != null){
+            holder.time.setText(order_time);
+        }
+        else if (order_time == null || order_date == null){
             holder.time.setText("");
             holder.stuffTime.setText("");
         }
-        else{
-            holder.stuffTime.setText(order_time);
-//            Log.i("suff________", order_time);
+        else if (order_date !=null && order_time != null){
+            String time_combined = order_date + " " +  order_time;
+            holder.stuffTime.setText(time_combined);
         }
+
+
+
         //장소들
         holder.stuffPlace.setText(stuff.get(position).getPlace());
-//        holder.stuffPrice.setText(stuff.get(position).getStuffCost());
         //사람수
         holder.stuffPeopleNum.setText(stuff.get(position).getNumUsers());
-
-        holder.ogTitle.setText(stuff.get(position).getOgTitle());
-        holder.ogContent.setText(stuff.get(position).getStuffLink());
-
-        //날짜가 null이면 흰색보여지기, 시간이 null이면 비우기.
-
-        boolean isExpandable = stuff.get(position).isExpandable();
-
-        if (isExpandable)
-            Picasso.get().load(stuff.get(position).getImageUrl()).into(holder.stuffImage);
-
-        holder.expandLayout.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
-        //여기서 이미지를 띄우면 될 듯
     }
 
     public void popupLeave(final int position, View v){
@@ -313,20 +254,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                if(isNew) {
-                    Intent intent = new Intent(context, ReceiptActivity.class);
-                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                    Log.i("roomID", stuff.get(position).getRoomId());
-                    intent.putExtra("test_id", stuff.get(position).getRoomId());
-                    context.startActivity(intent);
-                }else{
-                    Intent intent = new Intent(context, ChattingActivity.class);
-                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                    Log.i("roomID", stuff.get(position).getRoomId());
-                    intent.putExtra("room_id", stuff.get(position).getRoomId());
-                    intent.putExtra("isNew",isNew);
-                    context.startActivity(intent);
-                }
+//                if(isNew) {
+//                    Intent intent = new Intent(context, ReceiptActivity.class);
+//                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+//                    Log.i("roomID", stuff.get(position).getRoomId());
+//                    intent.putExtra("test_id", stuff.get(position).getRoomId());
+//                    context.startActivity(intent);
+//                }else{
+                Intent intent = new Intent(context, ChattingActivity.class);
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                Log.i("roomID", stuff.get(position).getRoomId());
+                intent.putExtra("room_id", stuff.get(position).getRoomId());
+                intent.putExtra("isNew",isNew);
+                context.startActivity(intent);
+//                }
             }
             @Override
             protected void onProgressUpdate(Void... values) {
@@ -385,25 +326,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         sendData sendData = new sendData();
         sendData.execute();
     }
-
-    //* link -> web
-    public void openWeb(Context context, String url) {
-        if (!url.startsWith("http://") && !url.startsWith("https://"))
-            url = "http://" + url;
-
-        // Parse the URI and create the intent.
-        Uri webPage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-
-        // Find an activity to hand the intent and start that activity.
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
-        } else {
-            Toast.makeText(context, "Wrong Address. Try again.", Toast.LENGTH_LONG).show();
-            Log.d("ImplicitIntents", "Can't handle this intent!");
-        }
-    }
-
 
     //* the number of card view
     @Override

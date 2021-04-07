@@ -46,12 +46,23 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_gravity="start"
-                        android:layout_marginEnd="50dp"
+                        android:layout_marginEnd="14dp"
                         android:fontFamily="@font/bold"
                         android:text="오뚜기 컵밥"
                         android:textAlignment="textStart"
                         android:textColor="@color/blue"
                         android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/post_pplnumber_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/post_title_textview"
+                        android:fontFamily="@font/regular"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="14dp"
+                        android:layout_marginTop="4dp"
+                        android:text="2"/>
 
                     <ImageButton
                         android:id="@+id/post_threeroundbutton"
@@ -99,69 +110,6 @@
                     android:layout_marginTop="12dp">
 
                     <TextView
-                        android:id="@+id/post_pplnumbertitle_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular "
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="인원:"/>
-
-                    <TextView
-                        android:id="@+id/post_pplnumber_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@id/post_pplnumbertitle_textview"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="2"/>
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/expandable_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15.24dp"
-                android:layout_marginEnd="15.24dp"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/post_datetitle_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:text="주문 날짜:"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/post_date_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@id/post_datetitle_textview"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="2020년 8월 25일"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
-
-                    <TextView
                         android:id="@+id/post_timetitle_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -179,109 +127,38 @@
                         android:fontFamily="@font/regular"
                         android:textColor="@color/darkgrey"
                         android:textSize="14dp"
-                        android:text="08:30 PM"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/post_preview_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="70.1dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@id/post_pplnumbertitle_textview"
-                    android:layout_marginTop="15.24dp"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/post_preview_iv"
-                        android:layout_width="70.1dp"
-                        android:layout_height="70.1dp"
-                        android:src="@drawable/previewimage"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"/>
+                        android:text="8월 25일 08:30 PM"/>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@id/post_preview_iv"
-                        android:layout_alignParentTop="true"
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_alignParentEnd="true"
-                        android:padding="9.9dp">
+                        android:layout_toEndOf="@id/post_time_textview">
 
                         <TextView
-                            android:id="@+id/post_preview_tv1"
+                            android:id="@+id/post_createbutton_textview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/regular"
-                            android:text="[11번가] 햇반 컵밥/오뚜기 컵밥 40종 골라담기"
-                            android:textSize="12.2dp"
-                            android:textColor="@color/black"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:textAlignment="textStart"/>
-
-                        <TextView
-                            android:id="@+id/post_preview_tv2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/regular"
-                            android:text="[11번가] 햇반 컵밥/오뚜기 컵밥 40종 골라담기"
-                            android:textSize="9.14dp"
-                            android:textColor="@color/darkgrey"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:textAlignment="textStart"
-                            android:layout_marginTop="7.62dp"/>
+                            android:text="방 들어가기"
+                            android:background="@drawable/blue_round_button"
+                            android:textColor="@color/white"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/bold"
+                            android:layout_alignParentEnd="true"/>
 
                     </RelativeLayout>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="32dp"
-                    android:layout_marginTop="26dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@id/post_preview_layout"
-                    android:layout_alignParentEnd="true">
-
-                    <ImageButton
-                        android:id="@+id/post_createbutton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:background="@null"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/big_button"/>
-
-                    <TextView
-                        android:id="@+id/post_createbutton_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:fontFamily="@font/bold"
-                        android:text="방 들어가기"
-                        android:textSize="16.76dp"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:gravity="center"/>
 
                 </RelativeLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

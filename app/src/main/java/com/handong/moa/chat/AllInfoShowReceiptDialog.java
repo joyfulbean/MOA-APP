@@ -3,6 +3,7 @@ package com.handong.moa.chat;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -10,12 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.handong.moa.R;
 import com.handong.moa.data.ServerInfo;
+import com.handong.moa.receipt.ReceiptActivity;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -42,6 +45,7 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
     private String roomId;
     private String totalCost;
     private TextView cost;
+    private Button addButton;
 
     private ListView listView;
     private AllImageShowReceiptAdapter imageAdapter;
@@ -77,6 +81,16 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
         listView.setAdapter(infoAdapter);
         cost = findViewById(R.id.wholereceipt_popup_wholecost);
         cost.setText("총 " + totalCost + "원");
+        addButton = findViewById(R.id.wholereceipt_popup_add_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity.getApplicationContext(), ReceiptActivity.class);
+                intent.putExtra("test_id",roomId);
+                activity.startActivity(intent);
+
+            }
+        });
 //        infoAdapter.notifyDataSetChanged();
 
 

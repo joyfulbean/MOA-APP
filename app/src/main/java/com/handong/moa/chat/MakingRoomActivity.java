@@ -230,7 +230,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         month = month + 1;
-        String date = year + "-" + month + "-" + day;
+        String date = month + "월" + " " + day + "일";
         stuffDateText.setText(date);
     }
 
@@ -427,8 +427,8 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
-                //Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
-                Intent intent = new Intent(getApplicationContext(), ReceiptActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+//                Intent intent = new Intent(getApplicationContext(), ReceiptActivity.class);
                 intent.putExtra("test_id",roomID);
                 saveImage();
                 startActivity(intent);

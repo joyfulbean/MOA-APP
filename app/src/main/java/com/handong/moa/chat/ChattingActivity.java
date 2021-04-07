@@ -41,6 +41,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.handong.moa.data.OrderInfo;
 import com.handong.moa.data.ServerInfo;
@@ -151,7 +152,7 @@ public class ChattingActivity extends AppCompatActivity {
     // write info, image info, all, each
     private ArrayList<OrderInfo> orderInfos = new ArrayList<>();
     private ArrayList<String> imgUrls = new ArrayList<>();
-    private RelativeLayout wholereceiptButton;
+    private ImageButton wholereceiptButton;
     private AllImageShowReceiptAdapter imageAdapter;
     public AllInfoShowReceiptAdapter infoAdapter;
     public EachInfoShowReceiptAdapter eachInfoAdapter;
@@ -165,10 +166,39 @@ public class ChattingActivity extends AppCompatActivity {
 
     public ChattingActivity() { }
 
+    String[] items = {"모집중", "주문중", "주문완료"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
+
+        //Spinner
+        Spinner spinner = findViewById(R.id.chatpage_spinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,android.R.layout.simple_spinner_item, items
+        );
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            //When Selected
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            //When Nothing is Selected
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
+
+
 
         //get the room id
         Intent secondIntent = getIntent();
@@ -187,29 +217,29 @@ public class ChattingActivity extends AppCompatActivity {
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //* room lock
-        lockButton = (SwitchButton) findViewById(R.id.chatpage_lock_button);
-        lockButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // 방장이 아닌경우
-                if (!MyData.getMail().equals(chattingInfo.getCreatorEmail())){
-                    lockButton.setChecked(!isChecked);
-                    Toast.makeText(ChattingActivity.this, "방 잠그기 기능은 방장만 사용 가능합니다.", Toast.LENGTH_SHORT).show();
-                }
-                // 스위치 버튼이 체크되었는지 검사하여 텍스트뷰에 각 경우에 맞게 출력합니다.
-                else if (isChecked) {
-                    //수정 불가능, 방 사라짐, 토스트 메세지
-                    isLock = true;
-                    Toast.makeText(ChattingActivity.this, "방이 잠겼습니다.\n주문서를 수정할 수 없으며, 방을 들어오거나 나갈 수 없습니다.", Toast.LENGTH_LONG).show();
-                    sendRoomidToServer();//방상태변경
-                } else {
-                    //수정 가능, 방떠있음, 토스트메세지
-                    isLock = false;
-                    Toast.makeText(ChattingActivity.this, "방 잠금이 풀렸습니다.", Toast.LENGTH_SHORT).show();
-                    sendRoomidToServer();//방상태변경
-                }
-            }
-        });
+//        lockButton = (SwitchButton) findViewById(R.id.chatpage_lock_button);
+//        lockButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                // 방장이 아닌경우
+//                if (!MyData.getMail().equals(chattingInfo.getCreatorEmail())){
+//                    lockButton.setChecked(!isChecked);
+//                    Toast.makeText(ChattingActivity.this, "방 잠그기 기능은 방장만 사용 가능합니다.", Toast.LENGTH_SHORT).show();
+//                }
+//                // 스위치 버튼이 체크되었는지 검사하여 텍스트뷰에 각 경우에 맞게 출력합니다.
+//                else if (isChecked) {
+//                    //수정 불가능, 방 사라짐, 토스트 메세지
+//                    isLock = true;
+//                    Toast.makeText(ChattingActivity.this, "방이 잠겼습니다.\n주문서를 수정할 수 없으며, 방을 들어오거나 나갈 수 없습니다.", Toast.LENGTH_LONG).show();
+//                    sendRoomidToServer();//방상태변경
+//                } else {
+//                    //수정 가능, 방떠있음, 토스트메세지
+//                    isLock = false;
+//                    Toast.makeText(ChattingActivity.this, "방 잠금이 풀렸습니다.", Toast.LENGTH_SHORT).show();
+//                    sendRoomidToServer();//방상태변경
+//                }
+//            }
+//        });
 
         //* send account
         //* send account
@@ -273,25 +303,25 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
-        previewImage = findViewById(R.id.post_preview_iv);
+//        previewImage = findViewById(R.id.post_preview_iv);
 
 
         //* post bar, chat page information
-        expandLayout = findViewById(R.id.chatpage_expandable_layout);
-        arrowButton = findViewById(R.id.chatpage_arrow_button);
-        arrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (expandLayout.getVisibility()==View.GONE) {
-                    expandLayout.setVisibility(View.VISIBLE);
-                    arrowButton.setImageResource(R.drawable.upbutton);
-                    //Picasso.get().load(chattingInfo.getImageUrl()).into(previewImage);
-                } else {
-                    expandLayout.setVisibility(View.GONE);
-                    arrowButton.setImageResource(R.drawable.downbutton);
-                }
-            }
-        });
+//        expandLayout = findViewById(R.id.chatpage_expandable_layout);
+//        arrowButton = findViewById(R.id.chatpage_arrow_button);
+//        arrowButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (expandLayout.getVisibility()==View.GONE) {
+//                    expandLayout.setVisibility(View.VISIBLE);
+//                    arrowButton.setImageResource(R.drawable.upbutton);
+//                    //Picasso.get().load(chattingInfo.getImageUrl()).into(previewImage);
+//                } else {
+//                    expandLayout.setVisibility(View.GONE);
+//                    arrowButton.setImageResource(R.drawable.downbutton);
+//                }
+//            }
+//        });
 
 //        //* Link 미리보기 누르면 Web으로 연결
 //        previewLayout = findViewById(R.id.chatpage_postpreview_layout);

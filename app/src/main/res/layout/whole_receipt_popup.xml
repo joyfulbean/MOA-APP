@@ -106,7 +106,7 @@
 
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/wholereceipt_popup_add_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
