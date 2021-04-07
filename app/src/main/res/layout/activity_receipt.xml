@@ -59,136 +59,37 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:fontFamily="@font/bold"
-                    android:text="주문 정보"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"/>
+                    android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginStart="16dp">
+                    <ImageButton
+                        android:id="@+id/write_darkgray_btn"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/write_darkgray_btn"
+                        android:layout_marginVertical="20dp"
+                        android:layout_marginEnd="20dp"/>
 
-                    <TextView
-                        android:id="@+id/order_product_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="상품 이름:"/>
+                    <ImageButton
+                        android:id="@+id/photo_lightgray_btn"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/photo_lightgray_btn"
+                        android:layout_marginVertical="20dp"
+                        android:layout_marginEnd="20dp"/>
 
-                    <TextView
-                        android:id="@+id/order_product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@id/order_product_label"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="치코파닭"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginStart="16dp">
-
-                    <TextView
-                        android:id="@+id/order_place_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="수령 장소:"/>
-
-                    <TextView
-                        android:id="@+id/order_place"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@id/order_place_label"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="하용조관"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginStart="16dp">
-
-                    <TextView
-                        android:id="@+id/order_date_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="주문 날짜:"/>
-
-                    <TextView
-                        android:id="@+id/order_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@id/order_date_label"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="2020년 8월 25일"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginStart="16dp">
-
-                    <TextView
-                        android:id="@+id/order_time_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="주문 시간:"/>
-
-                    <TextView
-                        android:id="@+id/order_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@id/order_time_label"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="14dp"
-                        android:text="08:30 PM"/>
-
-                </RelativeLayout>
+                </LinearLayout>
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:fontFamily="@font/bold"
-                    android:text="상품 추가"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"/>
+
+
+
 
                 <LinearLayout
                     android:id="@+id/write_suff_info"
@@ -217,20 +118,7 @@
                             android:textSize="14dp"
                             android:completionHint="검색어를 입력하세요."
                             android:completionThreshold="1"
-                            android:layout_alignParentStart="true"
-                            android:layout_toStartOf="@id/order_myorder_camerabutton1"/>
-
-                        <ImageButton
-                            android:id="@+id/order_myorder_camerabutton1"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/camerabuttongrey"
-                            android:background="@null"
-                            android:layout_gravity="end"
-                            android:scaleType="fitCenter"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentTop="true"/>
+                            android:layout_alignParentStart="true" />
 
                     </RelativeLayout>
 
@@ -349,7 +237,6 @@
                         android:layout_height="200dp"
                         android:layout_alignParentStart="true"
                         android:layout_toStartOf="@id/order_myorderimage_price_image"
-                        android:background="@null"
                         android:scaleType="fitCenter"
                         android:layout_alignParentBottom="true"/>
 
