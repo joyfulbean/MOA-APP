@@ -395,6 +395,15 @@ public class ChattingActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+        messageContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expandLayoutPlus.setVisibility(View.GONE);
+            }
+        });
+
+
+
 
         messageContent.addTextChangedListener(new TextWatcher() {
             @Override
@@ -478,10 +487,19 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
+        //for key
+        if (imm.isActive() || imm.isAcceptingText()) {
+            expandLayoutPlus.setVisibility(View.GONE);
+        }
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-
+//        if(messageContent.isFocusable()){
+//            expandLayoutPlus.setVisibility(View.GONE);
+//        }
+        if(imm.isActive()){
+            expandLayoutPlus.setVisibility(View.GONE);
+        }
         View focusView = getCurrentFocus();
         if (focusView != null) {
             Rect rect = new Rect();

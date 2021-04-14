@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/bold"
-                        android:text="오뚜기 컵밥"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="16dp" />
 
@@ -114,7 +114,7 @@
                         android:layout_marginStart="6dp"
                         android:layout_toEndOf="@id/chatpage_placetitle_textview1"
                         android:fontFamily="@font/regular"
-                        android:text="하용조관"
+                        android:text=""
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
@@ -146,7 +146,7 @@
                         android:layout_marginStart="6dp"
                         android:layout_toEndOf="@id/chatpage_datetitle_textview1"
                         android:fontFamily="@font/regular"
-                        android:text="8월 25일 08:25 PM "
+                        android:text=""
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
@@ -201,7 +201,7 @@
                             android:layout_marginStart="6dp"
                             android:layout_toEndOf="@id/chatpage_pplnumtitle_textview1"
                             android:fontFamily="@font/regular"
-                            android:text="4"
+                            android:text=""
                             android:textAlignment="textStart"
                             android:textColor="@color/black"
                             android:textSize="12dp" />
