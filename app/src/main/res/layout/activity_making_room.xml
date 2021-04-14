@@ -474,7 +474,8 @@
                     android:fontFamily="@font/bold"
                     android:text="상품 링크"
                     android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/createroom_stuffLink_edittext"
@@ -489,7 +490,8 @@
                     android:inputType="textPersonName"
                     android:textColor="@color/black"
                     android:textSize="14dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    />
 
                 <ImageView
                     android:id="@+id/stuff_link_line"
