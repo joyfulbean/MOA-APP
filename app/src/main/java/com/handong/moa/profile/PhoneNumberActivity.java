@@ -74,16 +74,16 @@ public class PhoneNumberActivity extends AppCompatActivity {
         String tempPhoneNumber = phoneNumber.getText().toString();
         String tempCheckPhoneNumber = checkingPhoneNumber.getText().toString();
 
-        if(tempPhoneNumber.equals(tempCheckPhoneNumber)) {
+//        if(tempPhoneNumber.equals(tempCheckPhoneNumber)) {
             MyData.phoneNumber = phoneNumber.getText().toString();
             SharedPreferences preferences= getSharedPreferences("info",MODE_PRIVATE);
             SharedPreferences.Editor editor=preferences.edit();
             editor.putString("phoneNumber", MyData.phoneNumber);
             editor.commit();
             finish();
-        }else{
-            Toast.makeText(this, "The phone number is different", Toast.LENGTH_SHORT).show();
-        }
+//        }else{
+//            Toast.makeText(this, "The phone number is different", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     // read phone number info from users local
