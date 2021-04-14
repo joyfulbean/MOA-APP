@@ -52,6 +52,7 @@ public class BankActivity extends AppCompatActivity {
 
     }
 
+    // get the phone number info and save phone number info into users local
     void saveData() {
         String tempBankName = bankName.getText().toString();
         String tempBankAccount = bankAccount.getText().toString();
@@ -68,6 +69,9 @@ public class BankActivity extends AppCompatActivity {
 
             SharedPreferences preferences= getSharedPreferences("info",MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("accountNumber", MyData.accountNumber);
+            editor.putString("accountName", MyData.accountName);
+            editor.putString("bankName", MyData.bankName);
             editor.putString("account", MyData.account);
             editor.commit();
             finish();
@@ -78,7 +82,11 @@ public class BankActivity extends AppCompatActivity {
 
     //내 phone에 저장되어 있는 프로필정보 읽어오기
     void loadPhoneData(){
-        SharedPreferences preferences = getSharedPreferences("info",MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("info", MODE_PRIVATE);
+        MyData.accountNumber = preferences.getString("accountNumber", null);
+        MyData.accountName = preferences.getString("accountName", null);
+        MyData.bankName = preferences.getString("bankName", null);
         MyData.account = preferences.getString("account", null);
+
     }
 }

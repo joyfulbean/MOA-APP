@@ -112,7 +112,7 @@ public class MyInfo extends Fragment {
             mail.setText(signInAccount.getEmail());
             phone.setText(MyData.phoneNumber);
 
-            if(MyData.account != null) {
+            if(MyData.bankName != null && MyData.accountNumber != null && MyData.accountName != null) {
                 bankName.setText(MyData.bankName);
                 bankAccount.setText(MyData.accountNumber);
                 bankPeopleName.setText(MyData.accountName);
