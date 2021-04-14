@@ -101,7 +101,10 @@ public class MainActivity extends AppCompatActivity {
     void loadData(){
         SharedPreferences preferences=getSharedPreferences("info",MODE_PRIVATE);
         MyData.phoneNumber=preferences.getString("phoneNumber", null);
-        MyData.account=preferences.getString("account", null);
+        MyData.accountNumber = preferences.getString("accountNumber", null);
+        MyData.accountName = preferences.getString("accountName", null);
+        MyData.bankName = preferences.getString("bankName", null);
+        MyData.account = preferences.getString("account", null);
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
