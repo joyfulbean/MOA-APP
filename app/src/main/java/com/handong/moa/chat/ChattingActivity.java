@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -164,6 +165,8 @@ public class ChattingActivity extends AppCompatActivity {
     private boolean isLock;
 
 
+    //drop down
+    private AutoCompleteTextView autoCompleteTextView;
     public ChattingActivity() { }
 
     String[] items = {"모집중", "주문중", "주문완료"};
@@ -173,30 +176,14 @@ public class ChattingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
 
-        //Spinner
-        Spinner spinner = findViewById(R.id.chatpage_spinner);
+        //drop down
+        autoCompleteTextView = findViewById(R.id.chatpage_autoCompleteText);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,android.R.layout.simple_spinner_item, items
-        );
+        String []option = {"모집중", "주문중", "주문완료"};
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.chatpage_optionitem, option);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            //When Selected
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            //When Nothing is Selected
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-
-        });
+        autoCompleteTextView.setText(arrayAdapter.getItem(0).toString(), false);
+        autoCompleteTextView.setAdapter(arrayAdapter);
 
 
 

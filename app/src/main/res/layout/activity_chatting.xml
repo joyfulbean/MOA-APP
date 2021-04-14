@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/bold"
-                        android:text=""
+                        android:text=" "
                         android:textColor="@color/white"
                         android:textSize="16dp" />
 
@@ -114,7 +114,7 @@
                         android:layout_marginStart="6dp"
                         android:layout_toEndOf="@id/chatpage_placetitle_textview1"
                         android:fontFamily="@font/regular"
-                        android:text=""
+                        android:text=" "
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
@@ -122,6 +122,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/chatpage_date_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -146,12 +147,67 @@
                         android:layout_marginStart="6dp"
                         android:layout_toEndOf="@id/chatpage_datetitle_textview1"
                         android:fontFamily="@font/regular"
+                        android:text=" "
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_below="@id/chatpage_date_layout">
+
+                    <TextView
+                        android:id="@+id/chatpage_pplnumtitle_textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="@font/regular"
+                        android:text="인원:"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/chatpage_pplnum_textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_toEndOf="@id/chatpage_pplnumtitle_textview1"
+                        android:fontFamily="@font/regular"
                         android:text=""
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
                 </RelativeLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/chatpage_state_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/chatpage_autoCompleteText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="none"
+                        android:textColor="@color/darkgrey"
+                        android:fontFamily="@font/regular"
+                        android:textSize="12dp"
+                        android:padding="0dp"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageButton
                     android:id="@+id/chatpage_wholereceipt_button"
@@ -161,62 +217,12 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="18dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_below="@id/lock_layout_order"
+                    android:layout_below="@id/chatpage_state_spinner"
                     android:layout_alignParentEnd="true"
                     android:src="@drawable/receipt_btn"
                     android:scaleType="fitCenter"
                     android:background="@null"></ImageButton>
 
-
-                <LinearLayout
-                    android:id="@+id/lock_layout_order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp">
-
-                        <TextView
-                            android:id="@+id/chatpage_pplnumtitle_textview1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:fontFamily="@font/regular"
-                            android:text="인원:"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:id="@+id/chatpage_pplnum_textview1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:layout_toEndOf="@id/chatpage_pplnumtitle_textview1"
-                            android:fontFamily="@font/regular"
-                            android:text=""
-                            android:textAlignment="textStart"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-
-                    </RelativeLayout>
-
-
-                    <Spinner
-                        android:id="@+id/chatpage_spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        />
-
-                </LinearLayout>
 
             </RelativeLayout>
 
