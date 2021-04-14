@@ -220,9 +220,8 @@ public class MyRoom extends Fragment {
                         temp.setRoomId(Integer.toString(obj.getInt("rid")));
                         Log.i("roomID", Integer.toString(obj.getInt("rid")));
                         temp.setStuffLink(obj.getString("stuff_link"));
-                        //temp.setImageUrl(obj.getString("image_url"));
-                        //temp.setOgTitle(obj.getString("og_title"));
-                        //Log.i("db", temp.getImageUrl());
+                        temp.setCreator_email(obj.getString("creator_email"));
+                        //Log.i("creator",obj.getString("creator_email"));
                         if(AorB) {
                             thingA.add(temp);
                         }else{

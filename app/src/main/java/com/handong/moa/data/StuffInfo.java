@@ -9,6 +9,16 @@ public class StuffInfo extends RoomInfo implements Serializable {
     private String orderTime;
     private String ogTitle;
     private String imageUrl = null;
+    private String creator_email;
+
+    public String getCreator_email() {
+        return creator_email;
+    }
+
+    public void setCreator_email(String creator_email) {
+        this.creator_email = creator_email;
+    }
+
     private boolean expandable;
 
     public boolean isExpandable() {

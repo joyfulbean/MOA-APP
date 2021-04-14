@@ -261,6 +261,8 @@ public class Stuff extends Fragment {
                         //temp.setStuffCost(obj.getString("stuff_cost")+"원");
                         temp.setRoomId(Integer.toString(obj.getInt("rid")));
                         Log.i("roomID", Integer.toString(obj.getInt("rid")));
+                        temp.setCreator_email(obj.getString("creator_email"));
+                        //Log.i("creator2",obj.getString("creator_email"));
                         //temp.setStuffLink(obj.getString("stuff_link"));
                         //temp.setImageUrl(obj.getString("image_url"));
                         //temp.setOgTitle(obj.getString("og_title"));
