@@ -93,6 +93,9 @@ public class ChatAdapter  extends BaseAdapter {
                 itemView = layoutInflater.inflate(R.layout.enter_exit_box, viewGroup, false);
                 TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
                 msgboxContent.setText(item.getMessage());
+            } else if (item.getUid().equals("MOA")){
+                itemView = layoutInflater.inflate(R.layout.other_msgbox, viewGroup, false);
+                setting(item, itemView, true, item.getUrl());
             } else {
                 itemView = layoutInflater.inflate(R.layout.other_msgbox, viewGroup, false);
                 setting(item, itemView, true, item.getUrl());

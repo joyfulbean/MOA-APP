@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.handong.moa.data.MyData;
 import com.handong.moa.R;
 import com.handong.moa.data.ServerInfo;
@@ -427,9 +429,10 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
+                sendMessageFirebase("MOA", "주문서 기능을 사용해보세요!!!!!!!!", "none", "MOA", "none");
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
 //                Intent intent = new Intent(getApplicationContext(), ReceiptActivity.class);
-                intent.putExtra("test_id",roomID);
+                intent.putExtra("room_id",roomID);
                 saveImage();
                 startActivity(intent);
                 finish();
@@ -488,6 +491,20 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         }
         sendData sendData = new sendData();
         sendData.execute();
+    }
+
+    //send message on firebase
+    private void sendMessageFirebase(String name, String content, String image, String uid, String url){
+        FirebaseDatabase firebaseDatabase;                           //Firebase Database 관리 객체참조변수
+        DatabaseReference roodIdReference;
+        Calendar calendar = Calendar.getInstance(); //현재 시간을 가지고 있는 객체
+        String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+
+        ChatMessageItem messageItem = new ChatMessageItem(name, content, time, image, uid, url);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        roodIdReference = firebaseDatabase.getReference(roomID);
+        roodIdReference.push().setValue(messageItem);
     }
 
     //* about radio group
