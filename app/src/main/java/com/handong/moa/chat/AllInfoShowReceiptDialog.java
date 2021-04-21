@@ -46,6 +46,8 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
     private String totalCost;
     private TextView cost;
     private Button addButton;
+    private int peopleNum;
+    private TextView peopleNumView;
 
     private ListView listView;
     private AllImageShowReceiptAdapter imageAdapter;
@@ -58,7 +60,7 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
 
 
 
-    public AllInfoShowReceiptDialog(Activity a, AllInfoShowReceiptAdapter infoAdapter, AllImageShowReceiptAdapter imageAdapter, ArrayList<String> imgUri, String roomId, String totalCost) {
+    public AllInfoShowReceiptDialog(Activity a, AllInfoShowReceiptAdapter infoAdapter, AllImageShowReceiptAdapter imageAdapter, ArrayList<String> imgUri, String roomId, String totalCost, int peopleNum) {
         super(a);
         this.activity = a;
         this.infoAdapter = infoAdapter;
@@ -66,6 +68,7 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
         this.imgUri = imgUri;
         this.roomId = roomId;
         this.totalCost = totalCost;
+        this.peopleNum = peopleNum;
         setupLayout();
     }
 
@@ -79,8 +82,13 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
         setContentView(R.layout.whole_receipt_popup);
         listView = findViewById(R.id.all_receipt_show_list);
         listView.setAdapter(infoAdapter);
+
         cost = findViewById(R.id.wholereceipt_popup_wholecost);
         cost.setText("총 " + totalCost + "원");
+
+        peopleNumView = findViewById(R.id.chatpage_pplnum_textview1);
+        peopleNumView.setText("\uD83D\uDC64 " + Integer.toString(peopleNum) + " 명 참여중");
+
         addButton = findViewById(R.id.wholereceipt_popup_add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
