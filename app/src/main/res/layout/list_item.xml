@@ -39,11 +39,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <ImageView
+                        android:id="@+id/post_crown"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/crown"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginEnd="10dp"
+                        android:layout_alignBottom="@id/post_title_textview"
+                        android:layout_alignTop="@id/post_title_textview"/>
+
                     <TextView
                         android:id="@+id/post_title_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
+                        android:layout_toEndOf="@id/post_crown"
                         android:layout_alignParentTop="true"
                         android:layout_gravity="start"
                         android:layout_marginEnd="14dp"
@@ -80,7 +90,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="26dp">
 
                     <TextView
                         android:id="@+id/post_placetitle_textview"
@@ -107,7 +117,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:id="@+id/post_timetitle_textview"
@@ -116,7 +126,10 @@
                         android:fontFamily="@font/regular"
                         android:text="주문 시간:"
                         android:textColor="@color/darkgrey"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:layout_alignBottom="@id/post_createbutton_textview"
+                        android:layout_alignTop="@id/post_createbutton_textview"
+                        android:gravity="center_vertical"/>
 
                     <TextView
                         android:id="@+id/post_time_textview"
@@ -126,32 +139,24 @@
                         android:layout_toRightOf="@id/post_timetitle_textview"
                         android:fontFamily="@font/regular"
                         android:textColor="@color/darkgrey"
+                        android:layout_alignBottom="@id/post_createbutton_textview"
                         android:textSize="14dp"
-                        android:text="8월 25일 08:30 PM"/>
+                        android:text="8월 25일 08:30 PM"
+                        android:layout_alignTop="@id/post_createbutton_textview"
+                        android:gravity="center_vertical"/>
 
-                    <RelativeLayout
-                        android:layout_width="50dp"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_toEndOf="@id/post_time_textview">
-
-                        <TextView
-                            android:id="@+id/post_createbutton_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="방 들어가기"
-                            android:background="@drawable/blue_round_button"
-                            android:textColor="@color/white"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="20dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textSize="16dp"
-                            android:fontFamily="@font/bold"
-                            android:layout_alignParentEnd="true"/>
-
-                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/post_createbutton_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="방 들어가기"
+                        android:background="@drawable/blue_round_button"
+                        android:textColor="@color/white"
+                        android:paddingVertical="7dp"
+                        android:paddingHorizontal="21dp"
+                        android:textSize="14dp"
+                        android:fontFamily="@font/bold"
+                        android:layout_alignParentEnd="true"/>
 
                 </RelativeLayout>
 

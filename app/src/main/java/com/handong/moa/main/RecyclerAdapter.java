@@ -107,7 +107,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         TextView time;
         TextView date;
 
-        //ImageView imgView;
+        ImageView crownImage;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
@@ -118,7 +118,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             stuffTime = (TextView) itemView.findViewById(R.id.post_time_textview);
             time = (TextView) itemView.findViewById(R.id.post_timetitle_textview);
             stuffPeopleNum = (TextView) itemView.findViewById(R.id.post_pplnumber_textview);
-            //imageView = (ImageView)findViewById(R.id.custom);
+            crownImage = (ImageView)itemView.findViewById(R.id.post_crown);
 
             threeroundbutton = itemView.findViewById(R.id.post_threeroundbutton);
             if(!isThreeRoundButton){
@@ -171,10 +171,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         Log.i("yebin2",stuff.get(position).getCreator_email());
         if(MyData.mail.equals(stuff.get(position).getCreator_email())){
             Log.i("yebin","yebin");
-            //holder.imgView .setImageDrawable();
+            holder.crownImage.setVisibility(View.VISIBLE);
         }
         else{
-            //holder.imgView .setVisibility(View.GONE);
+            holder.crownImage.setVisibility(View.GONE);
         }
 
         holder.stuffTitle.setText(stuff.get(position).getTitle());
