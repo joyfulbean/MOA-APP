@@ -164,10 +164,13 @@ public class ChattingActivity extends AppCompatActivity {
     private SwitchButton lockButton;
     private boolean isLock;
 
-
     //drop down
     private AutoCompleteTextView autoCompleteTextView;
     public ChattingActivity() { }
+
+    //postBar
+    private LinearLayout postBar;
+
 
     String[] items = {"모집중", "주문중", "주문완료"};
 
@@ -175,6 +178,9 @@ public class ChattingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
+
+        //postBar
+        postBar = findViewById(R.id.chatpage_postbar_layout);
 
         //drop down
         autoCompleteTextView = findViewById(R.id.chatpage_autoCompleteText);
@@ -482,9 +488,10 @@ public class ChattingActivity extends AppCompatActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 //        if(messageContent.isFocusable()){
-//            expandLayoutPlus.setVisibility(View.GONE);
+//            postBar.setVisibility(View.GONE);
 //        }
         if(imm.isActive()){
+//            postBar.setVisibility(View.GONE);
             expandLayoutPlus.setVisibility(View.GONE);
         }
         View focusView = getCurrentFocus();
@@ -502,6 +509,9 @@ public class ChattingActivity extends AppCompatActivity {
                     imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
                 focusView.clearFocus();
                 expandLayoutPlus.setVisibility(View.GONE);
+                postBar.setVisibility(View.VISIBLE);
+            }else {
+                postBar.setVisibility(View.GONE);
             }
             if(!plusRect.contains(x, y)){
                 expandLayoutPlus.setVisibility(View.GONE);
@@ -564,11 +574,15 @@ public class ChattingActivity extends AppCompatActivity {
         TextView chatpage_date_textview = (TextView)findViewById(R.id.chatpage_date_textview);
         chatpage_date_textview.setText(chattingInfo.getOrderDate());
 
-        TextView chatpage_time_textview = (TextView)findViewById(R.id.chatpage_time_textview);
+        TextView chatpage_time_textview = (TextView)findViewById(R.id.chatpage_date_textview1);
         chatpage_time_textview.setText(chattingInfo.getOrderTime());
 
-        TextView chatpage_place_textview = (TextView)findViewById(R.id.chatpage_place_textview);
+        TextView chatpage_place_textview = (TextView)findViewById(R.id.chatpage_place_textview1);
         chatpage_place_textview.setText(chattingInfo.getPlace());
+
+        TextView chatpage_pplnum_textview = (TextView)findViewById(R.id.chatpage_pplnum_textview1);
+        chatpage_pplnum_textview.setText(Integer.toString(chattingInfo.getNumUsers()));
+
 
         String status = chattingInfo.getStatus();
         if(!status.equals("모집중") && !status.equals("생성중")){
@@ -800,7 +814,7 @@ public class ChattingActivity extends AppCompatActivity {
                     chattingInfo.setOrderDate(obj.getString("order_date"));
                     chattingInfo.setOrderTime(obj.getString("order_time"));
                     chattingInfo.setPlace(obj.getString("place"));
-                    chattingInfo.setNumUsers(obj.getString("num_user"));
+                    chattingInfo.setNumUsers(obj.getInt("num_user"));
                     chattingInfo.setCreatorEmail(obj.getString("creator_email"));
                     chattingInfo.setStatus(obj.getString("status"));
                     chattingInfo.setStuffLink(obj.getString("stuff_link"));
@@ -925,7 +939,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                 imageAdapter = new AllImageShowReceiptAdapter(ChattingActivity.this);
                 infoAdapter = new AllInfoShowReceiptAdapter(ChattingActivity.this, orderInfos);
-                allInfoShowReceiptDialog = new AllInfoShowReceiptDialog(ChattingActivity.this, infoAdapter, imageAdapter, imgUrls, roomID, totalCost);
+                allInfoShowReceiptDialog = new AllInfoShowReceiptDialog(ChattingActivity.this, infoAdapter, imageAdapter, imgUrls, roomID, totalCost, chattingInfo.getNumUsers());
 
                 allInfoShowReceiptDialog.show();
                 allInfoShowReceiptDialog.setCanceledOnTouchOutside(true);

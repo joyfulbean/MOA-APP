@@ -7,7 +7,7 @@ public class RoomInfo implements Serializable {
     protected String category;
     protected String title;
     protected String place;
-    protected String numUsers;
+    protected int numUsers;
     protected String numUsersLimit;
     protected String creatorEmail;
     protected String status;
@@ -46,11 +46,11 @@ public class RoomInfo implements Serializable {
         this.place = place;
     }
 
-    public String getNumUsers() {
+    public int getNumUsers() {
         return numUsers;
     }
 
-    public void setNumUsers(String numUsers) {
+    public void setNumUsers(int numUsers) {
         this.numUsers = numUsers;
     }
 
