@@ -257,7 +257,7 @@ public class Stuff extends Fragment {
                         temp.setOrderDate(obj.getString("order_date"));
                         temp.setOrderTime(obj.getString("order_time"));
                         temp.setPlace(obj.getString("place"));
-                        temp.setNumUsers(obj.getString("num_user"));
+                        temp.setNumUsers(obj.getInt("num_user"));
                         //temp.setStuffCost(obj.getString("stuff_cost")+"원");
                         temp.setRoomId(Integer.toString(obj.getInt("rid")));
                         Log.i("roomID", Integer.toString(obj.getInt("rid")));

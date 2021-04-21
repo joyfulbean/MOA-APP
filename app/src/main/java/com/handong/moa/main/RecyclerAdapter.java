@@ -201,7 +201,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         //장소들
         holder.stuffPlace.setText(stuff.get(position).getPlace());
         //사람수
-        holder.stuffPeopleNum.setText(stuff.get(position).getNumUsers());
+        holder.stuffPeopleNum.setText(Integer.toString(stuff.get(position).getNumUsers()));
     }
 
     public void popupLeave(final int position, View v){

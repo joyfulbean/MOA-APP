@@ -417,7 +417,7 @@ public class ReceiptActivity extends AppCompatActivity {
                     stuffRoomInfo.setOrderDate(obj.getString("order_date"));
                     stuffRoomInfo.setOrderTime(obj.getString("order_time"));
                     stuffRoomInfo.setPlace(obj.getString("place"));
-                    stuffRoomInfo.setNumUsers(obj.getString("num_user"));
+                    stuffRoomInfo.setNumUsers(obj.getInt("num_user"));
                     responses.close();
                 } catch (JSONException e) {
                     e.printStackTrace();
