@@ -94,7 +94,7 @@ public class ChatAdapter  extends BaseAdapter {
                 TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
                 msgboxContent.setText(item.getMessage());
             } else if (item.getUid().equals("MOA")){
-                itemView = layoutInflater.inflate(R.layout.other_msgbox, viewGroup, false);
+                itemView = layoutInflater.inflate(R.layout.moabox, viewGroup, false);
                 setting(item, itemView, true, item.getUrl());
             } else {
                 itemView = layoutInflater.inflate(R.layout.other_msgbox, viewGroup, false);
@@ -118,11 +118,11 @@ public class ChatAdapter  extends BaseAdapter {
         TextView msgboxName = itemView.findViewById(R.id.msgbox_name);
         TextView msgboxContent = itemView.findViewById(R.id.msgbox_content); //텍스트뷰
         TextView msgboxTime = itemView.findViewById(R.id.msgbox_time);
-        if(isYou) {
-            msgImage = itemView.findViewById(R.id.other_msgbox_profile_imageview);
-            ChatLoadImageTask imageTask = new ChatLoadImageTask(url);
-            imageTask.execute();
-        }
+//        if(isYou) {
+//            msgImage = itemView.findViewById(R.id.other_msgbox_profile_imageview);
+//            ChatLoadImageTask imageTask = new ChatLoadImageTask(url);
+//            imageTask.execute();
+//        }
         msgboxName.setText(item.getName());
         msgboxContent.setText(item.getMessage());
         msgboxTime.setText(item.getTime());
