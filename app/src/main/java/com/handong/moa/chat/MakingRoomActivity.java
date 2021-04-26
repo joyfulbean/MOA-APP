@@ -116,7 +116,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 checkingRadio = (String) radioStuffButton.getText();
                 setting(checkingRadio);
 
-                if(title.getText().toString().length() != 0 && place.getText().toString().length() != 0){
+                if(title.getText().toString().length() != 0 ){
                     if(isValidString()) {
                         Log.i("isValid","It is valid");
                         sendServer();
@@ -152,6 +152,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 showDatePickerDialog(); // 날짜 버튼 클릭시 Date Picker Dialog 보여줌
             }
         });
+        setDateToToday();
 
         //* CD:Check Box
         orderTimeCB = findViewById(R.id.order_time_CB);
@@ -231,6 +232,14 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     //* date setting
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        month = month + 1;
+        String date = month + "월" + " " + day + "일";
+        stuffDateText.setText(date);
+    }
+    private void setDateToToday() {
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
         month = month + 1;
         String date = month + "월" + " " + day + "일";
         stuffDateText.setText(date);
