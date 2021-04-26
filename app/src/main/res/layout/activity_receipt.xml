@@ -82,7 +82,8 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/photo_lightgray_btn"
                         android:layout_marginVertical="20dp"
-                        android:layout_marginEnd="20dp"/>
+                        android:layout_marginEnd="20dp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 

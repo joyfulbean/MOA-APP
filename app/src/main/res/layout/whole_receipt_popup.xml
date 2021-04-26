@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"
-                    android:text="나도 주문서에 추가하기" />
+                    android:text="주문서 수정하기" />
 
             </LinearLayout>
 

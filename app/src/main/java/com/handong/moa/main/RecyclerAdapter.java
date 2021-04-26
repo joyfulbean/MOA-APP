@@ -167,10 +167,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         //Log.i("email22","hello");
-        Log.i("yebin",MyData.mail);
-        Log.i("yebin2",stuff.get(position).getCreator_email());
+//        Log.i("yebin",MyData.mail);
+//        Log.i("yebin2",stuff.get(position).getCreator_email());
         if(MyData.mail.equals(stuff.get(position).getCreator_email())){
-            Log.i("yebin","yebin");
+//            Log.i("yebin","yebin");
             holder.crownImage.setVisibility(View.VISIBLE);
         }
         else{

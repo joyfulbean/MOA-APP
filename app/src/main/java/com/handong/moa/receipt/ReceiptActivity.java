@@ -164,8 +164,8 @@ public class ReceiptActivity extends AppCompatActivity {
             Log.i("this", roomID);
         }
         // 커스텀 다이얼로그를 호출할 버튼을 정의한다.
-        CustomDialog customDialog = new CustomDialog(ReceiptActivity.this);
-        customDialog.callFunction();
+//        CustomDialog customDialog = new CustomDialog(ReceiptActivity.this);
+//        customDialog.callFunction();
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
