@@ -316,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:fontFamily="@font/bold"
-                    android:text="@string/stuff_place"
+                    android:text="배달 장소"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
 
@@ -409,7 +409,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="22.86dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:id="@+id/createroom_stuff_date_textview"
@@ -445,7 +445,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7.62dp"
                     android:src="@drawable/longline_edit"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
 
                 <CheckBox
                     android:id="@+id/order_time_CB"
