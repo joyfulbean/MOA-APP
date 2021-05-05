@@ -96,7 +96,7 @@ public class AllInfoShowReceiptDialog extends Dialog implements View.OnClickList
                 Intent intent = new Intent(activity.getApplicationContext(), ReceiptActivity.class);
                 intent.putExtra("test_id",roomId);
                 activity.startActivity(intent);
-                activity.finish();
+//                activity.finish();
                 dismiss();
 
             }
