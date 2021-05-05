@@ -210,15 +210,16 @@ public class Food extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                foodRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), "Thing");
-                foodRecyclerAdapter.setThreeRoundButton(false);
-                recyclerView.setAdapter(foodRecyclerAdapter);
                 if(AorB) {
                     thingB.clear();
-                    foodRecyclerAdapter.setStuff(thingA);
+                    foodRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA);
+                    foodRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(foodRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    foodRecyclerAdapter.setStuff(thingB);
+                    foodRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB);
+                    foodRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(foodRecyclerAdapter);
                 }
                 onRefreshComplete();
             }

@@ -79,6 +79,8 @@ public class ProfileActivity extends AppCompatActivity {
                         break;
                     case R.id.search:
                         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                        overridePendingTransition(0, 0);
+                        finish();
                         break;
                     case R.id.myroom:
                         startActivity(new Intent(getApplicationContext(), MyRoomActivity.class));
@@ -226,5 +228,13 @@ public class ProfileActivity extends AppCompatActivity {
                 bankPeopleName.setText(MyData.accountName);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        overridePendingTransition(0, 0);
+        finish();
     }
 }

@@ -99,17 +99,16 @@ public class All extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                allRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), "Thing");
-                allRecyclerAdapter.setThreeRoundButton(false);
-                recyclerView.setAdapter(allRecyclerAdapter);
                 if(AorB) {
                     thingB.clear();
-                    allRecyclerAdapter.setStuff(thingA);
-                    allRecyclerAdapter.setSearchListAll(thingA);
+                    allRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA);
+                    allRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(allRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    allRecyclerAdapter.setStuff(thingB);
-                    allRecyclerAdapter.setSearchListAll(thingB);
+                    allRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB);
+                    allRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(allRecyclerAdapter);
                 }
             }
             @Override

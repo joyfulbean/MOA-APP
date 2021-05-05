@@ -208,15 +208,16 @@ public class OTT extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                ottRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), "Thing");
-                ottRecyclerAdapter.setThreeRoundButton(false);
-                recyclerView.setAdapter(ottRecyclerAdapter);
                 if(AorB) {
                     thingB.clear();
-                    ottRecyclerAdapter.setStuff(thingA);
+                    ottRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA);
+                    ottRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(ottRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    ottRecyclerAdapter.setStuff(thingB);
+                    ottRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB);
+                    ottRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(ottRecyclerAdapter);
                 }
                 onRefreshComplete();
             }

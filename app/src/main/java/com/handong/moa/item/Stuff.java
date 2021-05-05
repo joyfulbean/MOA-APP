@@ -210,15 +210,16 @@ public class Stuff extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                stuffRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), "Thing");
-                stuffRecyclerAdapter.setThreeRoundButton(false);
-                recyclerView.setAdapter(stuffRecyclerAdapter);
                 if(AorB) {
                     thingB.clear();
-                    stuffRecyclerAdapter.setStuff(thingA);
+                    stuffRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA);
+                    stuffRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(stuffRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    stuffRecyclerAdapter.setStuff(thingB);
+                    stuffRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB);
+                    stuffRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(stuffRecyclerAdapter);
                 }
                 onRefreshComplete();
             }

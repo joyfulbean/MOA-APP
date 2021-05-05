@@ -109,6 +109,8 @@ public class MyRoomActivity extends AppCompatActivity {
                         break;
                     case R.id.search:
                         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                        overridePendingTransition(0, 0);
+                        finish();
                         break;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -139,10 +141,10 @@ public class MyRoomActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 if(AorB) {
                     thingB.clear();
-                    recyclerView.setAdapter(new RecyclerAdapter(getApplication().getApplicationContext(), thingA, "Thing"));
+                    recyclerView.setAdapter(new RecyclerAdapter(getApplication().getApplicationContext(), thingA));
                 }else{
                     thingA.clear();
-                    recyclerView.setAdapter(new RecyclerAdapter(getApplication().getApplicationContext(), thingB, "Thing"));
+                    recyclerView.setAdapter(new RecyclerAdapter(getApplication().getApplicationContext(), thingB));
                 }
                 onRefreshComplete();
             }
@@ -207,5 +209,13 @@ public class MyRoomActivity extends AppCompatActivity {
         }
         sendData sendData = new sendData();
         sendData.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        overridePendingTransition(0, 0);
+        finish();
     }
 }

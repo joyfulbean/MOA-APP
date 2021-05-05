@@ -208,15 +208,16 @@ public class Taxi extends Fragment {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                taxiRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), "Thing");
-                taxiRecyclerAdapter.setThreeRoundButton(false);
-                recyclerView.setAdapter(taxiRecyclerAdapter);
                 if(AorB) {
                     thingB.clear();
-                    taxiRecyclerAdapter.setStuff(thingA);
+                    taxiRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA);
+                    taxiRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(taxiRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    taxiRecyclerAdapter.setStuff(thingB);
+                    taxiRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB);
+                    taxiRecyclerAdapter.setThreeRoundButton(false);
+                    recyclerView.setAdapter(taxiRecyclerAdapter);
                 }
                 onRefreshComplete();
             }

@@ -331,6 +331,15 @@ public class ChattingActivity extends AppCompatActivity {
 
         //* send message
         messageContent = findViewById(R.id.chatpage_typein_edittext);
+        messageContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (expandLayoutPlus.getVisibility()==View.VISIBLE) {
+                    expandLayoutPlus.setVisibility(View.GONE);
+                }
+            }
+        });
+        
         messageSendButton = findViewById(R.id.chatpage_sendbutton);
         messageSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -478,21 +487,10 @@ public class ChattingActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isKeyboardShowing(View view) {
-
-        boolean isKeyboardShowing = imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        if (isKeyboardShowing) {
-            imm.showSoftInput(this.getCurrentFocus(), 0);
-        }
-        return isKeyboardShowing;
-    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View focusView = getCurrentFocus();
-//        if(isKeyboardShowing(focusView)){
-//            expandLayoutPlus.setVisibility(View.GONE);
-//        }
         if (focusView != null) {
             Rect rect = new Rect();
             focusView.getGlobalVisibleRect(rect);
@@ -509,14 +507,6 @@ public class ChattingActivity extends AppCompatActivity {
             }
             expandLayoutPlus.setVisibility(View.GONE);
             if(!plusRect.contains(x, y)){
-                expandLayoutPlus.setVisibility(View.GONE);
-            }
-            Rect editRect = new Rect();
-            messageContent.getGlobalVisibleRect(editRect);
-            if(editRect.contains(x, y)){
-                expandLayoutPlus.setVisibility(View.GONE);
-            }
-            if(editRect.contains(x, y)){
                 expandLayoutPlus.setVisibility(View.GONE);
             }
         }

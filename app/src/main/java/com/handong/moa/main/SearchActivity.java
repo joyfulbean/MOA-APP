@@ -55,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
         searchContent.addTextChangedListener(new TextWatcher() { // Edit Text Change Listener
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                All.allRecyclerAdapter.getFilter().filter("");
+                Stuff.stuffRecyclerAdapter.getFilter().filter("");
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -65,7 +65,7 @@ public class SearchActivity extends AppCompatActivity {
                 } else {
                     deleteButton.setVisibility(View.INVISIBLE);
                 }
-                All.allRecyclerAdapter.getFilter().filter(charSequence);
+                Stuff.stuffRecyclerAdapter.getFilter().filter(charSequence);
             }
             @Override
             public void afterTextChanged(Editable editable) { //주로 엔터 키 같은 입력값을 받기위해 사용
@@ -91,7 +91,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText searchText = (EditText)findViewById(R.id.searchpage_search_edittext);
                 searchText.setText("");
-                All.allRecyclerAdapter.getFilter().filter("");
+                Stuff.stuffRecyclerAdapter.getFilter().filter("");
             }
         });
 
@@ -105,5 +105,13 @@ public class SearchActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        overridePendingTransition(0, 0);
+        finish();
     }
 }
