@@ -46,7 +46,7 @@ public class All extends Fragment {
     private boolean AorB = true;
 
     // for recycler adapter, for view
-    public static RecyclerAdapter allRecyclerAdapter;
+    public RecyclerAdapter allRecyclerAdapter;
     private RecyclerView recyclerView;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
