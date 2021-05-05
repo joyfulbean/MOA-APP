@@ -302,7 +302,7 @@ public class ReceiptActivity extends AppCompatActivity {
                 MyItemSendServer();
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                 intent.putExtra("room_id",roomID);
-                intent.putExtra("isNew",true);
+                intent.putExtra("isNew",false);
                 startActivity(intent);
                 finish();
             }

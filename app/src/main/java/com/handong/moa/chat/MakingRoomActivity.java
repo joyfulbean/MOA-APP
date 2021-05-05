@@ -11,10 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -67,9 +70,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     public String checkingRadio;
 
     // for intent layout
-    private TextView foodDateText;
     private TextView stuffDateText;
-    private LinearLayout foodLayout;
     private LinearLayout stuffLayout;
 
     // for intput
@@ -133,16 +134,6 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
-        //* food layout
-        foodLayout = (LinearLayout) findViewById(R.id.createroom_foodlayout);        //Category Layout
-        foodDateText = findViewById(R.id.createroom_food_date_textview);
-        findViewById(R.id.createroom_food_date_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePickerDialog(); // 날짜 버튼 클릭시 Date Picker Dialog 보여줌
-            }
-        });
-
         //* stuff layout
         stuffLayout = (LinearLayout) findViewById(R.id.createroom_stufflayout);        //Category Layout
         stuffDateText = findViewById(R.id.createroom_stuff_date_textview);
@@ -152,6 +143,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 showDatePickerDialog(); // 날짜 버튼 클릭시 Date Picker Dialog 보여줌
             }
         });
+
         setDateToToday();
 
         //* CD:Check Box
@@ -199,7 +191,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         });
 
         //방만들기 버튼을 누를때 작동
-        /*ImageButton radioInfoButton = (ImageButton)findViewById(R.id.createroom_createbutton);
+        ImageButton radioInfoButton = (ImageButton)findViewById(R.id.createroom_createbutton);
         radioInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,26 +200,22 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 checkingRadio = (String) radioStuffButton.getText();
                 //getCheckedRadioButtonId() 의 리턴값은 선택된 RadioButton 의 id 값.
                 //방만들기 안에 값이 다 채워져잇는지 확인하는 코드 짜기
-
                 setting(checkingRadio);
+                sendServer();
 
-
-                if(id == R.id.createroom_radiostuff){
-                    sendServer();
-
-                } else if(id == R.id.createroom_radiofood){
-                    Toast.makeText(MakingRoomActivity.this, "오픈 준비중인 서비스 입니다.", Toast.LENGTH_SHORT).show();
-
-                }else if(id == R.id.createroom_radioott){
-                    Toast.makeText(MakingRoomActivity.this, "오픈 준비중인 서비스 입니다.", Toast.LENGTH_SHORT).show();
-
-                }else if(id == R.id.createroom_radiotransport){
-                    Toast.makeText(MakingRoomActivity.this, "오픈 준비중인 서비스 입니다.", Toast.LENGTH_SHORT).show();
-
-                }
+//                if(id == R.id.createroom_radiostuff || id == R.id.createroom_radiofood ){
+//                    sendServer();
+//
+//                }else if(id == R.id.createroom_radioott){
+//                    Toast.makeText(MakingRoomActivity.this, "오픈 준비중인 서비스 입니다.", Toast.LENGTH_SHORT).show();
+//
+//                }else if(id == R.id.createroom_radiotransport){
+//                    Toast.makeText(MakingRoomActivity.this, "오픈 준비중인 서비스 입니다.", Toast.LENGTH_SHORT).show();
+//
+//                }
             }
         });
-        */
+
     }
     //* date setting
     @Override
@@ -520,35 +508,91 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
     RadioGroup.OnCheckedChangeListener radioGroupButtonChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
 
-            //radio button
-//            final RadioGroup rg = (RadioGroup)findViewById(R.id.createroom_radiogroup);
-//            int id2 = rg.getCheckedRadioButtonId();
-//            radioStuffButton = (RadioButton) findViewById(id2);
             radiodefaultButton = findViewById(R.id.createroom_radiostuff);
 
             if(id == R.id.createroom_radiofood){
-                Toast.makeText(MakingRoomActivity.this, "오픈 준비중인 서비스 입니다.", Toast.LENGTH_SHORT).show();
-//                foodLayout.setVisibility(View.VISIBLE);
-//                stuffLayout.setVisibility(View.GONE);
-                foodLayout.setVisibility(View.GONE);
-                stuffLayout.setVisibility(View.VISIBLE);
-                radiodefaultButton.setChecked(true);
+                TextView tv1 = findViewById(R.id.createroom_stuffTitle_text);
+                tv1.setText("배달 음식 이름");
+                EditText et1 = findViewById(R.id.createroom_stuffTitle_edittext);
+                et1.setHint("베달 음식 이름");
+                ImageView ig1 = findViewById(R.id.createroom_img1);
+                ig1.setVisibility(View.VISIBLE);
+                TextView tv2 = findViewById(R.id.createroom_stuffPlace_text);
+                tv2.setVisibility(View.VISIBLE);
+                EditText et2 = findViewById(R.id.createroom_stuffaddress_textview);
+                et2.setVisibility(View.VISIBLE);
+                CheckBox ck1 = findViewById(R.id.order_date_CB);
+                ck1.setVisibility(View.VISIBLE);
+                RelativeLayout rl =findViewById(R.id.order_date_RL);
+                rl.setVisibility(View.VISIBLE);
+                ImageView ig2 = findViewById(R.id.order_date_line);
+                ig2.setVisibility(View.VISIBLE);
+                CheckBox ck2 = findViewById(R.id.order_time_CB);
+                ck2.setVisibility(View.VISIBLE);
+
 
             } else if(id == R.id.createroom_radiostuff){
-                foodLayout.setVisibility(View.GONE);
-                stuffLayout.setVisibility(View.VISIBLE);
+                TextView tv = findViewById(R.id.createroom_stuffTitle_text);
+                tv.setText("상품 이름");
+                EditText et = findViewById(R.id.createroom_stuffTitle_edittext);
+                et.setHint("상품 이름");
+                ImageView ig1 = findViewById(R.id.createroom_img1);
+                ig1.setVisibility(View.VISIBLE);
+                TextView tv2 = findViewById(R.id.createroom_stuffPlace_text);
+                tv2.setVisibility(View.VISIBLE);
+                EditText et2 = findViewById(R.id.createroom_stuffaddress_textview);
+                et2.setVisibility(View.VISIBLE);
+                CheckBox ck1 = findViewById(R.id.order_date_CB);
+                ck1.setVisibility(View.VISIBLE);
+                RelativeLayout rl =findViewById(R.id.order_date_RL);
+                rl.setVisibility(View.VISIBLE);
+                ImageView ig2 = findViewById(R.id.order_date_line);
+                ig2.setVisibility(View.VISIBLE);
+                CheckBox ck2 = findViewById(R.id.order_time_CB);
+                ck2.setVisibility(View.VISIBLE);
 
             }else if(id == R.id.createroom_radioott){
-                Toast.makeText(MakingRoomActivity.this, "오픈 준비중인 서비스 입니다.", Toast.LENGTH_SHORT).show();
-                foodLayout.setVisibility(View.GONE);
-                stuffLayout.setVisibility(View.VISIBLE);
-                radiodefaultButton.setChecked(true);
+                TextView tv1 = findViewById(R.id.createroom_stuffTitle_text);
+                tv1.setText("방 제목");
+                EditText et1 = findViewById(R.id.createroom_stuffTitle_edittext);
+                et1.setHint("ex.넷플릭스 4인 구합니다.");
+                ImageView ig1 = findViewById(R.id.createroom_img1);
+                ig1.setVisibility(View.GONE);
+                TextView tv2 = findViewById(R.id.createroom_stuffPlace_text);
+                tv2.setVisibility(View.GONE);
+                EditText et2 = findViewById(R.id.createroom_stuffaddress_textview);
+                et2.setVisibility(View.GONE);
+                CheckBox ck1 = findViewById(R.id.order_date_CB);
+                ck1.setVisibility(View.GONE);
+                RelativeLayout rl =findViewById(R.id.order_date_RL);
+                rl.setVisibility(View.GONE);
+                ImageView ig2 = findViewById(R.id.order_date_line);
+                ig2.setVisibility(View.GONE);
+                CheckBox ck2 = findViewById(R.id.order_time_CB);
+                ck2.setVisibility(View.GONE);
 
             }else if(id == R.id.createroom_radiotransport){
-                Toast.makeText(MakingRoomActivity.this, "오픈 준비중인 서비스 입니다.", Toast.LENGTH_SHORT).show();
-                foodLayout.setVisibility(View.GONE);
-                stuffLayout.setVisibility(View.VISIBLE);
-                radiodefaultButton.setChecked(true);
+                TextView tv = findViewById(R.id.createroom_stuffTitle_text);
+                tv.setText("이동 경로");
+                EditText et = findViewById(R.id.createroom_stuffTitle_edittext);
+                et.setHint("ex. 한동대 -> 포항역");
+                ImageView ig1 = findViewById(R.id.createroom_img1);
+                ig1.setVisibility(View.GONE);
+                TextView tv2 = findViewById(R.id.createroom_stuffPlace_text);
+                tv2.setVisibility(View.GONE);
+                EditText et2 = findViewById(R.id.createroom_stuffaddress_textview);
+                et2.setVisibility(View.GONE);
+                CheckBox ck1 = findViewById(R.id.order_date_CB);
+                ck1.setVisibility(View.VISIBLE);
+                ck1.setText("출발 날짜");
+                RelativeLayout rl =findViewById(R.id.order_date_RL);
+                rl.setVisibility(View.VISIBLE);
+                ImageView ig2 = findViewById(R.id.order_date_line);
+                ig2.setVisibility(View.VISIBLE);
+                CheckBox ck2 = findViewById(R.id.order_time_CB);
+                ck2.setVisibility(View.VISIBLE);
+                ck2.setText("출발 시간");
+                //radiodefaultButton.setChecked(true);
 
             }
         }

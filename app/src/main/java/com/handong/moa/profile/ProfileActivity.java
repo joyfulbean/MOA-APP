@@ -5,63 +5,61 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.handong.moa.R;
-import com.handong.moa.chat.MakingRoomActivity;
+import com.handong.moa.data.MyData;
+import com.handong.moa.init.LoginActivity;
 import com.handong.moa.main.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.handong.moa.main.SearchActivity;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    //* for tab & view page
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+    // for screen info
+    private TextView name;
+    private TextView mail;
+    private TextView phone;
+    private TextView bankName;
+    private TextView bankAccount;
+    private TextView bankPeopleName;
+
+    // for intent
+    private ImageButton phoneNumberButton;
+    private ImageButton bankButton;
+    private TextView logout;
+
     private ChipNavigationBar chipNavigationBar;
 
-    //* for creating room
-    private FloatingActionButton floatingActionButton;
+    // for google sign in
+    private GoogleSignInClient mGoogleSignInClient;
 
-    //* for my room page and my info page
-    private MyRoom myRoom;
-    private MyInfo myInfo;
+    private int REQUEST_TEST = 777;
+    private int REQUEST_BANK = 888;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        //* view page and tab bar
-        viewPager = findViewById(R.id.profilepage_viewpager);
-        tabLayout = findViewById(R.id.profilepage_tablayout);
-
-        tabLayout.setupWithViewPager(viewPager);
-
-        myRoom = new MyRoom();
-        myInfo = new MyInfo();
-
-        //* change page (my room & my info)
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(myRoom, "MyRoom");
-        viewPagerAdapter.addFragment(myInfo, "MyInfo");
-        viewPager.setAdapter(viewPagerAdapter);
-
-        ArrayList<String> iText = new ArrayList<String>();
-
-        iText.add("참여중");
-        iText.add("나의 정보");
-
-        for (int i = 0; i < 2; i++) {
-            tabLayout.getTabAt(i).setText(iText.get(i));
-        }
-
 
         //* under tab bar (store & profile)
         chipNavigationBar = findViewById(R.id.bottom_navi);
@@ -78,20 +76,89 @@ public class ProfileActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         overridePendingTransition(0, 0);
                         finish();
+                        break;
+                    case R.id.search:
+                        startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                        break;
+                    case R.id.myroom:
+                        startActivity(new Intent(getApplicationContext(), MyRoomActivity.class));
+                        overridePendingTransition(0, 0);
+                        finish();
+                        break;
                 }
             }
         });
 
-        //* create room - plus button
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.create_room_button);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() { // 이미지 버튼 이벤트 정의
+        logout = findViewById(R.id.logout_button);
+        name = findViewById(R.id.profileinfo_name_textview2);
+        mail = findViewById(R.id.profileinfo_email_textview2);
+        phone = findViewById(R.id.profileinfo_phonenumber_textview2);
+        bankName = findViewById(R.id.profileinfo_bank_textview2);
+        bankAccount = findViewById(R.id.profileinfo_banknumber_textview2);
+        bankPeopleName = findViewById(R.id.profileinfo_bank_people_name_textview2);
+
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        if(signInAccount != null){
+            name.setText(signInAccount.getDisplayName());
+            mail.setText(signInAccount.getEmail());
+            phone.setText(MyData.phoneNumber);
+
+            if(MyData.bankName != null && MyData.accountNumber != null && MyData.accountName != null) {
+                bankName.setText(MyData.bankName);
+                bankAccount.setText(MyData.accountNumber);
+                bankPeopleName.setText(MyData.accountName);
+            }
+        }
+
+        //* phone number intent action
+        phoneNumberButton = findViewById(R.id.profileinfo_phonenumber_button);
+//        phoneNumberButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent (getActivity(), PhoneNumberActivity.class);
+//                startActivity(intent);
+//                refresh();
+//            }
+//        });
+
+        phoneNumberButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //클릭 했을경우
-                // TODO Auto-generated method stub
-                //버튼 클릭 시 발생할 이벤트내용
-                Intent intent = new Intent(ProfileActivity.this, MakingRoomActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), PhoneNumberActivity.class);
+                startActivityForResult(intent, REQUEST_TEST);
+                // startActivityForResult(intent);
+            }
+        });
+
+
+        //* bank intent action
+        bankButton = findViewById(R.id.profileinfo_bank_button);
+        bankButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (getApplication(), BankActivity.class);
+                startActivityForResult(intent, REQUEST_BANK);
+//                startActivity(intent);
+//                refresh();
+
+            }
+        });
+
+        //* logout
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                try {
+                    createRequest();
+                    mAuth.signOut();
+                    mGoogleSignInClient.signOut();
+                    Toast.makeText(getApplication() , "User Sign out!", Toast.LENGTH_SHORT).show();
+                }catch (Exception e) {
+                    Toast.makeText(getApplication() , "Error Sign out!", Toast.LENGTH_SHORT).show();
+                }
+                Intent intent = new Intent(getApplication(), LoginActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -114,5 +181,50 @@ public class ProfileActivity extends AppCompatActivity {
             return fragments.size();
         }
     }
-}
 
+
+    private void createRequest() {
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(getApplication(), gso);
+        // Build a GoogleSignInClient with the options specified by gso.
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            MyData.setName(user.getDisplayName());
+            MyData.setMail(user.getEmail());
+        }
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_TEST) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getApplication(), "Result: " + MyData.phoneNumber, Toast.LENGTH_SHORT).show();
+                phone.setText(MyData.phoneNumber);
+            } else {   // RESULT_CANCEL
+                //Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Success: " + MyData.phoneNumber, Toast.LENGTH_SHORT).show();
+                phone.setText(MyData.phoneNumber);
+            }
+        }
+        else if(requestCode == REQUEST_BANK) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getApplication(), "Result: " + MyData.account, Toast.LENGTH_SHORT).show();
+                bankName.setText(MyData.bankName);
+                bankAccount.setText(MyData.accountNumber);
+                bankPeopleName.setText(MyData.accountName);
+            } else {   // RESULT_CANCEL
+                bankName.setText(MyData.bankName);
+                bankAccount.setText(MyData.accountNumber);
+                bankPeopleName.setText(MyData.accountName);
+            }
+        }
+    }
+}

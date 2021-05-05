@@ -1,8 +1,11 @@
-package com.handong.moa.profile;
+package com.handong.moa.item;
+
+
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,13 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.handong.moa.R;
 import com.handong.moa.data.ServerInfo;
-import com.handong.moa.main.RecyclerAdapter;
 import com.handong.moa.data.StuffInfo;
-import com.handong.moa.main.Stuff;
-import com.handong.moa.data.MyData;
+import com.handong.moa.main.RecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,25 +35,20 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyRoom#newInstance} factory method to
+ * Use the {@link Stuff#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyRoom extends Fragment {
+public class All extends Fragment {
     // for server
-    private static final String urls = ServerInfo.getUrl() + "room/my/";
+    private static final String urls = ServerInfo.getUrl() + "room"; //
     public ArrayList<StuffInfo> thingA = new ArrayList<>();
     public ArrayList<StuffInfo> thingB = new ArrayList<>();
     private boolean AorB = true;
 
-    // for refresh function
-    private boolean isRefreshing = false;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-
     // for recycler adapter, for view
+    public static RecyclerAdapter allRecyclerAdapter;
     private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -60,19 +57,10 @@ public class MyRoom extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MyRoom() {
+    public All() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Thing.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Stuff newInstance(String param1, String param2) {
         Stuff fragment = new Stuff();
         Bundle args = new Bundle();
@@ -92,91 +80,37 @@ public class MyRoom extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    //fragment 의 oncreat 함수
-    //https://brunch.co.kr/@henen/21
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        //* declaring view
-        View view = inflater.inflate(R.layout.fragment_my_room,container,false);
-
-        //* declaring recycler & linear layout manager
-        recyclerView = (RecyclerView) view.findViewById(R.id.myroom_recyclerview);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        //* declaring swipe refresh
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
-
-        //* call server
-        recieveServer();
-
-        //* Inflate the layout for this fragment
-        return view;
-    }
-
+    //* for refresh action
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        /**
-         * Create an ArrayAdapter to contain the data for the ListView. Each item in the ListView
-         * uses the system-defined simple_list_item_1 layout that contains one TextView.
-         */
-        /**
-         * Implement {@link SwipeRefreshLayout.OnRefreshListener}. When users do the "swipe to
-         * refresh" gesture, SwipeRefreshLayout invokes
-         * {@link SwipeRefreshLayout.OnRefreshListener#onRefresh onRefresh()}. In
-         * {@link SwipeRefreshLayout.OnRefreshListener#onRefresh onRefresh()}, call a method that
-         * refreshes the content. Call the same method in response to the Refresh action from the
-         * action bar.
-         * https://devgyugyu.tistory.com/5 -> indexoutofboundsexception when refreshing
-         */
-        //* swipe action
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                Log.i("LOG_TAG", "Refresh menu item selected");
-                if(!isRefreshing) {
-                    isRefreshing = true;
-                    if(AorB) {
-                        recieveServer();
-                        AorB = false;
-                    }else{
-                        recieveServer();
-                        thingA.clear();
-                        AorB = true;
-                    }
-                    isRefreshing = false;
-                }
-            }
-        });
-    }
-    //* Stop the refreshing indicator
-    private void onRefreshComplete() {
-        // Stop the refreshing indicator
-        mSwipeRefreshLayout.setRefreshing(false);
+        receiveServer();
     }
 
-    public void recieveServer(){
+
+    public void receiveServer(){
         class sendData extends AsyncTask<Void, Void, String> {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                thingA.clear();
+                thingB.clear();
             }
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                allRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), "Thing");
+                allRecyclerAdapter.setThreeRoundButton(false);
+                recyclerView.setAdapter(allRecyclerAdapter);
                 if(AorB) {
                     thingB.clear();
-                    recyclerView.setAdapter(new RecyclerAdapter(getActivity().getApplicationContext(), thingA, "Thing"));
+                    allRecyclerAdapter.setStuff(thingA);
+                    allRecyclerAdapter.setSearchListAll(thingA);
                 }else{
                     thingA.clear();
-                    recyclerView.setAdapter(new RecyclerAdapter(getActivity().getApplicationContext(), thingB, "Thing"));
+                    allRecyclerAdapter.setStuff(thingB);
+                    allRecyclerAdapter.setSearchListAll(thingB);
                 }
-                onRefreshComplete();
             }
             @Override
             protected void onProgressUpdate(Void... values) {
@@ -192,11 +126,10 @@ public class MyRoom extends Fragment {
             }
             @Override
             protected String doInBackground(Void... voids) {
-                Log.i("GetMyRoomList", "Star");
                 try {
                     OkHttpClient client = new OkHttpClient();
                     Request request = new Request.Builder()
-                            .url(urls + MyData.getMail())
+                            .url(urls)
                             .build();
 
                     Response responses = null;
@@ -207,7 +140,6 @@ public class MyRoom extends Fragment {
                     JSONObject jObject = new JSONObject(responses.body().string());
                     JSONArray jArray = jObject.getJSONArray("data");
 
-                    Log.i("roomID", Integer.toString(jArray.length()));
 
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject obj = jArray.getJSONObject(i);
@@ -217,15 +149,23 @@ public class MyRoom extends Fragment {
                         temp.setOrderTime(obj.getString("order_time"));
                         temp.setPlace(obj.getString("place"));
                         temp.setNumUsers(obj.getInt("num_user"));
+                        //temp.setStuffCost(obj.getString("stuff_cost")+"원");
                         temp.setRoomId(Integer.toString(obj.getInt("rid")));
                         Log.i("roomID", Integer.toString(obj.getInt("rid")));
-                        temp.setStuffLink(obj.getString("stuff_link"));
                         temp.setCreator_email(obj.getString("creator_email"));
-                        //Log.i("creator",obj.getString("creator_email"));
+                        //Log.i("creator2",obj.getString("creator_email"));
+                        //temp.setStuffLink(obj.getString("stuff_link"));
+                        //temp.setImageUrl(obj.getString("image_url"));
+                        //temp.setOgTitle(obj.getString("og_title"));
+
+                        //Log.i("db", temp.getImageUrl());
+                        System.out.println("all! ^^");
                         if(AorB) {
                             thingA.add(temp);
+                            System.out.println("^A^");
                         }else{
                             thingB.add(temp);
+                            System.out.println("^B^");
                         }
                     }
                     responses.close();

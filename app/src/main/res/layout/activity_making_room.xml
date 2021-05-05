@@ -53,8 +53,7 @@
                 android:layout_marginStart="30.48dp"
                 android:layout_marginEnd="30.48dp"
                 android:layout_marginBottom="5dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -117,162 +116,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/createroom_foodlayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30.48dp"
-                android:layout_marginEnd="30.48dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/bold"
-                    android:text="음식 이름"
-                    android:textColor="@color/black"
-                    android:textSize="15.24dp" />
-
-                <EditText
-                    android:id="@+id/createroom_foodTitle_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15.24dp"
-                    android:layout_marginTop="22.86dp"
-                    android:layout_marginEnd="15.24dp"
-                    android:background="@null"
-                    android:fontFamily="@font/regular"
-                    android:hint=" 음식 이름"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/black"
-                    android:textSize="13.71dp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7.62dp"
-                    android:src="@drawable/longline" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="38.1dp"
-                    android:fontFamily="@font/bold"
-                    android:text="주문 날짜"
-                    android:textColor="@color/black"
-                    android:textSize="15.24dp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22.86dp">
-
-                    <TextView
-                        android:id="@+id/createroom_food_date_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="15.24dp"
-                        android:fontFamily="@font/regular"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="13.71dp" />
-
-                    <ImageButton
-                        android:id="@+id/createroom_food_date_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="15.24dp"
-                        android:background="@null"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/calendaricon" />
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7.62dp"
-                    android:src="@drawable/longline" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="38.1dp"
-                    android:fontFamily="@font/bold"
-                    android:text="주문 시간"
-                    android:textColor="@color/black"
-                    android:textSize="15.24dp" />
-
-                <TimePicker
-                    android:id="@+id/createroom_food_timepicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:timePickerMode="spinner" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:fontFamily="@font/bold"
-                    android:text="배달 장소"
-                    android:textColor="@color/black"
-                    android:textSize="15.24dp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22.86dp">
-
-                    <TextView
-                        android:id="@+id/food_college_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="15.24dp"
-                        android:fontFamily="@font/regular"
-                        android:text="한동대학교"
-                        android:textColor="@color/black"
-                        android:textSize="13.71dp" />
-
-                    <EditText
-                        android:id="@+id/createroom_foodaddress_edittext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="30.48dp"
-                        android:layout_marginEnd="15.24dp"
-                        android:layout_toEndOf="@+id/food_college_textview"
-                        android:background="@null"
-                        android:fontFamily="@font/regular"
-                        android:hint="배달 장소"
-                        android:inputType="textPersonName"
-                        android:textColor="@color/black"
-                        android:textSize="13.71dp" />
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="257.52dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="7.62dp"
-                    android:src="@drawable/longline" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/createroom_stufflayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -282,6 +125,7 @@
                 android:visibility="visible">
 
                 <TextView
+                    android:id="@+id/createroom_stuffTitle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
@@ -306,12 +150,14 @@
                     android:textSize="14dp" />
 
                 <ImageView
+                    android:id="@+id/createroom_img1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/longline_edit" />
 
                 <TextView
+                    android:id="@+id/createroom_stuffPlace_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
@@ -408,8 +254,7 @@
                     android:id="@+id/order_date_RL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22.86dp"
-                    android:visibility="visible">
+                    android:layout_marginTop="22.86dp">
 
                     <TextView
                         android:id="@+id/createroom_stuff_date_textview"
@@ -500,6 +345,161 @@
                     android:layout_marginTop="10dp"
                     android:src="@drawable/longline_edit"
                     android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/createroom_ottlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30.48dp"
+                android:layout_marginEnd="30.48dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/stuff_name"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    />
+
+                <EditText
+                    android:id="@+id/createroom_ottTitle_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginTop="22.86dp"
+                    android:layout_marginEnd="15.24dp"
+                    android:background="@null"
+                    android:fontFamily="@font/regular"
+                    android:hint="상품 이름"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/longline_edit" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/createroom_taxilayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30.48dp"
+                android:layout_marginEnd="30.48dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/bold"
+                    android:text="이동 경로"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    />
+
+                <EditText
+                    android:id="@+id/createroom_taxiTitle_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15.24dp"
+                    android:layout_marginTop="22.86dp"
+                    android:layout_marginEnd="15.24dp"
+                    android:background="@null"
+                    android:fontFamily="@font/regular"
+                    android:hint="ex. 한동대 -> 포할역"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/longline_edit" />
+
+                <CheckBox
+                    android:id="@+id/order_taxidate_CB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:fontFamily="@font/bold"
+                    android:text="출 날짜"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/order_taxidate_RL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22.86dp">
+
+                    <TextView
+                        android:id="@+id/createroom_taxi_date_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="15.24dp"
+                        android:fontFamily="@font/regular"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <ImageButton
+                        android:id="@+id/createroom_taxi_date_button"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="15.24dp"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/calendaricon" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/order_taxidate_line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7.62dp"
+                    android:src="@drawable/longline_edit"
+                    android:visibility="visible"/>
+
+                <CheckBox
+                    android:id="@+id/order_taxitime_CB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/bold"
+                    android:text="출 시간"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TimePicker
+                    android:id="@+id/createroom_taxi_timepicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:timePickerMode="spinner"
+                    android:visibility="gone"/>
+
 
             </LinearLayout>
 

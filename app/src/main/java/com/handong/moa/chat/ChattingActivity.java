@@ -89,6 +89,7 @@ import okhttp3.Response;
 
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.view.inputmethod.InputMethodManager.RESULT_SHOWN;
 import static com.handong.moa.receipt.ReceiptActivity.verifyStoragePermissions;
 
 public class ChattingActivity extends AppCompatActivity {
@@ -110,8 +111,6 @@ public class ChattingActivity extends AppCompatActivity {
     private String linkUrl;
     private ImageButton arrowButton, popupCloseButton;
     private ImageView previewImage;
-
-
 
     // for displaying the message box list
     private EditText messageContent;
@@ -145,7 +144,6 @@ public class ChattingActivity extends AppCompatActivity {
     //* 업로드할 이미지 파일의 경로 Uri
     private Uri imgUri;
 
-
     //상수
     private final int GET_GALLERY_IMAGE = 200;
 
@@ -170,7 +168,6 @@ public class ChattingActivity extends AppCompatActivity {
 
     //postBar
     private LinearLayout postBar;
-
 
     String[] items = {"모집중", "주문중", "주문완료"};
 
@@ -388,12 +385,7 @@ public class ChattingActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-        messageContent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                expandLayoutPlus.setVisibility(View.GONE);
-            }
-        });
+
 
 
 
@@ -485,16 +477,22 @@ public class ChattingActivity extends AppCompatActivity {
             expandLayoutPlus.setVisibility(View.GONE);
         }
     }
+
+    private boolean isKeyboardShowing(View view) {
+
+        boolean isKeyboardShowing = imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (isKeyboardShowing) {
+            imm.showSoftInput(this.getCurrentFocus(), 0);
+        }
+        return isKeyboardShowing;
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if(messageContent.isFocusable()){
-//            postBar.setVisibility(View.GONE);
-//        }
-        if(imm.isActive()){
-//            postBar.setVisibility(View.GONE);
-            expandLayoutPlus.setVisibility(View.GONE);
-        }
         View focusView = getCurrentFocus();
+//        if(isKeyboardShowing(focusView)){
+//            expandLayoutPlus.setVisibility(View.GONE);
+//        }
         if (focusView != null) {
             Rect rect = new Rect();
             focusView.getGlobalVisibleRect(rect);
@@ -503,17 +501,22 @@ public class ChattingActivity extends AppCompatActivity {
             Rect plusRect = new Rect();
             expandLayoutPlus.getGlobalVisibleRect(plusRect);
             int x = (int) ev.getX(), y = (int) ev.getY();
-            if (!rect.contains(x, y) && !buttonRect.contains(x, y) && !plusRect.contains(x, y)) {
+            if(!rect.contains(x, y) && !buttonRect.contains(x, y) && !plusRect.contains(x, y)) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 if (imm != null)
                     imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
                 focusView.clearFocus();
-                expandLayoutPlus.setVisibility(View.GONE);
-                postBar.setVisibility(View.VISIBLE);
-            }else {
-                postBar.setVisibility(View.GONE);
             }
+            expandLayoutPlus.setVisibility(View.GONE);
             if(!plusRect.contains(x, y)){
+                expandLayoutPlus.setVisibility(View.GONE);
+            }
+            Rect editRect = new Rect();
+            messageContent.getGlobalVisibleRect(editRect);
+            if(editRect.contains(x, y)){
+                expandLayoutPlus.setVisibility(View.GONE);
+            }
+            if(editRect.contains(x, y)){
                 expandLayoutPlus.setVisibility(View.GONE);
             }
         }
@@ -531,7 +534,6 @@ public class ChattingActivity extends AppCompatActivity {
         roodIdReference = firebaseDatabase.getReference(roomID);
         roodIdReference.push().setValue(messageItem);
     }
-
 
     //* for camera and gallery
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -642,6 +644,7 @@ public class ChattingActivity extends AppCompatActivity {
             return row;
         }
     }
+
     //* for profile photo
     public class RoomMemberLoadImageTask extends AsyncTask<Bitmap, Void, Bitmap> {
         private String url;
@@ -770,18 +773,18 @@ public class ChattingActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-            }
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                settingScreen();
-                // 아니면 여기서 추가를해줘도 될 듯 하네
                 if(isNew) {
                     String content = MyData.name + "님이 입장 했습니다.";
                     sendMessageFirebase("ENTER_EXIT", content, "none", "ENTER_EXIT", "none");
                     isNew = false;
                     saveNewParticipant();
                 }
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                settingScreen();
+                // 아니면 여기서 추가를해줘도 될 듯 하네
             }
             @Override
             protected void onProgressUpdate(Void... values) {

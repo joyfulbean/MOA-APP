@@ -58,7 +58,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private Context context;
     private ArrayList<StuffInfo> stuff;
     private String type;
-    private List<StuffInfo> tempListAll;
+    private List<StuffInfo> searchListAll;
 
     // for getting link image
     private String title;
@@ -75,12 +75,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private static final String urls = ServerInfo.getUrl() + "participant";
     private boolean isNew;
 
+    public void setSearchListAll(List<StuffInfo> searchListAll) {
+        this.searchListAll = searchListAll;
+    }
+
+    public ArrayList<StuffInfo> getStuff() {
+        return stuff;
+    }
+
+    public void setStuff(ArrayList<StuffInfo> stuff) {
+        this.stuff = stuff;
+    }
+
+    public RecyclerAdapter(Context context, String type) {
+        this.context = context;
+        this.type = type;
+    }
 
     public RecyclerAdapter(Context context, ArrayList<StuffInfo> stuff, String type) {
         this.context = context;
         this.stuff = stuff;
         this.type = type;
-        this.tempListAll = new ArrayList<>(stuff);
     }
 
     //* setting the view
@@ -134,7 +149,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-
                             switch (item.getItemId()){
                                 case R.id.popupLeave:
                                     popupLeave(position, v);
@@ -364,7 +378,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 filteredList.clear();
             } else {
                 Log.i("Searching", "Text: " + charSequence.toString());
-                for (StuffInfo temp : tempListAll)
+                for (StuffInfo temp : searchListAll)
                     if (temp.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(temp);
                     }

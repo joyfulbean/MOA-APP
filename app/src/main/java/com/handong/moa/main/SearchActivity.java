@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +18,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.handong.moa.R;
+import com.handong.moa.data.StuffInfo;
+import com.handong.moa.item.All;
+import com.handong.moa.item.Food;
+import com.handong.moa.item.OTT;
+import com.handong.moa.item.Stuff;
+import com.handong.moa.item.Taxi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +40,6 @@ public class SearchActivity extends AppCompatActivity {
     //main stuff page
     private Stuff stuff;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,17 +47,15 @@ public class SearchActivity extends AppCompatActivity {
 
         //* view page
         viewPager = findViewById(R.id.searchpage_viewpager);
-        stuff = new Stuff();
-        SearchActivity.ViewPagerAdapter viewPagerAdapter = new SearchActivity.ViewPagerAdapter(getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(stuff, "Stuff");
-        viewPager.setAdapter(viewPagerAdapter);
+        VPAdapter adapter = new VPAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
 
         //* search content
         searchContent = (EditText)findViewById(R.id.searchpage_search_edittext);
         searchContent.addTextChangedListener(new TextWatcher() { // Edit Text Change Listener
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Stuff.stuffRecyclerAdapter.getFilter().filter("");
+                All.allRecyclerAdapter.getFilter().filter("");
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -60,7 +65,7 @@ public class SearchActivity extends AppCompatActivity {
                 } else {
                     deleteButton.setVisibility(View.INVISIBLE);
                 }
-                Stuff.stuffRecyclerAdapter.getFilter().filter(charSequence);
+                All.allRecyclerAdapter.getFilter().filter(charSequence);
             }
             @Override
             public void afterTextChanged(Editable editable) { //주로 엔터 키 같은 입력값을 받기위해 사용
@@ -86,7 +91,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText searchText = (EditText)findViewById(R.id.searchpage_search_edittext);
                 searchText.setText("");
-                Stuff.stuffRecyclerAdapter.getFilter().filter("");
+                All.allRecyclerAdapter.getFilter().filter("");
             }
         });
 
@@ -95,27 +100,10 @@ public class SearchActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
-    }
-
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private List<Fragment> fragments = new ArrayList<>();
-        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
-        }
-        public void addFragment(Fragment fragment, String title) {
-            fragments.add(fragment);
-        }
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
     }
 }

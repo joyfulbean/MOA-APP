@@ -1,5 +1,4 @@
-package com.handong.moa.main;
-
+package com.handong.moa.item;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+
 import com.handong.moa.R;
 import com.handong.moa.data.ServerInfo;
 import com.handong.moa.data.StuffInfo;
+import com.handong.moa.main.RecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,27 +34,27 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Stuff#newInstance} factory method to
+ * Use the {@link Taxi#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Stuff extends Fragment {
+public class Taxi extends Fragment {
+
     // for server
-    private static final String urls = ServerInfo.getUrl() + "room";
+    private static final String urls = ServerInfo.getUrl() + "room" + "?category=교통"; //
     public ArrayList<StuffInfo> thingA = new ArrayList<>();
     public ArrayList<StuffInfo> thingB = new ArrayList<>();
     private boolean AorB = true;
-
-    private ImageButton upperActionButton;
 
     // for refreshing
     private boolean isRefreshing = false;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     // for recycler adapter, for view
-    public static RecyclerAdapter stuffRecyclerAdapter;
+    public static RecyclerAdapter taxiRecyclerAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ImageButton upbutton;
+    private ImageButton upperActionButton;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,10 +65,9 @@ public class Stuff extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Stuff() {
+    public Taxi() {
         // Required empty public constructor
     }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -93,7 +93,6 @@ public class Stuff extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        setHasOptionsMenu(true);
     }
 
     //fragment 의 oncreat 함수
@@ -102,7 +101,7 @@ public class Stuff extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //* declaring view
-        View view = inflater.inflate(R.layout.fragment_stuff,container,false);
+        View view = inflater.inflate(R.layout.fragment_taxi,container,false);
 
 
 
@@ -147,7 +146,7 @@ public class Stuff extends Fragment {
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
 
         //* call server
-        recieveServer();
+        receiveServer();
 
         //* Inflate the layout for this fragment
         return view;
@@ -179,10 +178,11 @@ public class Stuff extends Fragment {
                 if(!isRefreshing) {
                     isRefreshing = true;
                     if(AorB) {
-                        recieveServer();
+                        receiveServer();
+                        thingB.clear();
                         AorB = false;
                     }else{
-                        recieveServer();
+                        receiveServer();
                         thingA.clear();
                         AorB = true;
                     }
@@ -191,34 +191,32 @@ public class Stuff extends Fragment {
             }
         });
     }
-    /*
-     * Listen for option item selections so that we receive a notification
-     * when the user requests a refresh by selecting the refresh action bar item.
-     */
+
     //* Stop the refreshing indicator
     private void onRefreshComplete() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    public void recieveServer(){
+    public void receiveServer(){
         class sendData extends AsyncTask<Void, Void, String> {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                thingA.clear();
+                thingB.clear();
             }
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                taxiRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), "Thing");
+                taxiRecyclerAdapter.setThreeRoundButton(false);
+                recyclerView.setAdapter(taxiRecyclerAdapter);
                 if(AorB) {
                     thingB.clear();
-                    stuffRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA, "Thing");
-                    stuffRecyclerAdapter.setThreeRoundButton(false);
-                    recyclerView.setAdapter(stuffRecyclerAdapter);
+                    taxiRecyclerAdapter.setStuff(thingA);
                 }else{
                     thingA.clear();
-                    stuffRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB, "Thing");
-                    stuffRecyclerAdapter.setThreeRoundButton(false);
-                    recyclerView.setAdapter(stuffRecyclerAdapter);
+                    taxiRecyclerAdapter.setStuff(thingB);
                 }
                 onRefreshComplete();
             }
@@ -286,4 +284,6 @@ public class Stuff extends Fragment {
         sendData sendData = new sendData();
         sendData.execute();
     }
+
+
 }
