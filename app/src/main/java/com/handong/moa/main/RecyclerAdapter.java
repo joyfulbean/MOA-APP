@@ -59,6 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private ArrayList<StuffInfo> stuff;
     private String type;
     private List<StuffInfo> tempListAll;
+    private String tpye;
 
     // for getting link image
     private String title;
@@ -76,10 +77,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private boolean isNew;
 
 
-    public RecyclerAdapter(Context context, ArrayList<StuffInfo> stuff) {
+    public RecyclerAdapter(Context context, ArrayList<StuffInfo> stuff, String tpye) {
         this.context = context;
         this.stuff = stuff;
         this.tempListAll = new ArrayList<>(stuff);
+        this.tpye = tpye;
     }
 
     //* setting the view
