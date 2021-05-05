@@ -101,12 +101,12 @@ public class All extends Fragment {
                 super.onPostExecute(s);
                 if(AorB) {
                     thingB.clear();
-                    allRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA);
+                    allRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA, "all");
                     allRecyclerAdapter.setThreeRoundButton(false);
                     recyclerView.setAdapter(allRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    allRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB);
+                    allRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB, "all");
                     allRecyclerAdapter.setThreeRoundButton(false);
                     recyclerView.setAdapter(allRecyclerAdapter);
                 }

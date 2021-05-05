@@ -156,12 +156,12 @@ public class SearchActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 if(AorB) {
                     thingB.clear();
-                    allRecyclerAdapter = new RecyclerAdapter(SearchActivity.this, thingA);
+                    allRecyclerAdapter = new RecyclerAdapter(SearchActivity.this, thingA, "search");
                     allRecyclerAdapter.setThreeRoundButton(false);
                     recyclerView.setAdapter(allRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    allRecyclerAdapter = new RecyclerAdapter(SearchActivity.this, thingB);
+                    allRecyclerAdapter = new RecyclerAdapter(SearchActivity.this, thingB, "search");
                     allRecyclerAdapter.setThreeRoundButton(false);
                     recyclerView.setAdapter(allRecyclerAdapter);
                 }

@@ -141,10 +141,10 @@ public class MyRoomActivity extends AppCompatActivity {
                 super.onPostExecute(s);
                 if(AorB) {
                     thingB.clear();
-                    recyclerView.setAdapter(new RecyclerAdapter(getApplication().getApplicationContext(), thingA));
+                    recyclerView.setAdapter(new RecyclerAdapter(getApplication().getApplicationContext(), thingA, "myroom"));
                 }else{
                     thingA.clear();
-                    recyclerView.setAdapter(new RecyclerAdapter(getApplication().getApplicationContext(), thingB));
+                    recyclerView.setAdapter(new RecyclerAdapter(getApplication().getApplicationContext(), thingB, "myroom"));
                 }
                 onRefreshComplete();
             }
