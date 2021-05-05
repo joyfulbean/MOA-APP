@@ -62,7 +62,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/write_darkgray_btn"
@@ -72,8 +73,7 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/write_darkgray_btn"
                         android:layout_marginVertical="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:visibility="gone"/>
+                        android:layout_marginEnd="20dp"/>
 
                     <ImageButton
                         android:id="@+id/photo_lightgray_btn"
@@ -301,15 +301,22 @@
                     android:background="@drawable/add_order_button"
                     android:clickable="true"/>
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/longline_edit"
+                    android:layout_marginTop="60dp"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="30dp"
                     android:fontFamily="@font/bold"
                     android:text="나의 상품"
                     android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:layout_marginStart="10dp"/>
 
                 <LinearLayout
                     android:id="@+id/order_myorderothers_layout"

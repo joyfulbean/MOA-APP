@@ -175,20 +175,20 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 }
             }
         });
-        orderDateCB = findViewById(R.id.order_date_CB);
-        findViewById(R.id.order_date_CB).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(orderDateCB.isChecked()) {
-                    findViewById(R.id.order_date_RL).setVisibility(View.VISIBLE);
-                    findViewById(R.id.order_date_line).setVisibility(View.VISIBLE);
-                }
-                else{
-                    findViewById(R.id.order_date_RL).setVisibility(View.GONE);
-                    findViewById(R.id.order_date_line).setVisibility(View.GONE);
-                }
-            }
-        });
+//        orderDateCB = findViewById(R.id.order_date_CB);
+//        findViewById(R.id.order_date_CB).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(orderDateCB.isChecked()) {
+//                    findViewById(R.id.order_date_RL).setVisibility(View.VISIBLE);
+//                    findViewById(R.id.order_date_line).setVisibility(View.VISIBLE);
+//                }
+//                else{
+//                    findViewById(R.id.order_date_RL).setVisibility(View.GONE);
+//                    findViewById(R.id.order_date_line).setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
         //방만들기 버튼을 누를때 작동
         ImageButton radioInfoButton = (ImageButton)findViewById(R.id.createroom_createbutton);
@@ -268,12 +268,12 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
         stuffRoomInfo.setTitle(title.getText().toString());
         stuffRoomInfo.setPlace(place.getText().toString());
 
+        stuffRoomInfo.setOrderDate(stuffDateText.getText().toString());
+
         if(stuffLinkCB.isChecked())
             stuffRoomInfo.setStuffLink(link.getText().toString());
         else stuffRoomInfo.setStuffLink("");
-        if(orderDateCB.isChecked())
-            stuffRoomInfo.setOrderDate(stuffDateText.getText().toString());
-        else stuffRoomInfo.setOrderDate("");
+
         if(orderTimeCB.isChecked())
             stuffRoomInfo.setOrderTime(hour + "시 " + min + "분");
         else stuffRoomInfo.setOrderTime("");
@@ -512,16 +512,16 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
 
             if(id == R.id.createroom_radiofood){
                 TextView tv1 = findViewById(R.id.createroom_stuffTitle_text);
-                tv1.setText("배달 음식 이름");
+                tv1.setText("배달음식 이름");
                 EditText et1 = findViewById(R.id.createroom_stuffTitle_edittext);
-                et1.setHint("베달 음식 이름");
+                et1.setHint("배달음식 이름");
                 ImageView ig1 = findViewById(R.id.createroom_img1);
                 ig1.setVisibility(View.VISIBLE);
                 TextView tv2 = findViewById(R.id.createroom_stuffPlace_text);
                 tv2.setVisibility(View.VISIBLE);
                 EditText et2 = findViewById(R.id.createroom_stuffaddress_textview);
                 et2.setVisibility(View.VISIBLE);
-                CheckBox ck1 = findViewById(R.id.order_date_CB);
+                TextView ck1 = findViewById(R.id.order_date_CB);
                 ck1.setVisibility(View.VISIBLE);
                 RelativeLayout rl =findViewById(R.id.order_date_RL);
                 rl.setVisibility(View.VISIBLE);
@@ -542,7 +542,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 tv2.setVisibility(View.VISIBLE);
                 EditText et2 = findViewById(R.id.createroom_stuffaddress_textview);
                 et2.setVisibility(View.VISIBLE);
-                CheckBox ck1 = findViewById(R.id.order_date_CB);
+                TextView ck1 = findViewById(R.id.order_date_CB);
                 ck1.setVisibility(View.VISIBLE);
                 RelativeLayout rl =findViewById(R.id.order_date_RL);
                 rl.setVisibility(View.VISIBLE);
@@ -562,7 +562,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 tv2.setVisibility(View.GONE);
                 EditText et2 = findViewById(R.id.createroom_stuffaddress_textview);
                 et2.setVisibility(View.GONE);
-                CheckBox ck1 = findViewById(R.id.order_date_CB);
+                TextView ck1 = findViewById(R.id.order_date_CB);
                 ck1.setVisibility(View.GONE);
                 RelativeLayout rl =findViewById(R.id.order_date_RL);
                 rl.setVisibility(View.GONE);
@@ -582,7 +582,7 @@ public class MakingRoomActivity extends AppCompatActivity implements DatePickerD
                 tv2.setVisibility(View.GONE);
                 EditText et2 = findViewById(R.id.createroom_stuffaddress_textview);
                 et2.setVisibility(View.GONE);
-                CheckBox ck1 = findViewById(R.id.order_date_CB);
+                TextView ck1 = findViewById(R.id.order_date_CB);
                 ck1.setVisibility(View.VISIBLE);
                 ck1.setText("출발 날짜");
                 RelativeLayout rl =findViewById(R.id.order_date_RL);

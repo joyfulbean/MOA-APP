@@ -128,7 +128,7 @@
                     android:id="@+id/createroom_stuffTitle_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="40dp"
                     android:fontFamily="@font/bold"
                     android:text="@string/stuff_name"
                     android:textColor="@color/black"
@@ -150,7 +150,6 @@
                     android:textSize="14dp" />
 
                 <ImageView
-                    android:id="@+id/createroom_img1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -160,7 +159,7 @@
                     android:id="@+id/createroom_stuffPlace_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="48dp"
                     android:fontFamily="@font/bold"
                     android:text="배달 장소"
                     android:textColor="@color/black"
@@ -189,6 +188,7 @@
                 </RelativeLayout>
 
                 <ImageView
+                    android:id="@+id/createroom_img1"
                     android:layout_width="400dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -239,7 +239,7 @@
 
                 </RelativeLayout>
 
-                <CheckBox
+                <TextView
                     android:id="@+id/order_date_CB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

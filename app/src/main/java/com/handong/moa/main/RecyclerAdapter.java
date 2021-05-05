@@ -59,7 +59,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private ArrayList<StuffInfo> stuff;
     private String type;
     private List<StuffInfo> tempListAll;
-    private String tpye;
 
     // for getting link image
     private String title;
@@ -77,11 +76,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private boolean isNew;
 
 
-    public RecyclerAdapter(Context context, ArrayList<StuffInfo> stuff, String tpye) {
+    public RecyclerAdapter(Context context, ArrayList<StuffInfo> stuff, String type) {
         this.context = context;
         this.stuff = stuff;
         this.tempListAll = new ArrayList<>(stuff);
-        this.tpye = tpye;
+        this.type = type;
     }
 
     //* setting the view
@@ -108,6 +107,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         TextView time;
         TextView date;
 
+        TextView place_tv;
+        TextView time_edit;
+
         ImageView crownImage;
 
         public MyViewHolder(final View itemView) {
@@ -115,9 +117,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
             //* for displaying screen info
             stuffTitle = (TextView) itemView.findViewById(R.id.post_title_textview);
+            place_tv = (TextView) itemView.findViewById(R.id.post_placetitle_textview);
             stuffPlace = (TextView) itemView.findViewById(R.id.post_place_textview);
-            stuffTime = (TextView) itemView.findViewById(R.id.post_time_textview);
             time = (TextView) itemView.findViewById(R.id.post_timetitle_textview);
+            time_edit = (TextView) itemView.findViewById(R.id.post_time_textview);
+
+            stuffTime = (TextView) itemView.findViewById(R.id.post_time_textview);
             stuffPeopleNum = (TextView) itemView.findViewById(R.id.post_pplnumber_textview);
             crownImage = (ImageView)itemView.findViewById(R.id.post_crown);
 
@@ -177,25 +182,53 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             holder.crownImage.setVisibility(View.GONE);
         }
 
-        holder.stuffTitle.setText(stuff.get(position).getTitle());
         //날짜
         String order_date = stuff.get(position).getOrderDate();
 
         //시간
         String order_time = stuff.get(position).getOrderTime();
 
-        if (order_date == null && order_time != null){
-            holder.time.setText(order_time);
-        }
-        else if (order_time == null || order_date == null){
-            holder.time.setText("");
-            holder.stuffTime.setText("");
-        }
-        else if (order_date !=null && order_time != null){
-            String time_combined = order_date + " " +  order_time;
-            holder.stuffTime.setText(time_combined);
-        }
+        holder.stuffTitle.setText(stuff.get(position).getTitle());
 
+        if(type=="stuff" || type =="food"){
+            holder.time.setText("주문 시간:");
+
+            if (order_date == null && order_time != null){
+                holder.time.setText(order_time);
+            }
+            else if (order_time == null || order_date == null){
+                holder.time.setText("");
+                holder.stuffTime.setText("");
+            }
+            else if (order_date !=null && order_time != null){
+                String time_combined = order_date + " " +  order_time;
+                holder.stuffTime.setText(time_combined);
+            }
+
+        }
+        else if(type == "ott"){
+            holder.place_tv.setVisibility(View.GONE);
+            holder.stuffPlace.setVisibility(View.GONE);
+            holder.time.setVisibility(View.GONE);
+            holder.time_edit.setVisibility(View.GONE);
+        }
+        else if(type == "taxi"){
+            holder.place_tv.setVisibility(View.GONE);
+            holder.stuffPlace.setVisibility(View.GONE);
+            holder.time.setText("출발 시간:");
+
+            if (order_date == null && order_time != null){
+                holder.time.setText(order_time);
+            }
+            else if (order_time == null || order_date == null){
+                holder.time.setText("");
+                holder.stuffTime.setText("");
+            }
+            else if (order_date !=null && order_time != null){
+                String time_combined = order_date + " " +  order_time;
+                holder.stuffTime.setText(time_combined);
+            }
+        }
 
 
         //장소들

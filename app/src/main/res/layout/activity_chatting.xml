@@ -64,7 +64,8 @@
                         android:background="@null"
                         android:scaleType="fitCenter"
 
-                        android:src="@drawable/menuicon"/>
+                        android:src="@drawable/menuicon"
+                        android:layout_marginEnd="16dp"/>
 
 
                 </androidx.appcompat.widget.Toolbar>
@@ -105,7 +106,8 @@
                         android:text="수령 장소:"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/chatpage_place_textview1"
@@ -117,7 +119,8 @@
                         android:text=" "
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 
@@ -138,7 +141,20 @@
                         android:text="주문 시간:"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/chatpage_taxitime_textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="@font/regular"
+                        android:text="이동 시간:"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/chatpage_date_textview1"
@@ -150,9 +166,11 @@
                         android:text=" "
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
+
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -170,7 +188,8 @@
                         android:text="인원:"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/chatpage_pplnum_textview1"
@@ -194,6 +213,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="invisible"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
 
                     <AutoCompleteTextView
@@ -423,8 +443,9 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/chatpage_typein_edittext"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/chatpage_typein_edittext"
                     app:layout_constraintEnd_toStartOf="@id/chatpage_typein_edittext"/>
 
                 <EditText
@@ -457,9 +478,9 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/send_button"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="12dp"/>
+                    app:layout_constraintBottom_toBottomOf="@id/chatpage_typein_edittext"
+                    app:layout_constraintTop_toTopOf="@id/chatpage_typein_edittext"
+                    android:layout_marginEnd="16dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -538,7 +559,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     <LinearLayout
         android:id="@+id/chatpage_drawer"
         android:layout_width="240dp"
@@ -546,6 +566,7 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:layout_gravity="end">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -574,7 +595,7 @@
                     android:text="대화 상대"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="15.24dp" />
+                    android:textSize="16dp" />
 
                 <ImageButton
                     android:id="@+id/chatpage_drawer_closebutton"
@@ -596,7 +617,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="15.24dp"
+                android:padding="16dp"
                 android:layout_below="@id/chatpage_drawer_upperbarlayout">
 
                 <ImageView
@@ -658,8 +679,8 @@
 
                 <ImageButton
                     android:id="@+id/chatpage_exitroom"
-                    android:layout_width="15.24dp"
-                    android:layout_height="15.24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
@@ -670,9 +691,21 @@
                     android:text="방 나가기"
                     android:textColor="@color/white"
                     android:textSize="11.43dp"
-                    android:layout_marginStart="15.24dp">
+                    android:layout_marginStart="16dp"/>
 
-                </ImageButton>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="방 정보 수정"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/bold"
+                    android:textSize="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:onClick="edit_room_info"/>
 
             </RelativeLayout>
 

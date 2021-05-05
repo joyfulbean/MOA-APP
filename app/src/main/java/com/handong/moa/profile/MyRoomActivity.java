@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.handong.moa.R;
+import com.handong.moa.chat.MakingRoomActivity;
 import com.handong.moa.data.MyData;
 import com.handong.moa.data.ServerInfo;
 import com.handong.moa.data.StuffInfo;
@@ -48,6 +50,7 @@ public class MyRoomActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
 
     private ChipNavigationBar chipNavigationBar;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,18 @@ public class MyRoomActivity extends AppCompatActivity {
 
         setNavigationBar();
 
+
+        //* create room - plus button
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.create_room_button);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() { // 이미지 버튼 이벤트 정의
+            @Override
+            public void onClick(View v) { //클릭 했을경우
+                // TODO Auto-generated method stub
+                //버튼 클릭 시 발생할 이벤트내용
+                Intent intent = new Intent(MyRoomActivity.this, MakingRoomActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //* declaring recycler & linear layout manager
         recyclerView = (RecyclerView) findViewById(R.id.myroom_recyclerview);

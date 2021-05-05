@@ -13,15 +13,14 @@
 
         <ImageButton
             android:id="@+id/createroom_backbutton_for_edit_room"
-            android:layout_width="16dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/backarrow"
             android:background="@null"
             android:scaleType="fitCenter"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="13.33dp"/>
+            android:src="@drawable/backarrow"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginStart="10dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -35,7 +34,7 @@
             android:text="방 정보 수정"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="15.24dp" />
+            android:textSize="16dp" />
     </RelativeLayout>
 
     <ScrollView

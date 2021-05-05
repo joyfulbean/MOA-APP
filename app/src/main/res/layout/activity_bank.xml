@@ -25,7 +25,7 @@
             android:src="@drawable/backarrow"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:layout_marginStart="12dp"/>
+            android:layout_marginStart="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
         <ImageView
             android:layout_width="350.48dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/longline"
+            android:src="@drawable/longline_edit"
             android:layout_marginTop="7.62dp" />
 
         <TextView
@@ -108,7 +108,7 @@
         <ImageView
             android:layout_width="350.48dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/longline"
+            android:src="@drawable/longline_edit"
             android:layout_marginTop="7.62dp" />
 
         <EditText
@@ -128,7 +128,7 @@
         <ImageView
             android:layout_width="350.48dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/longline"
+            android:src="@drawable/longline_edit"
             android:layout_marginTop="7.62dp"/>
 
         <TextView
@@ -157,7 +157,7 @@
         <ImageView
             android:layout_width="350.48dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/longline"
+            android:src="@drawable/longline_edit"
             android:layout_marginTop="7.62dp" />
 
     </LinearLayout>

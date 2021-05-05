@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:text="총 주문 내역"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/extrabold"
+                    android:fontFamily="@font/bold"
                     android:textSize="16dp"
                     android:layout_marginStart="23dp"/>
 
@@ -51,7 +51,8 @@
                     android:id="@+id/wholereceipt_popup_menutextlayout1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp">
 
                     <ListView
                         android:id="@+id/all_receipt_show_image_list"
@@ -66,47 +67,56 @@
                 </LinearLayout>
 
 
-                <ImageView
-                    android:id="@+id/wholereceipt_popup_wholecostline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shortline"
-                    android:layout_marginStart="38dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginTop="23dp"/>
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/wholereceipt_popup_wholecostline"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:src="@drawable/shortline"-->
+                <!--                    android:layout_marginStart="38dp"-->
+                <!--                    android:layout_marginEnd="30dp"-->
+                <!--                    android:layout_marginTop="23dp"/>-->
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp">
 
-
-                    <RelativeLayout
+                    <LinearLayout
+                        android:id="@+id/chatpage_pplnum_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="18dp">
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="38dp"
+                        android:layout_toStartOf="@id/wholereceipt_popup_wholecost"
+                        android:layout_marginEnd="20dp">
 
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/profilebuttonblue"/>
 
                         <TextView
                             android:id="@+id/chatpage_pplnum_textview1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
+                            android:layout_marginStart="8dp"
                             android:fontFamily="@font/regular"
                             android:text=" 명 참여중"
                             android:textAlignment="textStart"
                             android:textColor="@color/black"
-                            android:textSize="12dp" />
+                            android:textSize="14dp"/>
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
-<!--                    <ImageView-->
-<!--                        android:id="@+id/imageView2"-->
-<!--                        android:layout_width="90dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        app:srcCompat="@drawable/ppl_num_receipt"-->
-<!--                        android:layout_alignParentStart="true"-->
-<!--                        android:layout_marginStart="30dp"/>-->
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/imageView2"-->
+                    <!--                        android:layout_width="90dp"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        app:srcCompat="@drawable/ppl_num_receipt"-->
+                    <!--                        android:layout_alignParentStart="true"-->
+                    <!--                        android:layout_marginStart="30dp"/>-->
 
                     <TextView
                         android:id="@+id/wholereceipt_popup_wholecost"
@@ -117,22 +127,30 @@
                         android:text="총 원"
                         android:textColor="@color/black"
                         android:textSize="16dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
+                        android:layout_marginEnd="38dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"/>
+                        android:layout_alignParentBottom="true"/>
 
                 </RelativeLayout>
 
-
-
-                <Button
+                <TextView
                     android:id="@+id/wholereceipt_popup_add_button"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
-                    android:text="주문서 수정하기" />
+                    android:text="주문서 수정하기"
+                    android:textAlignment="center"
+                    android:background="@drawable/blue_round_button"
+                    android:textColor="@color/white"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/bold"
+                    android:layout_marginTop="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="40dp"
+                    android:layout_marginBottom="30dp"/>
 
             </LinearLayout>
 

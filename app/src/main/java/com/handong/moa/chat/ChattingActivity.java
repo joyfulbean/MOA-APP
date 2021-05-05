@@ -44,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Spinner;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.handong.moa.data.OrderInfo;
 import com.handong.moa.data.ServerInfo;
 import com.handong.moa.main.MainActivity;
@@ -163,6 +164,7 @@ public class ChattingActivity extends AppCompatActivity {
     private boolean isLock;
 
     //drop down
+    private ArrayAdapter arrayAdapter;
     private AutoCompleteTextView autoCompleteTextView;
     public ChattingActivity() { }
 
@@ -179,17 +181,6 @@ public class ChattingActivity extends AppCompatActivity {
         //postBar
         postBar = findViewById(R.id.chatpage_postbar_layout);
 
-        //drop down
-        autoCompleteTextView = findViewById(R.id.chatpage_autoCompleteText);
-
-        String []option = {"모집중", "주문중", "주문완료"};
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.chatpage_optionitem, option);
-
-        autoCompleteTextView.setText(arrayAdapter.getItem(0).toString(), false);
-        autoCompleteTextView.setAdapter(arrayAdapter);
-
-
-
         //get the room id
         Intent secondIntent = getIntent();
         String message = secondIntent.getStringExtra("room_id");
@@ -204,6 +195,34 @@ public class ChattingActivity extends AppCompatActivity {
         }
         setMyProfile();     // 대화 참여자 페이지에서 내 프로필 설정
         receiveServer();    // chatting room 정보 가져 오기
+
+        //drop down
+        autoCompleteTextView = findViewById(R.id.chatpage_autoCompleteText);
+        String []option = {"모집중", "방잠금"};
+        arrayAdapter = new ArrayAdapter(this, R.layout.chatpage_optionitem, option);
+
+        autoCompleteTextView.setText(arrayAdapter.getItem(0).toString(), false);
+        autoCompleteTextView.setAdapter(arrayAdapter);
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            String temp;
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                temp = autoCompleteTextView.getText().toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(!temp.equals(autoCompleteTextView.getText().toString())) {
+                    Log.i("status", "Status Has been Changed Successfully ");
+                    sendRoomidToServer();
+                }
+            }
+        });
+
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         //* room lock
@@ -339,7 +358,7 @@ public class ChattingActivity extends AppCompatActivity {
                 }
             }
         });
-        
+
         messageSendButton = findViewById(R.id.chatpage_sendbutton);
         messageSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -556,33 +575,68 @@ public class ChattingActivity extends AppCompatActivity {
 
     //* when set chat page information
     public void settingScreen(){
-        // for recipe page
-        TextView chatpage_title_textview = (TextView)findViewById(R.id.chatpage_title_textview);
-        chatpage_title_textview.setText(chattingInfo.getTitle());
+        TextView placeTitle = (TextView)findViewById(R.id.chatpage_placetitle_textview1);
+        TextView placeContent = (TextView)findViewById(R.id.chatpage_place_textview1);
 
-        TextView chatpage_name_textview = (TextView)findViewById(R.id.chatpage_name_textview);
-        chatpage_name_textview.setText(chattingInfo.getTitle());
+        TextView orderTime = (TextView)findViewById(R.id.chatpage_datetitle_textview1);
+        TextView moveTime = (TextView)findViewById(R.id.chatpage_taxitime_textview1);
+        TextView time = (TextView)findViewById(R.id.chatpage_date_textview1);
 
-        TextView chatpage_date_textview = (TextView)findViewById(R.id.chatpage_date_textview);
-        chatpage_date_textview.setText(chattingInfo.getOrderDate());
+        TextView roomTitle = (TextView)findViewById(R.id.chatpage_title_textview);
+        roomTitle.setText(chattingInfo.getTitle());
 
-        TextView chatpage_time_textview = (TextView)findViewById(R.id.chatpage_date_textview1);
-        chatpage_time_textview.setText(chattingInfo.getOrderTime());
+        TextView peopleNumTitle = (TextView)findViewById(R.id.chatpage_pplnumtitle_textview1);
+        TextView peopleNum = (TextView)findViewById(R.id.chatpage_pplnum_textview1);
+        peopleNum.setText(Integer.toString(chattingInfo.getNumUsers()));
 
-        TextView chatpage_place_textview = (TextView)findViewById(R.id.chatpage_place_textview1);
-        chatpage_place_textview.setText(chattingInfo.getPlace());
+        String timeString = chattingInfo.getOrderDate() + " " +  chattingInfo.getOrderTime();
 
-        TextView chatpage_pplnum_textview = (TextView)findViewById(R.id.chatpage_pplnum_textview1);
-        chatpage_pplnum_textview.setText(Integer.toString(chattingInfo.getNumUsers()));
+        if(chattingInfo.getCategory().equals("물품")){
+            placeTitle.setVisibility(View.VISIBLE);
+            orderTime.setVisibility(View.VISIBLE);
+            peopleNumTitle.setVisibility(View.VISIBLE);
 
+            placeContent.setText(chattingInfo.getPlace());
+            placeContent.setVisibility(View.VISIBLE);
+            time.setText(timeString);
+            time.setVisibility(View.VISIBLE);
+        }
+        if(chattingInfo.getCategory().equals("음식")){
+            placeTitle.setVisibility(View.VISIBLE);
+            orderTime.setVisibility(View.VISIBLE);
+            peopleNumTitle.setVisibility(View.VISIBLE);
 
-        String status = chattingInfo.getStatus();
-        if(!status.equals("모집중") && !status.equals("생성중")){
-            lockButton.setCheckedImmediatelyNoEvent(true);
+            placeContent.setText(chattingInfo.getPlace());
+            placeContent.setVisibility(View.VISIBLE);
+            time.setText(timeString);
+            time.setVisibility(View.VISIBLE);
+        }
+        if(chattingInfo.getCategory().equals("OTT")){
+            peopleNumTitle.setVisibility(View.VISIBLE);
+        }
+        if(chattingInfo.getCategory().equals("교통")){
+            orderTime.setVisibility(View.INVISIBLE);
+            moveTime.setVisibility(View.VISIBLE);
+            peopleNumTitle.setVisibility(View.VISIBLE);
+
+            time.setText(timeString);
+            time.setVisibility(View.VISIBLE);
         }
 
-        linkUrl = chattingInfo.getStuffLink();
 
+        TextInputLayout spinner = findViewById(R.id.chatpage_state_spinner);
+
+        if(MyData.getMail().equals(chattingInfo.getCreatorEmail()))
+            spinner.setVisibility(View.VISIBLE);
+
+        linkUrl = chattingInfo.getStuffLink();
+    }
+
+    public void settingStatus(){
+        if(chattingInfo.getStatus().equals("모집중"))
+            autoCompleteTextView.setText(arrayAdapter.getItem(0).toString(), false);
+        else
+            autoCompleteTextView.setText(arrayAdapter.getItem(1).toString(), false);
     }
 
     //* when show people list
@@ -774,6 +828,7 @@ public class ChattingActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 settingScreen();
+                settingStatus();
                 // 아니면 여기서 추가를해줘도 될 듯 하네
             }
             @Override
@@ -811,14 +866,8 @@ public class ChattingActivity extends AppCompatActivity {
                     chattingInfo.setCreatorEmail(obj.getString("creator_email"));
                     chattingInfo.setStatus(obj.getString("status"));
                     chattingInfo.setStuffLink(obj.getString("stuff_link"));
+                    chattingInfo.setCategory(obj.getString("category"));
 
-//                    chattingInfo.setStuffCost(obj.getString("stuff_cost")+"원");
-//                    chattingInfo.setStuffLink(obj.getString("stuff_link"));
-//                    chattingInfo.setCreatorName(obj.getString("creator_name"));
-//                    chattingInfo.setImageUrl(obj.getString("image_url"));
-//                    chattingInfo.setOgTitle(obj.getString("og_title"));
-//                    isNew = obj.getBoolean("is_new");
-//                    Log.i("db22", chattingInfo.getOgTitle());
                     responses.close();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1063,6 +1112,7 @@ public class ChattingActivity extends AppCompatActivity {
 
                     JSONObject jsonInput = new JSONObject();
                     jsonInput.put("room_id", roomID);
+                    jsonInput.put("room_status", autoCompleteTextView.getText().toString());
 
                     RequestBody reqBody = RequestBody.create(
                             MediaType.parse("application/json; charset=utf-8"),
