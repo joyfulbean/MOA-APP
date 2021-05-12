@@ -52,6 +52,7 @@
                     <TextView
                         android:id="@+id/post_title_textview"
                         android:layout_width="wrap_content"
+                        android:maxWidth="250dp"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/post_crown"
                         android:layout_alignParentTop="true"
