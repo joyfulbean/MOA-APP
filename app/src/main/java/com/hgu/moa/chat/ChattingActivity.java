@@ -566,24 +566,31 @@ public class ChattingActivity extends AppCompatActivity {
     public void settingScreen(){
         TextView placeTitle = (TextView)findViewById(R.id.chatpage_placetitle_textview1);
         TextView placeContent = (TextView)findViewById(R.id.chatpage_place_textview1);
+        RelativeLayout placeLayout = (RelativeLayout)findViewById(R.id.chatpage_place_layout);
 
         TextView orderTime = (TextView)findViewById(R.id.chatpage_datetitle_textview1);
         TextView moveTime = (TextView)findViewById(R.id.chatpage_taxitime_textview1);
         TextView time = (TextView)findViewById(R.id.chatpage_date_textview1);
+        RelativeLayout timeLayout = (RelativeLayout)findViewById(R.id.chatpage_date_layout);
 
         TextView roomTitle = (TextView)findViewById(R.id.chatpage_title_textview);
         roomTitle.setText(chattingInfo.getTitle());
 
         TextView peopleNumTitle = (TextView)findViewById(R.id.chatpage_pplnumtitle_textview1);
         TextView peopleNum = (TextView)findViewById(R.id.chatpage_pplnum_textview1);
+
         peopleNum.setText(Integer.toString(chattingInfo.getNumUsers()));
 
         String timeString = chattingInfo.getOrderDate() + " " +  chattingInfo.getOrderTime();
 
         if(chattingInfo.getCategory().equals("물품")){
+            wholereceiptButton.setVisibility(View.VISIBLE);
             placeTitle.setVisibility(View.VISIBLE);
+            placeLayout.setVisibility(View.VISIBLE);
+
             orderTime.setVisibility(View.VISIBLE);
             peopleNumTitle.setVisibility(View.VISIBLE);
+            timeLayout.setVisibility(View.VISIBLE);
 
             placeContent.setText(chattingInfo.getPlace());
             placeContent.setVisibility(View.VISIBLE);
@@ -591,8 +598,12 @@ public class ChattingActivity extends AppCompatActivity {
             time.setVisibility(View.VISIBLE);
         }
         if(chattingInfo.getCategory().equals("음식")){
+            wholereceiptButton.setVisibility(View.VISIBLE);
             placeTitle.setVisibility(View.VISIBLE);
+            placeLayout.setVisibility(View.VISIBLE);
+
             orderTime.setVisibility(View.VISIBLE);
+            timeLayout.setVisibility(View.VISIBLE);
             peopleNumTitle.setVisibility(View.VISIBLE);
 
             placeContent.setText(chattingInfo.getPlace());
@@ -605,6 +616,7 @@ public class ChattingActivity extends AppCompatActivity {
         }
         if(chattingInfo.getCategory().equals("교통")){
             orderTime.setVisibility(View.INVISIBLE);
+            timeLayout.setVisibility(View.VISIBLE);
             moveTime.setVisibility(View.VISIBLE);
             peopleNumTitle.setVisibility(View.VISIBLE);
 

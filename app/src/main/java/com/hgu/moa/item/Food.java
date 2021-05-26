@@ -212,12 +212,12 @@ public class Food extends Fragment {
                 super.onPostExecute(s);
                 if(AorB) {
                     thingB.clear();
-                    foodRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA, "food");
+                    foodRecyclerAdapter = new RecyclerAdapter(getContext(), thingA, "food");
                     foodRecyclerAdapter.setThreeRoundButton(false);
                     recyclerView.setAdapter(foodRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    foodRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB, "food");
+                    foodRecyclerAdapter = new RecyclerAdapter(getContext(), thingB, "food");
                     foodRecyclerAdapter.setThreeRoundButton(false);
                     recyclerView.setAdapter(foodRecyclerAdapter);
                 }

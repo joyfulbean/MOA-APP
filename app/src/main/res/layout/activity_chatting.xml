@@ -88,14 +88,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <RelativeLayout
                     android:id="@+id/chatpage_place_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="18dp">
+                    android:layout_marginTop="18dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/chatpage_placetitle_textview1"
@@ -130,7 +132,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="18dp"
-                    android:layout_below="@id/chatpage_place_layout">
+                    android:layout_below="@id/chatpage_place_layout"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/chatpage_datetitle_textview1"
@@ -189,7 +192,7 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="12dp"
-                        android:visibility="gone"/>
+                        android:visibility="visible"/>
 
                     <TextView
                         android:id="@+id/chatpage_pplnum_textview1"
@@ -213,6 +216,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
                     android:visibility="invisible"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
 
@@ -221,11 +225,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:inputType="none"
-                        android:textColor="@color/darkgrey"
                         android:fontFamily="@font/regular"
-                        android:textSize="12dp"
-                        android:padding="0dp"/>
+                        android:inputType="none"
+                        android:padding="0dp"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -234,14 +238,14 @@
                     android:layout_width="80dp"
                     android:layout_height="28dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="18dp"
                     android:layout_marginEnd="16dp"
                     android:layout_below="@id/chatpage_state_spinner"
                     android:layout_alignParentEnd="true"
                     android:src="@drawable/receipt_btn"
                     android:scaleType="fitCenter"
-                    android:background="@null"></ImageButton>
+                    android:background="@null"
+                    android:visibility="gone"></ImageButton>
 
 
             </RelativeLayout>
@@ -441,8 +445,6 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="12dp"
                     app:layout_constraintBottom_toBottomOf="@id/chatpage_typein_edittext"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/chatpage_typein_edittext"
@@ -458,15 +460,15 @@
                     app:layout_constraintEnd_toStartOf="@id/chatpage_sendbutton"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
                     android:fontFamily="@font/regular"
                     android:textColor="@color/black"
                     android:textSize="18dp"
                     android:background="@drawable/white_round_box"
                     android:paddingStart="12dp"
                     android:paddingTop="4dp"
-                    android:paddingBottom="2dp"
+                    android:paddingBottom="5dp"
                     android:paddingEnd="12dp"/>
 
                 <ImageButton
@@ -479,8 +481,8 @@
                     android:src="@drawable/send_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/chatpage_typein_edittext"
-                    app:layout_constraintTop_toTopOf="@id/chatpage_typein_edittext"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="2.5dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

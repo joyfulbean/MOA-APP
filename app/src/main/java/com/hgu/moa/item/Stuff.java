@@ -212,12 +212,12 @@ public class Stuff extends Fragment {
                 super.onPostExecute(s);
                 if(AorB) {
                     thingB.clear();
-                    stuffRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingA, "stuff");
+                    stuffRecyclerAdapter = new RecyclerAdapter(getContext(), thingA, "stuff");
                     stuffRecyclerAdapter.setThreeRoundButton(false);
                     recyclerView.setAdapter(stuffRecyclerAdapter);
                 }else{
                     thingA.clear();
-                    stuffRecyclerAdapter = new RecyclerAdapter(getActivity().getApplicationContext(), thingB, "stuff");
+                    stuffRecyclerAdapter = new RecyclerAdapter(getContext(), thingB, "stuff");
                     stuffRecyclerAdapter.setThreeRoundButton(false);
                     recyclerView.setAdapter(stuffRecyclerAdapter);
                 }
