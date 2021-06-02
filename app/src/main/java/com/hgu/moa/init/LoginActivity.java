@@ -41,7 +41,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class  LoginActivity extends AppCompatActivity {
     // for server
     private static final String urls = ServerInfo.getUrl() + "user";
     boolean isNew;
