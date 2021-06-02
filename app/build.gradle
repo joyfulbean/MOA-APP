@@ -21,6 +21,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 repositories {
@@ -79,7 +84,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.2.1'
 
     //for firebase
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation ('com.google.firebase:firebase-analytics') {
+        exclude module: "play-services-ads-identifier"
+    }
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
 
