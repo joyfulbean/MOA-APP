@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -42,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton phoneNumberButton;
     private ImageButton bankButton;
     private TextView logout;
+    private TextView policy;
 
     private ChipNavigationBar chipNavigationBar;
 
@@ -88,6 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         logout = findViewById(R.id.logout_button);
+        policy = findViewById(R.id.policy_button);
         name = findViewById(R.id.profileinfo_name_textview2);
         mail = findViewById(R.id.profileinfo_email_textview2);
         phone = findViewById(R.id.profileinfo_phonenumber_textview2);
@@ -157,6 +160,15 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(getApplication(), LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        //* show policy
+        policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://3.19.66.183:5000/privacy"));
+                startActivity(browserIntent);
             }
         });
     }
