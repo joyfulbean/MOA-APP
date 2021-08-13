@@ -3,6 +3,13 @@
 
 ![image](https://user-images.githubusercontent.com/48133047/117578025-5a320300-b127-11eb-9d6a-43b957e17d7b.png)
 
+## 어플리케이션 설명
+![사진1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdRfRbe%2Fbtrb78lFbmu%2FhpkvZY7w7f884k9VirInK1%2Fimg.png)
+
+![사진2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FH70o5%2Fbtrb7vuC6l1%2FKU665bf8oatVbf9eGBmmk1%2Fimg.png)
+
+![사진3](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Flu45q%2Fbtrb9GhVIq2%2Fso9t4dIIk07ygTY676yUpK%2Fimg.png)
+
 ## 실제 어플리케이션 사용 캡쳐 화면
 
 ![merge](https://user-images.githubusercontent.com/48133047/116819269-555ed380-abaa-11eb-881c-f8a4e68fbe0e.png)
